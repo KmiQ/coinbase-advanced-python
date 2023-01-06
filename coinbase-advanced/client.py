@@ -2,8 +2,10 @@ import hmac
 import hashlib
 import time
 import requests
+import json
 
 from models.accounts import AccountsPage, Account
+from models.orders import Order
 
 
 class CoinbaseAdvancedTradeAPIClient(object):
@@ -11,6 +13,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         self._base_url = base_url
         self._api_key = api_key
         self._secret_key = secret_key
+
+    # Accounts #
 
     def list_accounts(self, limit: int = 49, cursor: str = None) -> AccountsPage:
         request_path = '/api/v3/brokerage/accounts'
@@ -38,6 +42,27 @@ class CoinbaseAdvancedTradeAPIClient(object):
         account = Account.from_response(response)
         return account
 
+    # Orders #
+
+    def create_order(self, client_order_id: str, product_id: str, side: str, order_configuration: dict) -> Order:
+        request_path = "/api/v3/brokerage/orders"
+        method = "POST"
+
+        payload = {
+            'client_order_id': client_order_id,
+            'product_id': product_id,
+            'side': side,
+            'order_configuration': order_configuration
+        }
+
+        headers = self._build_request_headers(method, request_path, json.dumps(payload))
+        response = requests.post(self._base_url+request_path, json=payload, headers=headers)
+
+        order = Order.from_response(response)
+        return order
+
+    # Helpers #
+
     def _build_request_headers(self, method, request_path, body=''):
         timestamp = str(int(time.time()))
 
@@ -62,23 +87,41 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
 #################### TESTING ####################
 
-client = CoinbaseAdvancedTradeAPIClient(api_key='hOOnWpN0x2zsu12i', secret_key='86s3z4DLYrFCw4QonF54u4CdirrbBSnw')
-page = client.list_accounts()  # Accounts: List Accounts
+# For Reading
+#client = CoinbaseAdvancedTradeAPIClient(api_key='hOOnWpN0x2zsu12i', secret_key='86s3z4DLYrFCw4QonF54u4CdirrbBSnw')
 
-if page.error:
-    print(page.error)
-else:
-    accounts = page.accounts
-    for a in accounts:
-        if a.name == 'BTC Wallet':
-            print(a.hold)
+# Full Access to ALGO Wallet
+client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='HUbLt2GsnPOTTkl0t2wkFWn4RrznDJRM')
+
+# page = client.list_accounts()  # Accounts: List Accounts
+
+# if page.error:
+#    print(page.error)
+# else:
+#    accounts = page.accounts
+#    for a in accounts:
+#        if a.name == 'BTC Wallet':
+#            print(a.hold)
 
 
 ############
 
-account = client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
+#account = client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
 
-if account.error:
-    print(account.error)
-else:
-    print(account.name)
+# if account.error:
+#    print(account.error)
+# else:
+#    print(account.name)
+
+############
+
+order_configuration = {
+    "limit_limit_gtc": {
+        "limit_price": ".19",
+        "base_size": "5"
+    }
+}
+order = client.create_order("nkjsdfnw23", "ALGO-USD", "SELL", order_configuration)
+
+if order.error:
+    print(order.error)
