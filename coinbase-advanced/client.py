@@ -4,8 +4,21 @@ import time
 import requests
 import json
 
+from enum import Enum
+from datetime import datetime
 from models.accounts import AccountsPage, Account
 from models.orders import Order
+
+
+class SIDE(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class STOP_DIRECTION(Enum):
+    UNKNOWN = "UNKNOWN_STOP_DIRECTION"
+    UP = "STOP_DIRECTION_STOP_UP"
+    DOWN = "STOP_DIRECTION_STOP_DOWN"
 
 
 class CoinbaseAdvancedTradeAPIClient(object):
@@ -44,14 +57,75 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     # Orders #
 
-    def create_order(self, client_order_id: str, product_id: str, side: str, order_configuration: dict) -> Order:
+    def create_buy_market_order(self, client_order_id: str, product_id: str, quote_size: float):
+        order_configuration = {
+            "market_market_ioc": {
+                "quote_size": str(quote_size),
+            }
+        }
+
+        return self.create_order(client_order_id, product_id, SIDE.BUY, order_configuration)
+
+    def create_sell_market_order(self, client_order_id: str, product_id: str, base_size: float):
+        order_configuration = {
+            "market_market_ioc": {
+                "base_size": str(base_size),
+            }
+        }
+
+        return self.create_order(client_order_id, product_id, SIDE.SELL, order_configuration)
+
+    def create_limit_order(
+            self, client_order_id: str, product_id: str, side: SIDE, limit_price: float, base_size: float,
+            cancel_time: datetime = None, post_only: bool = None):
+
+        order_configuration = {}
+
+        limit_order_configuration = {
+            "limit_price": str(limit_price),
+            "base_size": str(base_size),
+        }
+
+        if post_only is not None:
+            limit_order_configuration['post_only'] = post_only
+
+        if cancel_time is not None:
+            limit_order_configuration['end_time'] = cancel_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+            order_configuration['limit_limit_gtd'] = limit_order_configuration
+        else:
+            order_configuration['limit_limit_gtc'] = limit_order_configuration
+
+        return self.create_order(client_order_id, product_id, side, order_configuration)
+
+    def create_stop_limit_order(
+            self, client_order_id: str, product_id: str, side: SIDE, stop_price: float, stop_direction: STOP_DIRECTION,
+            limit_price: float, base_size: float, cancel_time: datetime = None):
+
+        order_configuration = {}
+
+        stop_limit_order_configuration = {
+            "stop_price": str(stop_price),
+            "limit_price": str(limit_price),
+            "base_size": str(base_size),
+            "stop_direction": stop_direction.value,
+        }
+
+        if cancel_time is not None:
+            stop_limit_order_configuration['end_time'] = cancel_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+            order_configuration['stop_limit_stop_limit_gtd'] = stop_limit_order_configuration
+        else:
+            order_configuration['stop_limit_stop_limit_gtc'] = stop_limit_order_configuration
+
+        return self.create_order(client_order_id, product_id, side, order_configuration)
+
+    def create_order(self, client_order_id: str, product_id: str, side: SIDE, order_configuration: dict) -> Order:
         request_path = "/api/v3/brokerage/orders"
         method = "POST"
 
         payload = {
             'client_order_id': client_order_id,
             'product_id': product_id,
-            'side': side,
+            'side': side.value,
             'order_configuration': order_configuration
         }
 
@@ -115,13 +189,15 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 
 ############
 
-order_configuration = {
-    "limit_limit_gtc": {
-        "limit_price": ".19",
-        "base_size": "5"
-    }
-}
-order = client.create_order("nkjsdfnw23", "ALGO-USD", "SELL", order_configuration)
+#order = client.create_order("nkjsdfnw23", "ALGO-USD", "SELL", order_configuration)
+
+#order = client.create_limit_order("jalksjd341", "ALGO-USD", "BUY", ".19", 5)
+
+# order = client.create_stop_limit_order("nkjansd89hasi", "ALGO-USD", "BUY", .18,
+#                                       "STOP_DIRECTION_STOP_DOWN", .16, 7, datetime(2023, 1, 9, 15))
+
+order = client.create_buy_market_order("asdasd", "ALGO-USD", 3)
+#order = client.create_sell_market_order("njkasdh7", "ALGO-USD", 5)
 
 if order.error:
     print(order.error)
