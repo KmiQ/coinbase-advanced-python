@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 import json
 import requests
@@ -77,9 +77,9 @@ class OrderConfiguration:
     stop_limit_stop_limit_gtc: StopLimitStopLimitGtc
     stop_limit_stop_limit_gtd: StopLimitStopLimitGtd
 
-    def __init__(
-            self, market_market_ioc: MarketMarketIoc, limit_limit_gtc: LimitLimitGt, limit_limit_gtd: LimitLimitGt,
-            stop_limit_stop_limit_gtc: StopLimitStopLimitGtc, stop_limit_stop_limit_gtd: StopLimitStopLimitGtd) -> None:
+    def __init__(self, market_market_ioc: MarketMarketIoc = None, limit_limit_gtc: LimitLimitGt = None,
+                 limit_limit_gtd: LimitLimitGt = None, stop_limit_stop_limit_gtc: StopLimitStopLimitGtc = None,
+                 stop_limit_stop_limit_gtd: StopLimitStopLimitGtd = None) -> None:
         self.market_market_ioc = market_market_ioc
         self.limit_limit_gtc = limit_limit_gtc
         self.limit_limit_gtd = limit_limit_gtd
@@ -94,11 +94,11 @@ class Order:
     client_order_id: str
     order_configuration: OrderConfiguration
 
-    error: dict
+    error: str
     order_error: OrderError
 
     def __init__(self, order_id: str, product_id: str, side: str, client_order_id: str,
-                 order_configuration: dict, error=None, order_error: dict = None) -> None:
+                 order_configuration: dict, error: str = None, order_error: dict = None) -> None:
         self.order_id = order_id
         self.product_id = product_id
         self.side = side
@@ -125,3 +125,34 @@ class Order:
         success_response = result['success_response']
         order_configuration = result['order_configuration']
         return cls(**success_response, order_configuration=order_configuration)
+
+
+class OrderCancellation:
+    success: bool
+    failure_reason: str
+    order_id: str
+
+    def __init__(self, success: bool, failure_reason: str, order_id: str) -> None:
+        self.success = success
+        self.failure_reason = failure_reason
+        self.order_id = order_id
+
+
+class OrderBatchCancellation:
+    results: List[OrderCancellation]
+
+    error: str
+
+    def __init__(self, results: List[OrderCancellation], error: str = None) -> None:
+        self.results = results
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'Order':
+
+        if not response.ok:
+            error_result = response.text
+            return cls(None, error_result)
+
+        result = json.loads(response.text)
+
+        return cls(**result)

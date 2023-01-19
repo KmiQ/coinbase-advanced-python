@@ -7,7 +7,7 @@ import json
 from enum import Enum
 from datetime import datetime
 from models.accounts import AccountsPage, Account
-from models.orders import Order
+from models.orders import Order, OrderBatchCancellation
 
 
 class SIDE(Enum):
@@ -135,6 +135,20 @@ class CoinbaseAdvancedTradeAPIClient(object):
         order = Order.from_response(response)
         return order
 
+    def cancel_orders(self, order_ids: list) -> OrderBatchCancellation:
+        request_path = "/api/v3/brokerage/orders/batch_cancel/"
+        method = "POST"
+
+        payload = {
+            'order_ids': order_ids,
+        }
+
+        headers = self._build_request_headers(method, request_path, json.dumps(payload))
+        response = requests.post(self._base_url+request_path, json=payload, headers=headers)
+
+        cancellation_result = OrderBatchCancellation.from_response(response)
+        return cancellation_result
+
     # Helpers #
 
     def _build_request_headers(self, method, request_path, body=''):
@@ -196,8 +210,13 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 # order = client.create_stop_limit_order("nkjansd89hasi", "ALGO-USD", "BUY", .18,
 #                                       "STOP_DIRECTION_STOP_DOWN", .16, 7, datetime(2023, 1, 9, 15))
 
-order = client.create_buy_market_order("asdasd", "ALGO-USD", 3)
+#order = client.create_buy_market_order("asdasd", "ALGO-USD", 3)
 #order = client.create_sell_market_order("njkasdh7", "ALGO-USD", 5)
 
-if order.error:
-    print(order.error)
+#order1 = client.create_limit_order("jbkjbdskfbg73ibukl", "ALGO-USD", SIDE.BUY, ".10", 5)
+#order2 = client.create_limit_order("ansjkdfb78y8", "ALGO-USD", SIDE.BUY, ".7", 5)
+
+#cancellation_receipt = client.cancel_orders([order1.order_id, order2.order_id])
+#cancellation_receipt = client.cancel_orders([order2.order_id])
+
+#a = 5
