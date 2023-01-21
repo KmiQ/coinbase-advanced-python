@@ -4,10 +4,11 @@ import time
 import requests
 import json
 
+from typing import List
 from enum import Enum
 from datetime import datetime
 from models.accounts import AccountsPage, Account
-from models.orders import Order, OrderBatchCancellation
+from models.orders import OrdersPage, Order, OrderBatchCancellation
 
 
 class SIDE(Enum):
@@ -19,6 +20,18 @@ class STOP_DIRECTION(Enum):
     UNKNOWN = "UNKNOWN_STOP_DIRECTION"
     UP = "STOP_DIRECTION_STOP_UP"
     DOWN = "STOP_DIRECTION_STOP_DOWN"
+
+
+class ORDER_TYPE(Enum):
+    UNKNOWN_ORDER_TYPE = "UNKNOWN_ORDER_TYPE"
+    MARKET = "MARKET"
+    LIMIT = "LIMIT"
+    STOP = "STOP"
+    STOP_LIMIT = "STOP_LIMIT"
+
+
+class PRODUCT_TYPE(Enum):
+    SPOT = "SPOT"
 
 
 class CoinbaseAdvancedTradeAPIClient(object):
@@ -149,6 +162,52 @@ class CoinbaseAdvancedTradeAPIClient(object):
         cancellation_result = OrderBatchCancellation.from_response(response)
         return cancellation_result
 
+    def list_orders(
+            self, product_id: str = None, order_status: List[str] = None, limit: int = 999, start_date: datetime = None,
+            end_date: datetime = None, user_native_currency: str = None, order_type: ORDER_TYPE = None, order_side: SIDE = None,
+            cursor: str = None, product_type: PRODUCT_TYPE = None) -> OrdersPage:
+        request_path = '/api/v3/brokerage/orders/historical/batch'
+        method = "GET"
+
+        query_params = ''
+
+        if product_id is not None:
+            query_params = self._next_param(query_params) + 'product_id='+product_id
+
+        if order_status is not None:
+            query_params = self._next_param(query_params) + 'order_status='+','.join(order_status)
+
+        if limit is not None:
+            query_params = self._next_param(query_params) + 'limit='+str(limit)
+
+        if start_date is not None:
+            query_params = self._next_param(query_params) + 'start_date=' + start_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        if end_date is not None:
+            query_params = self._next_param(query_params) + 'end_date=' + end_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        if user_native_currency is not None:
+            query_params = self._next_param(query_params) + 'user_native_currency=' + user_native_currency
+
+        if order_type is not None:
+            query_params = self._next_param(query_params) + 'order_type=' + order_type.value
+
+        if order_side is not None:
+            query_params = self._next_param(query_params) + 'order_side=' + order_side.value
+
+        if cursor is not None:
+            query_params = self._next_param(query_params) + 'cursor=' + cursor
+
+        if product_type is not None:
+            query_params = self._next_param(query_params) + 'product_type=' + product_type.value
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+
+        page = OrdersPage.from_response(response)
+        return page
+
     # Helpers #
 
     def _build_request_headers(self, method, request_path, body=''):
@@ -172,11 +231,15 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         return signature
 
+    def _next_param(self, query_params: str) -> str:
+        return query_params + ('?' if query_params == '' else '&')
 
 #################### TESTING ####################
 
+
 # For Reading
 #client = CoinbaseAdvancedTradeAPIClient(api_key='hOOnWpN0x2zsu12i', secret_key='86s3z4DLYrFCw4QonF54u4CdirrbBSnw')
+
 
 # Full Access to ALGO Wallet
 client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='HUbLt2GsnPOTTkl0t2wkFWn4RrznDJRM')
@@ -219,4 +282,6 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 #cancellation_receipt = client.cancel_orders([order1.order_id, order2.order_id])
 #cancellation_receipt = client.cancel_orders([order2.order_id])
 
-#a = 5
+orders_page = client.list_orders(order_status=['OPEN'])
+
+a = 5

@@ -94,17 +94,88 @@ class Order:
     client_order_id: str
     order_configuration: OrderConfiguration
 
+    user_id: str
+    status: str
+    time_in_force: str
+    created_time: datetime
+    completion_percentage: int
+    filled_size: str
+    average_filled_price: int
+    fee: str
+    number_of_fills: int
+    filled_value: int
+    pending_cancel: bool
+    size_in_quote: bool
+    total_fees: str
+    size_inclusive_of_fees: bool
+    total_value_after_fees: str
+    trigger_status: str
+    order_type: str
+    reject_reason: str
+    settled: str
+    product_type: str
+    reject_message: str
+    cancel_message: str
+
     error: str
     order_error: OrderError
 
     def __init__(self, order_id: str, product_id: str, side: str, client_order_id: str,
-                 order_configuration: dict, error: str = None, order_error: dict = None) -> None:
+                 order_configuration: dict,
+
+                 user_id: str = None,
+                 status: str = None,
+                 time_in_force: str = None,
+                 created_time: datetime = None,
+                 completion_percentage: int = None,
+                 filled_size: str = None,
+                 average_filled_price: int = None,
+                 fee: str = None,
+                 number_of_fills: int = None,
+                 filled_value: int = None,
+                 pending_cancel: bool = None,
+                 size_in_quote: bool = None,
+                 total_fees: str = None,
+                 size_inclusive_of_fees: bool = None,
+                 total_value_after_fees: str = None,
+                 trigger_status: str = None,
+                 order_type: str = None,
+                 reject_reason: str = None,
+                 settled: str = None,
+                 product_type: str = None,
+                 reject_message: str = None,
+                 cancel_message: str = None,
+
+                 error: str = None, order_error: dict = None) -> None:
         self.order_id = order_id
         self.product_id = product_id
         self.side = side
         self.client_order_id = client_order_id
         self.order_configuration = OrderConfiguration(
             **order_configuration) if order_configuration is not None else None
+
+        self.user_id = user_id
+        self.status = status
+        self.time_in_force = time_in_force
+        self.created_time = created_time
+        self.completion_percentage = completion_percentage
+        self.filled_size = filled_size
+        self.average_filled_price = average_filled_price
+        self.fee = fee
+        self.number_of_fills = number_of_fills
+        self.filled_value = filled_value
+        self.pending_cancel = pending_cancel
+        self.size_in_quote = size_in_quote
+        self.total_fees = total_fees
+        self.size_inclusive_of_fees = size_inclusive_of_fees
+        self.total_value_after_fees = total_value_after_fees
+        self.trigger_status = trigger_status
+        self.order_type = order_type
+        self.reject_reason = reject_reason
+        self.settled = settled
+        self.product_type = product_type
+        self.reject_message = reject_message
+        self.cancel_message = cancel_message
 
         self.error = error
         self.order_error = OrderError(**order_error) if order_error is not None else None
@@ -114,17 +185,56 @@ class Order:
 
         if not response.ok:
             error_result = response.text
-            return cls(None, None, None, None, None, error_result, None)
+            return cls(
+                None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, None, error_result, None)
 
         result = json.loads(response.text)
 
         if not result['success']:
             error_response = result['error_response']
-            return cls(None, None, None, None, None, result['failure_reason'], error_response)
+            return cls(
+                None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, None, result['failure_reason'],
+                error_response)
 
         success_response = result['success_response']
         order_configuration = result['order_configuration']
         return cls(**success_response, order_configuration=order_configuration)
+
+
+class OrdersPage:
+    orders: List[Order]
+    has_next: bool
+    cursor: str
+    sequence: int
+
+    error: dict
+
+    def __init__(self,
+                 orders: List[dict],
+                 has_next: bool,
+                 cursor: str,
+                 sequence: int,
+                 error=None) -> None:
+
+        self.orders = list(map(lambda x: Order(**x), orders)) if orders is not None else None
+
+        self.has_next = has_next
+        self.cursor = cursor
+        self.sequence = sequence
+
+        self.error = error
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'OrdersPage':
+
+        if not response.ok:
+            error_result = json.loads(response.text)
+            return cls(None, None, None, None, error=error_result)
+
+        result = json.loads(response.text)
+        return cls(**result)
 
 
 class OrderCancellation:
