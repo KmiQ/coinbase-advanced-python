@@ -145,7 +145,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         headers = self._build_request_headers(method, request_path, json.dumps(payload))
         response = requests.post(self._base_url+request_path, json=payload, headers=headers)
 
-        order = Order.from_response(response)
+        order = Order.from_create_order_response(response)
         return order
 
     def cancel_orders(self, order_ids: list) -> OrderBatchCancellation:
@@ -240,6 +240,17 @@ class CoinbaseAdvancedTradeAPIClient(object):
         page = FillsPage.from_response(response)
         return page
 
+    def get_order(self, order_id: str) -> Order:
+        request_path = f"/api/v3/brokerage/orders/historical/{order_id}"
+        method = "GET"
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path, headers=headers)
+
+        order = Order.from_get_order_response(response)
+        return order
+
     # Helpers #
 
     def _build_request_headers(self, method, request_path, body=''):
@@ -316,5 +327,7 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 
 #orders_page = client.list_orders(order_status=['OPEN'])
 #fills_page = client.list_fills()
+
+#order = client.get_order("5fffa9e8-73db-4a2c-8b3f-08509203ac04")
 
 a = 5

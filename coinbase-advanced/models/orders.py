@@ -184,13 +184,13 @@ class Order:
         self.order_error = OrderError(**order_error) if order_error is not None else None
 
     @classmethod
-    def from_response(cls, response: requests.Response) -> 'Order':
+    def from_create_order_response(cls, response: requests.Response) -> 'Order':
 
         if not response.ok:
             error_result = response.text
             return cls(
                 None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None, None, error_result, None)
+                None, None, None, None, None, None, None, None, None, None, error_result, None)
 
         result = json.loads(response.text)
 
@@ -204,6 +204,21 @@ class Order:
         success_response = result['success_response']
         order_configuration = result['order_configuration']
         return cls(**success_response, order_configuration=order_configuration)
+
+    @classmethod
+    def from_get_order_response(cls, response: requests.Response) -> 'Order':
+
+        if not response.ok:
+            error_result = response.text
+            return cls(
+                None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, None, None, None, error_result, None)
+
+        result = json.loads(response.text)
+
+        order = result['order']
+
+        return cls(**order)
 
 
 class OrdersPage:
