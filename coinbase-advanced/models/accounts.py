@@ -64,7 +64,7 @@ class Account:
 class AccountsPage:
     accounts: List[Account]
     has_next: bool
-    cursor: int
+    cursor: str
     size: int
 
     error: dict
@@ -72,7 +72,7 @@ class AccountsPage:
     def __init__(self,
                  accounts: List[dict],
                  has_next: bool,
-                 cursor: int,
+                 cursor: str,
                  size: int,
                  error=None) -> None:
 

@@ -8,7 +8,7 @@ from typing import List
 from enum import Enum
 from datetime import datetime
 from models.accounts import AccountsPage, Account
-from models.orders import OrdersPage, Order, OrderBatchCancellation
+from models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage
 
 
 class SIDE(Enum):
@@ -208,6 +208,38 @@ class CoinbaseAdvancedTradeAPIClient(object):
         page = OrdersPage.from_response(response)
         return page
 
+    def list_fills(self, order_id: str = None, product_id: str = None, start_date: datetime = None,
+                   end_date: datetime = None, cursor: str = None, limit: int = 100):
+        request_path = '/api/v3/brokerage/orders/historical/fills'
+        method = "GET"
+
+        query_params = ''
+
+        if order_id is not None:
+            query_params = self._next_param(query_params) + 'order_id='+order_id
+
+        if product_id is not None:
+            query_params = self._next_param(query_params) + 'product_id='+product_id
+
+        if limit is not None:
+            query_params = self._next_param(query_params) + 'limit='+str(limit)
+
+        if start_date is not None:
+            query_params = self._next_param(query_params) + 'start_date=' + start_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        if end_date is not None:
+            query_params = self._next_param(query_params) + 'end_date=' + end_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        if cursor is not None:
+            query_params = self._next_param(query_params) + 'cursor=' + cursor
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+
+        page = FillsPage.from_response(response)
+        return page
+
     # Helpers #
 
     def _build_request_headers(self, method, request_path, body=''):
@@ -282,6 +314,7 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 #cancellation_receipt = client.cancel_orders([order1.order_id, order2.order_id])
 #cancellation_receipt = client.cancel_orders([order2.order_id])
 
-orders_page = client.list_orders(order_status=['OPEN'])
+#orders_page = client.list_orders(order_status=['OPEN'])
+#fills_page = client.list_fills()
 
 a = 5

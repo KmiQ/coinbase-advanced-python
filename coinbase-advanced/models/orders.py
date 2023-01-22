@@ -26,11 +26,12 @@ class LimitLimitGt:
     post_only: bool
     end_time: Optional[datetime]
 
-    def __init__(self, base_size: str, limit_price: str, post_only: bool, end_time: Optional[datetime]) -> None:
+    def __init__(self, base_size: str, limit_price: str, post_only: bool, end_time: Optional[str]) -> None:
         self.base_size = base_size
         self.limit_price = limit_price
         self.post_only = post_only
-        self.end_time = end_time
+        self.end_time = datetime.strptime(end_time if len(
+            end_time) <= 27 else end_time[:26]+'Z', "%Y-%m-%dT%H:%M:%S.%fZ") if end_time is not None else None
 
 
 class MarketMarketIoc:
@@ -62,11 +63,12 @@ class StopLimitStopLimitGtd:
     end_time: datetime
     stop_direction: str
 
-    def __init__(self, base_size: float, limit_price: str, stop_price: str, end_time: datetime, stop_direction: str) -> None:
+    def __init__(self, base_size: float, limit_price: str, stop_price: str, end_time: str, stop_direction: str) -> None:
         self.base_size = base_size
         self.limit_price = limit_price
         self.stop_price = stop_price
-        self.end_time = end_time
+        self.end_time = datetime.strptime(end_time if len(
+            end_time) <= 27 else end_time[:26]+'Z', "%Y-%m-%dT%H:%M:%S.%fZ") if end_time is not None else None
         self.stop_direction = stop_direction
 
 
@@ -126,7 +128,7 @@ class Order:
                  user_id: str = None,
                  status: str = None,
                  time_in_force: str = None,
-                 created_time: datetime = None,
+                 created_time: str = None,
                  completion_percentage: int = None,
                  filled_size: str = None,
                  average_filled_price: int = None,
@@ -157,7 +159,8 @@ class Order:
         self.user_id = user_id
         self.status = status
         self.time_in_force = time_in_force
-        self.created_time = created_time
+        self.created_time = datetime.strptime(created_time if len(
+            created_time) <= 27 else created_time[:26]+'Z', "%Y-%m-%dT%H:%M:%S.%fZ") if created_time is not None else None
         self.completion_percentage = completion_percentage
         self.filled_size = filled_size
         self.average_filled_price = average_filled_price
@@ -265,4 +268,72 @@ class OrderBatchCancellation:
 
         result = json.loads(response.text)
 
+        return cls(**result)
+
+
+class Fill:
+    entry_id: str
+    trade_id: str
+    order_id: str
+    trade_time: datetime
+    trade_type: str
+    price: str
+    size: str
+    commission: str
+    product_id: str
+    sequence_timestamp: datetime
+    liquidity_indicator: str
+    size_in_quote: bool
+    user_id: str
+    side: str
+
+    def __init__(
+            self, entry_id: str, trade_id: str, order_id: str, trade_time: str, trade_type: str, price: str,
+            size: str, commission: str, product_id: str, sequence_timestamp: str, liquidity_indicator: str,
+            size_in_quote: bool, user_id: str, side: str) -> None:
+        self.entry_id = entry_id
+        self.trade_id = trade_id
+        self.order_id = order_id
+        self.trade_time = datetime.strptime(
+            trade_time if len(trade_time) <= 27 else trade_time[:26]+'Z',
+            "%Y-%m-%dT%H:%M:%S.%fZ") if trade_time is not None else None
+        self.trade_type = trade_type
+        self.price = price
+        self.size = size
+        self.commission = commission
+        self.product_id = product_id
+        self.sequence_timestamp = datetime.strptime(
+            sequence_timestamp if len(sequence_timestamp) <= 27 else sequence_timestamp[: 26] + 'Z',
+            "%Y-%m-%dT%H:%M:%S.%fZ") if sequence_timestamp is not None else None
+        self.liquidity_indicator = liquidity_indicator
+        self.size_in_quote = size_in_quote
+        self.user_id = user_id
+        self.side = side
+
+
+class FillsPage:
+    fills: List[Fill]
+    cursor: str
+
+    error: dict
+
+    def __init__(self,
+                 fills: List[dict],
+                 cursor: str,
+                 error=None) -> None:
+
+        self.fills = list(map(lambda x: Fill(**x), fills)) if fills is not None else None
+
+        self.cursor = cursor
+
+        self.error = error
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'FillsPage':
+
+        if not response.ok:
+            error_result = json.loads(response.text)
+            return cls(None, None, error=error_result)
+
+        result = json.loads(response.text)
         return cls(**result)
