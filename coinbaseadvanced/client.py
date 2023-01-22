@@ -7,8 +7,8 @@ import json
 from typing import List
 from enum import Enum
 from datetime import datetime
-from models.accounts import AccountsPage, Account
-from models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage
+from .models.accounts import AccountsPage, Account
+from .models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage
 
 
 class SIDE(Enum):
