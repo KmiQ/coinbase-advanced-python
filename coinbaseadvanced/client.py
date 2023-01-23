@@ -7,8 +7,8 @@ import json
 from typing import List
 from enum import Enum
 from datetime import datetime
-from .models.accounts import AccountsPage, Account
-from .models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage
+from coinbaseadvanced.models.accounts import AccountsPage, Account
+from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage
 
 
 class SIDE(Enum):
@@ -281,11 +281,11 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
 
 # For Reading
-#client = CoinbaseAdvancedTradeAPIClient(api_key='hOOnWpN0x2zsu12i', secret_key='86s3z4DLYrFCw4QonF54u4CdirrbBSnw')
+client = CoinbaseAdvancedTradeAPIClient(api_key='hOOnWpN0x2zsu12i', secret_key='86s3z4DLYrFCw4QonF54u4CdirrbBSnw')
 
 
 # Full Access to ALGO Wallet
-client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='HUbLt2GsnPOTTkl0t2wkFWn4RrznDJRM')
+#client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='HUbLt2GsnPOTTkl0t2wkFWn4RrznDJRM')
 
 # page = client.list_accounts()  # Accounts: List Accounts
 
@@ -300,7 +300,8 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 
 ############
 
-#account = client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
+account = client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
+a = 5
 
 # if account.error:
 #    print(account.error)
@@ -329,5 +330,3 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 #fills_page = client.list_fills()
 
 #order = client.get_order("5fffa9e8-73db-4a2c-8b3f-08509203ac04")
-
-a = 5
