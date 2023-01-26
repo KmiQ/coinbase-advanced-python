@@ -26,9 +26,17 @@ def fixture_get_account_success_response() -> str:
             text=content)
 
 
-def fixture_get_account_failure_response() -> str:
-    with open('tests/fixtures/get_account_failure_response.json', 'r', encoding="utf-8") as file:
+def fixture_standard_failure_response() -> str:
+    with open('tests/fixtures/default_failure_response.json', 'r', encoding="utf-8") as file:
         content = file.read()
         return fixtured_mock_response(
             ok=False,
+            text=content)
+
+
+def fixture_list_accounts_success_response() -> str:
+    with open('tests/fixtures/list_accounts_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
             text=content)

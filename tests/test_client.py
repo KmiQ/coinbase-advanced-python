@@ -2,7 +2,7 @@ import unittest
 from unittest import mock
 
 from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient
-from tests.fixtures.fixtures import fixture_get_account_failure_response, fixture_get_account_success_response
+from tests.fixtures.fixtures import fixture_standard_failure_response, fixture_get_account_success_response, fixture_list_accounts_success_response
 
 
 class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
@@ -65,7 +65,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
     @mock.patch("coinbaseadvanced.client.requests.get")
     def test_get_account_failure(self, mock_get):
 
-        mock_resp = fixture_get_account_failure_response()
+        mock_resp = fixture_standard_failure_response()
         mock_get.return_value = mock_resp
 
         client = CoinbaseAdvancedTradeAPIClient(
@@ -78,6 +78,75 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertIsNotNone(account)
         self.assertDictEqual(account.error, {
             "error": "unknown",
-            "error_details": "Could not find users account information",
-            "message": "Could not find users account information"
+            "error_details": "some error details here",
+            "message": "some additional message here"
+        })
+
+    @mock.patch("coinbaseadvanced.client.requests.get")
+    def test_list_accounts_success(self, mock_get):
+
+        mock_resp = fixture_list_accounts_success_response()
+        mock_get.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        page = client.list_accounts()
+
+        # Check input
+
+        call_args = mock_get.call_args_list
+
+        for call in call_args:
+            args, kwargs = call
+            self.assertIn('https://coinbase.com/api/v3/brokerage/accounts?limit=49', args)
+
+            headers = kwargs['headers']
+            self.assertIn('accept', headers)
+            self.assertIn('CB-ACCESS-KEY', headers)
+            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
+            self.assertIn('CB-ACCESS-SIGN', headers)
+
+        # Check output
+
+        self.assertIsNotNone(page)
+
+        accounts = page.accounts
+
+        self.assertEqual(len(accounts), page.size)
+        self.assertEqual(page.has_next, True)
+        self.assertIsNotNone(page.cursor)
+
+        for account in accounts:
+            self.assertIsNotNone(account)
+            self.assertIsNotNone(account.uuid)
+            self.assertIsNotNone(account.name)
+            self.assertIsNotNone(account.active)
+            self.assertIsNotNone(account.available_balance)
+            self.assertIsNotNone(account.created_at)
+            self.assertIsNotNone(account.currency)
+            self.assertIsNotNone(account.default)
+            self.assertIsNotNone(account.hold)
+            self.assertIsNotNone(account.ready)
+
+            self.assertIsNone(account.error)
+
+    @mock.patch("coinbaseadvanced.client.requests.get")
+    def test_list_accounts_failure(self, mock_get):
+
+        mock_resp = fixture_standard_failure_response()
+        mock_get.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        page = client.list_accounts()
+
+        # Check output
+
+        self.assertIsNotNone(page)
+        self.assertDictEqual(page.error, {
+            "error": "unknown",
+            "error_details": "some error details here",
+            "message": "some additional message here"
         })

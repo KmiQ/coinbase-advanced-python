@@ -1,0 +1,5 @@
+{
+    "error": "unknown",
+    "error_details": "some error details here",
+    "message": "some additional message here"
+}

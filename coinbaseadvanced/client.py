@@ -287,7 +287,7 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='hOOnWpN0x2zsu12i', secret_key='
 # Full Access to ALGO Wallet
 #client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='HUbLt2GsnPOTTkl0t2wkFWn4RrznDJRM')
 
-# page = client.list_accounts()  # Accounts: List Accounts
+page = client.list_accounts(limit=89898)  # Accounts: List Accounts
 
 # if page.error:
 #    print(page.error)
@@ -300,7 +300,7 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='hOOnWpN0x2zsu12i', secret_key='
 
 ############
 
-account = client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
+#account = client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
 a = 5
 
 # if account.error:
