@@ -1,0 +1,16 @@
+{
+    "success": true,
+    "failure_reason": "UNKNOWN_FAILURE_REASON",
+    "order_id": "95a50b31-7128-49ac-bba9-0e7200051a92",
+    "success_response": {
+        "order_id": "95a50b31-7128-49ac-bba9-0e7200051a92",
+        "product_id": "ALGO-USD",
+        "side": "SELL",
+        "client_order_id": "njkasdh7"
+    },
+    "order_configuration": {
+        "market_market_ioc": {
+            "base_size": "5"
+        }
+    }
+}

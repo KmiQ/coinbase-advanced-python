@@ -26,7 +26,7 @@ def fixture_get_account_success_response() -> str:
             text=content)
 
 
-def fixture_standard_failure_response() -> str:
+def fixture_default_failure_response() -> str:
     with open('tests/fixtures/default_failure_response.json', 'r', encoding="utf-8") as file:
         content = file.read()
         return fixtured_mock_response(
@@ -39,4 +39,44 @@ def fixture_list_accounts_success_response() -> str:
         content = file.read()
         return fixtured_mock_response(
             ok=True,
+            text=content)
+
+
+def fixture_create_limit_order_success_response() -> str:
+    with open('tests/fixtures/create_limit_order_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_create_stop_limit_order_success_response() -> str:
+    with open('tests/fixtures/create_stop_limit_order_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_create_buy_market_order_success_response() -> str:
+    with open('tests/fixtures/create_buy_market_order_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_create_sell_market_order_success_response() -> str:
+    with open('tests/fixtures/create_sell_market_order_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_default_order_failure_response() -> str:
+    with open('tests/fixtures/default_order_failure_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=False,
             text=content)

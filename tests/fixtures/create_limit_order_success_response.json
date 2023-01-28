@@ -1,0 +1,18 @@
+{
+    "success": true,
+    "failure_reason": "UNKNOWN_FAILURE_REASON",
+    "order_id": "07f1e718-8ea8-4ece-a2e1-3f00aad7f040",
+    "success_response": {
+        "order_id": "07f1e718-8ea8-4ece-a2e1-3f00aad7f040",
+        "product_id": "ALGO-USD",
+        "side": "BUY",
+        "client_order_id": "lknalksdj89asdkl"
+    },
+    "order_configuration": {
+        "limit_limit_gtc": {
+            "base_size": "5",
+            "limit_price": ".19",
+            "post_only": false
+        }
+    }
+}
