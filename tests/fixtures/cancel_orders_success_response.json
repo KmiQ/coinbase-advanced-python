@@ -1,0 +1,14 @@
+{
+    "results": [
+        {
+            "success": false,
+            "failure_reason": "UNKNOWN_CANCEL_ORDER",
+            "order_id": "dc98ccb7-8494-418d-99e9-651b76ca64f2"
+        },
+        {
+            "success": true,
+            "failure_reason": "UNKNOWN_CANCEL_FAILURE_REASON",
+            "order_id": "2ab5a57e-f3e4-41fa-bf82-65e7d89640c0"
+        }
+    ]
+}

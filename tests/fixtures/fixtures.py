@@ -80,3 +80,11 @@ def fixture_default_order_failure_response() -> str:
         return fixtured_mock_response(
             ok=False,
             text=content)
+
+
+def fixture_cancel_orders_success_response() -> str:
+    with open('tests/fixtures/cancel_orders_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)

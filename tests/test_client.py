@@ -3,7 +3,7 @@ from unittest import mock
 from datetime import datetime
 
 from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, SIDE, STOP_DIRECTION
-from tests.fixtures.fixtures import fixture_default_failure_response, fixture_get_account_success_response, fixture_list_accounts_success_response, fixture_create_limit_order_success_response, fixture_create_stop_limit_order_success_response, fixture_create_buy_market_order_success_response, fixture_create_sell_market_order_success_response, fixture_default_order_failure_response
+from tests.fixtures.fixtures import fixture_default_failure_response, fixture_get_account_success_response, fixture_list_accounts_success_response, fixture_create_limit_order_success_response, fixture_create_stop_limit_order_success_response, fixture_create_buy_market_order_success_response, fixture_create_sell_market_order_success_response, fixture_default_order_failure_response, fixture_cancel_orders_success_response
 
 
 class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
@@ -381,3 +381,38 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
                 }
             }
         })
+
+    @mock.patch("coinbaseadvanced.client.requests.post")
+    def test_cancel_orders_success(self, mock_post):
+
+        mock_resp = fixture_cancel_orders_success_response()
+        mock_post.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='lknalksdj89asdkl', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        cancellation_receipt = client.cancel_orders(["order_id_1", "order_id_2"])
+
+        # Check input
+
+        call_args = mock_post.call_args_list
+
+        for call in call_args:
+            args, kwargs = call
+            self.assertIn('https://api.coinbase.com/api/v3/brokerage/orders/batch_cancel/', args)
+
+            headers = kwargs['headers']
+            self.assertIn('accept', headers)
+            self.assertIn('CB-ACCESS-KEY', headers)
+            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
+            self.assertIn('CB-ACCESS-SIGN', headers)
+
+            json = kwargs['json']
+            self.assertIn('order_id_1', json['order_ids'])
+            self.assertIn('order_id_2', json['order_ids'])
+
+        # Check output
+
+        self.assertIsNotNone(cancellation_receipt)
+
+        self.assertEqual(len(cancellation_receipt.results), 2)

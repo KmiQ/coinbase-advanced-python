@@ -283,11 +283,14 @@ class CoinbaseAdvancedTradeAPIClient(object):
 # For Reading
 # client = CoinbaseAdvancedTradeAPIClient(api_key='hOOnWpN0x2zsu12i', secret_key='86s3z4DLYrFCw4QonF54u4CdirrbBSnw')
 
+# page = client.list_accounts(limit=89898)  # Accounts: List Accounts
+
+# account = client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
+
 
 # Full Access to ALGO Wallet
 client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='HUbLt2GsnPOTTkl0t2wkFWn4RrznDJRM')
 
-# page = client.list_accounts(limit=89898)  # Accounts: List Accounts
 
 # if page.error:
 #    print(page.error)
@@ -300,7 +303,6 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 
 ############
 
-# account = client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
 # a = 5
 
 # if account.error:
@@ -320,14 +322,16 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 # order = client.create_buy_market_order("asdasd", "ALGO-USD", 1)
 # order = client.create_sell_market_order("njkasdh7", "ALGO-USD", 5)
 
-# order1 = client.create_limit_order("jbkjbdskfbg73ibukl", "ALGO-USD", SIDE.BUY, ".10", 5)
-# order2 = client.create_limit_order("ansjkdfb78y8", "ALGO-USD", SIDE.BUY, ".7", 5)
+#order1 = client.create_limit_order("k7999902", "ALGO-USD", SIDE.SELL, ".9", 5)
+#order2 = client.create_limit_order("j876789ks", "ALGO-USD", SIDE.SELL, ".9", 5)
 
-# cancellation_receipt = client.cancel_orders([order1.order_id, order2.order_id])
-# cancellation_receipt = client.cancel_orders([order2.order_id])
+#a = 5
+#cancellation_receipt = client.cancel_orders(['a', 'b'])
+
+a = 5
+#cancellation_receipt = client.cancel_orders([order2.order_id])
 
 # orders_page = client.list_orders(order_status=['OPEN'])
 # fills_page = client.list_fills()
 
 # order = client.get_order("5fffa9e8-73db-4a2c-8b3f-08509203ac04")
-a = 5
