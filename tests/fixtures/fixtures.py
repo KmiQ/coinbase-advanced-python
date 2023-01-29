@@ -88,3 +88,27 @@ def fixture_cancel_orders_success_response() -> str:
         return fixtured_mock_response(
             ok=True,
             text=content)
+
+
+def fixture_list_orders_success_response() -> str:
+    with open('tests/fixtures/list_orders_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_list_fills_success_response() -> str:
+    with open('tests/fixtures/list_fills_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_get_order_success_response() -> str:
+    with open('tests/fixtures/get_order_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)

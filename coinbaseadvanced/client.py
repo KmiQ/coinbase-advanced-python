@@ -328,10 +328,10 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 #a = 5
 #cancellation_receipt = client.cancel_orders(['a', 'b'])
 
-a = 5
 #cancellation_receipt = client.cancel_orders([order2.order_id])
 
-# orders_page = client.list_orders(order_status=['OPEN'])
-# fills_page = client.list_fills()
+#orders_page = client.list_orders(start_date=datetime(2023, 1, 25), end_date=datetime(2023, 1, 30), limit=10, )
+#fills_page = client.list_fills(limit=5, start_date=datetime(2023, 1, 20), end_date=datetime(2023, 1, 30))
 
-# order = client.get_order("5fffa9e8-73db-4a2c-8b3f-08509203ac04")
+order = client.get_order("5fffa9e8-73db-4a2c-8b3f-08509203ac04")
+a = 5
