@@ -7,6 +7,7 @@ import json
 from typing import List
 from enum import Enum
 from datetime import datetime
+from coinbaseadvanced.models.products import ProductsPage
 from coinbaseadvanced.models.accounts import AccountsPage, Account
 from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage
 
@@ -251,6 +252,30 @@ class CoinbaseAdvancedTradeAPIClient(object):
         order = Order.from_get_order_response(response)
         return order
 
+    # Products #
+
+    def list_products(self, limit: int = None, offset: int = None, product_type: PRODUCT_TYPE = None) -> ProductsPage:
+        request_path = '/api/v3/brokerage/products'
+        method = "GET"
+
+        query_params = ''
+
+        if limit is not None:
+            query_params = self._next_param(query_params) + 'limit='+str(limit)
+
+        if offset is not None:
+            query_params = self._next_param(query_params) + 'offset='+str(offset)
+
+        if product_type is not None:
+            query_params = self._next_param(query_params) + 'product_type=' + product_type.value
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+
+        page = ProductsPage.from_response(response)
+        return page
+
     # Helpers #
 
     def _build_request_headers(self, method, request_path, body=''):
@@ -333,5 +358,8 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 #orders_page = client.list_orders(start_date=datetime(2023, 1, 25), end_date=datetime(2023, 1, 30), limit=10, )
 #fills_page = client.list_fills(limit=5, start_date=datetime(2023, 1, 20), end_date=datetime(2023, 1, 30))
 
-order = client.get_order("5fffa9e8-73db-4a2c-8b3f-08509203ac04")
-a = 5
+#order = client.get_order("5fffa9e8-73db-4a2c-8b3f-08509203ac04")
+
+#product_page = client.list_products(limit=5)
+
+#a = 5
