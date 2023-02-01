@@ -7,7 +7,7 @@ import json
 from typing import List
 from enum import Enum
 from datetime import datetime
-from coinbaseadvanced.models.products import ProductsPage
+from coinbaseadvanced.models.products import ProductsPage, Product
 from coinbaseadvanced.models.accounts import AccountsPage, Account
 from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage
 
@@ -276,6 +276,17 @@ class CoinbaseAdvancedTradeAPIClient(object):
         page = ProductsPage.from_response(response)
         return page
 
+    def get_product(self, product_id: str) -> Product:
+        request_path = f"/api/v3/brokerage/products/{product_id}"
+        method = "GET"
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path, headers=headers)
+
+        product = Product.from_response(response)
+        return product
+
     # Helpers #
 
     def _build_request_headers(self, method, request_path, body=''):
@@ -362,4 +373,6 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 
 #product_page = client.list_products(limit=5)
 
-#a = 5
+product = client.get_product('BTC-USD')
+
+a = 5

@@ -38,13 +38,15 @@ class Product:
     base_display_symbol: str
     quote_display_symbol: str
 
+    error: dict
+
     def __init__(self, product_id: str, price: str, price_percentage_change_24h: str, volume_24h: int,
                  volume_percentage_change_24h: str, base_increment: str, quote_increment: str, quote_min_size: str,
                  quote_max_size: int, base_min_size: str, base_max_size: int, base_name: str, quote_name: str,
                  watched: bool, is_disabled: bool, new: bool, status: str, cancel_only: bool, limit_only: bool,
                  post_only: bool, trading_disabled: bool, auction_mode: bool, product_type: str, quote_currency_id: str,
                  base_currency_id: str, mid_market_price: str, fcm_trading_session_details: str, alias: str,
-                 alias_to: list, base_display_symbol: str, quote_display_symbol: str) -> None:
+                 alias_to: list, base_display_symbol: str, quote_display_symbol: str, error: dict = None) -> None:
         self.product_id = product_id
         self.price = price
         self.price_percentage_change_24h = price_percentage_change_24h
@@ -76,6 +78,21 @@ class Product:
         self.alias_to = alias_to
         self.base_display_symbol = base_display_symbol
         self.quote_display_symbol = quote_display_symbol
+
+        self.error = error
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'Product':
+
+        if not response.ok:
+            error_result = json.loads(response.text)
+            return cls(
+                None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, None, None, None, None, None, None, None, error=error_result)
+
+        result = json.loads(response.text)
+        product_dict = result
+        return cls(**product_dict)
 
 
 class ProductsPage:
