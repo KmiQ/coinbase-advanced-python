@@ -115,3 +115,41 @@ class ProductsPage:
 
         result = json.loads(response.text)
         return cls(**result)
+
+
+class Candle:
+    start: int
+    low: str
+    high: str
+    open: str
+    close: str
+    volume: int
+
+    def __init__(self, start: int, low: str, high: str, open: str, close: str, volume: int) -> None:
+        self.start = start
+        self.low = low
+        self.high = high
+        self.open = open
+        self.close = close
+        self.volume = volume
+
+
+class CandlesPage:
+    candles: List[Candle]
+
+    error: dict
+
+    def __init__(self, candles: List[Candle], error: dict = None) -> None:
+        self.candles = list(map(lambda x: Candle(**x), candles)) if candles is not None else None
+
+        self.error = error
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'CandlesPage':
+
+        if not response.ok:
+            error_result = json.loads(response.text)
+            return cls(None, error=error_result)
+
+        result = json.loads(response.text)
+        return cls(**result)

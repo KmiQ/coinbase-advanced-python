@@ -7,7 +7,7 @@ import json
 from typing import List
 from enum import Enum
 from datetime import datetime
-from coinbaseadvanced.models.products import ProductsPage, Product
+from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage
 from coinbaseadvanced.models.accounts import AccountsPage, Account
 from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage
 
@@ -33,6 +33,18 @@ class ORDER_TYPE(Enum):
 
 class PRODUCT_TYPE(Enum):
     SPOT = "SPOT"
+
+
+class GRANULARITY(Enum):
+    UNKNOWN = "UNKNOWN_GRANULARITY"
+    ONE_MINUTE = "ONE_MINUTE"
+    FIVE_MINUTE = "FIVE_MINUTE"
+    FIFTEEN_MINUTE = "FIFTEEN_MINUTE"
+    THIRTY_MINUTE = "THIRTY_MINUTE"
+    ONE_HOUR = "ONE_HOUR"
+    TWO_HOUR = "TWO_HOUR"
+    SIX_HOUR = "SIX_HOUR"
+    ONE_DAY = "ONE_DAY"
 
 
 class CoinbaseAdvancedTradeAPIClient(object):
@@ -287,6 +299,24 @@ class CoinbaseAdvancedTradeAPIClient(object):
         product = Product.from_response(response)
         return product
 
+    def get_product_candles(
+            self, product_id: str, start_date: datetime, end_date: datetime, granularity: GRANULARITY) -> CandlesPage:
+        request_path = f"/api/v3/brokerage/products/{product_id}/candles"
+        method = "GET"
+
+        query_params = ''
+
+        query_params = self._next_param(query_params) + 'start=' + str(int(start_date.timestamp()))
+        query_params = self._next_param(query_params) + 'end=' + str(int(end_date.timestamp()))
+        query_params = self._next_param(query_params) + 'granularity=' + granularity.value
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+
+        product_candles = CandlesPage.from_response(response)
+        return product_candles
+
     # Helpers #
 
     def _build_request_headers(self, method, request_path, body=''):
@@ -373,6 +403,11 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 
 #product_page = client.list_products(limit=5)
 
-product = client.get_product('BTC-USD')
+#product = client.get_product('BTC-USD')
+
+# candles = client.get_product_candles(
+#     "ALGO-USD", start_date=datetime(2023, 1, 1),
+#     end_date=datetime(2023, 1, 31),
+#     granularity=GRANULARITY.ONE_DAY)
 
 a = 5

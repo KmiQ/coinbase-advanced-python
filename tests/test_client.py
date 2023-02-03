@@ -2,8 +2,8 @@ import unittest
 from unittest import mock
 from datetime import datetime
 
-from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, SIDE, STOP_DIRECTION
-from tests.fixtures.fixtures import fixture_default_failure_response, fixture_get_account_success_response, fixture_list_accounts_success_response, fixture_create_limit_order_success_response, fixture_create_stop_limit_order_success_response, fixture_create_buy_market_order_success_response, fixture_create_sell_market_order_success_response, fixture_default_order_failure_response, fixture_cancel_orders_success_response, fixture_list_orders_success_response, fixture_list_fills_success_response, fixture_get_order_success_response, fixture_list_products_success_response, fixture_get_product_success_response
+from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, SIDE, STOP_DIRECTION, GRANULARITY
+from tests.fixtures.fixtures import fixture_default_failure_response, fixture_get_account_success_response, fixture_list_accounts_success_response, fixture_create_limit_order_success_response, fixture_create_stop_limit_order_success_response, fixture_create_buy_market_order_success_response, fixture_create_sell_market_order_success_response, fixture_default_order_failure_response, fixture_cancel_orders_success_response, fixture_list_orders_success_response, fixture_list_fills_success_response, fixture_get_order_success_response, fixture_list_products_success_response, fixture_get_product_success_response, fixture_get_product_candles_success_response
 
 
 class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
@@ -625,7 +625,6 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         # Check output
 
         self.assertIsNotNone(product)
-        self.assertIsNotNone(product)
         self.assertIsNotNone(product.price)
         self.assertIsNotNone(product.product_id)
         self.assertIsNotNone(product.status)
@@ -633,3 +632,49 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertIsNotNone(product.quote_name)
         self.assertIsNotNone(product.watched)
         self.assertIsNotNone(product.price_percentage_change_24h)
+
+    @mock.patch("coinbaseadvanced.client.requests.get")
+    def test_get_product_candles(self, mock_get):
+
+        mock_resp = fixture_get_product_candles_success_response()
+        mock_get.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        product_candles = client.get_product_candles(
+            "ALGO-USD", start_date=datetime(2023, 1, 1),
+            end_date=datetime(2023, 1, 31),
+            granularity=GRANULARITY.ONE_DAY)
+
+        # Check input
+
+        call_args = mock_get.call_args_list
+
+        for call in call_args:
+            args, kwargs = call
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/products/ALGO-USD/candles?start=1672549200&end=1675141200&granularity=ONE_DAY',
+                args)
+
+            headers = kwargs['headers']
+            self.assertIn('accept', headers)
+            self.assertIn('CB-ACCESS-KEY', headers)
+            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
+            self.assertIn('CB-ACCESS-SIGN', headers)
+
+        # Check output
+
+        self.assertIsNotNone(product_candles)
+
+        candles = product_candles.candles
+        self.assertEqual(len(candles), 30)
+
+        for candle in candles:
+            self.assertIsNotNone(candle)
+            self.assertIsNotNone(candle.start)
+            self.assertIsNotNone(candle.high)
+            self.assertIsNotNone(candle.low)
+            self.assertIsNotNone(candle.open)
+            self.assertIsNotNone(candle.close)
+            self.assertIsNotNone(candle.volume)
