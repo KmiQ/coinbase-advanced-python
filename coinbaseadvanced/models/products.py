@@ -153,3 +153,49 @@ class CandlesPage:
 
         result = json.loads(response.text)
         return cls(**result)
+
+
+class Trade:
+    trade_id: UUID
+    product_id: str
+    price: str
+    size: int
+    time: datetime
+    side: str
+    bid: str
+    ask: str
+
+    def __init__(self, trade_id: UUID, product_id: str, price: str, size: int, time: datetime, side: str, bid: str, ask: str) -> None:
+        self.trade_id = trade_id
+        self.product_id = product_id
+        self.price = price
+        self.size = size
+        self.time = time
+        self.side = side
+        self.bid = bid
+        self.ask = ask
+
+
+class TradesPage:
+    trades: List[Trade]
+    best_bid: str
+    best_ask: str
+
+    error: dict
+
+    def __init__(self, trades: List[Trade], best_bid: str, best_ask: str, error: dict = None) -> None:
+        self.trades = list(map(lambda x: Trade(**x), trades)) if trades is not None else None
+        self.best_bid = best_bid
+        self.best_ask = best_ask
+
+        self.error = error
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'TradesPage':
+
+        if not response.ok:
+            error_result = json.loads(response.text)
+            return cls(None, None, None, error=error_result)
+
+        result = json.loads(response.text)
+        return cls(**result)

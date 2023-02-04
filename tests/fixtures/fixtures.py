@@ -136,3 +136,19 @@ def fixture_get_product_candles_success_response() -> str:
         return fixtured_mock_response(
             ok=True,
             text=content)
+
+
+def fixture_get_trades_success_response() -> str:
+    with open('tests/fixtures/get_trades_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_get_transactions_summary_success_response() -> str:
+    with open('tests/fixtures/get_transactions_summary_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)

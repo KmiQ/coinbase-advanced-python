@@ -1,0 +1,1006 @@
+{
+    "trades": [
+        {
+            "trade_id": "495649151",
+            "product_id": "BTC-USD",
+            "price": "23457.39",
+            "size": "0.02890163",
+            "time": "2023-02-03T23:44:34.057642Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649150",
+            "product_id": "BTC-USD",
+            "price": "23457.37",
+            "size": "0.0008456",
+            "time": "2023-02-03T23:44:34.057642Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649149",
+            "product_id": "BTC-USD",
+            "price": "23457.37",
+            "size": "0.00027306",
+            "time": "2023-02-03T23:44:34.057642Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649148",
+            "product_id": "BTC-USD",
+            "price": "23457.36",
+            "size": "0.00125273",
+            "time": "2023-02-03T23:44:34.057642Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649147",
+            "product_id": "BTC-USD",
+            "price": "23457.36",
+            "size": "0.0005873",
+            "time": "2023-02-03T23:44:34.057642Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649146",
+            "product_id": "BTC-USD",
+            "price": "23457.1",
+            "size": "0.00521754",
+            "time": "2023-02-03T23:44:33.709074Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649145",
+            "product_id": "BTC-USD",
+            "price": "23457.36",
+            "size": "0.0004127",
+            "time": "2023-02-03T23:44:33.583913Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649144",
+            "product_id": "BTC-USD",
+            "price": "23457.37",
+            "size": "0.00124815",
+            "time": "2023-02-03T23:44:33.159226Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649143",
+            "product_id": "BTC-USD",
+            "price": "23457.37",
+            "size": "0.00077816",
+            "time": "2023-02-03T23:44:33.159226Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649142",
+            "product_id": "BTC-USD",
+            "price": "23457.37",
+            "size": "0.00022184",
+            "time": "2023-02-03T23:44:32.741770Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649141",
+            "product_id": "BTC-USD",
+            "price": "23457.4",
+            "size": "0.00062066",
+            "time": "2023-02-03T23:44:31.726797Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649140",
+            "product_id": "BTC-USD",
+            "price": "23456.49",
+            "size": "0.00101231",
+            "time": "2023-02-03T23:44:31.726797Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649139",
+            "product_id": "BTC-USD",
+            "price": "23456.49",
+            "size": "0.03834686",
+            "time": "2023-02-03T23:44:31.726797Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649138",
+            "product_id": "BTC-USD",
+            "price": "23456.48",
+            "size": "0.00121939",
+            "time": "2023-02-03T23:44:31.726797Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649137",
+            "product_id": "BTC-USD",
+            "price": "23456.48",
+            "size": "0.001",
+            "time": "2023-02-03T23:44:31.726797Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649136",
+            "product_id": "BTC-USD",
+            "price": "23456.49",
+            "size": "0.0308475",
+            "time": "2023-02-03T23:44:31.498317Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649135",
+            "product_id": "BTC-USD",
+            "price": "23456.37",
+            "size": "0.00111197",
+            "time": "2023-02-03T23:44:31.498317Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649134",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.0013471",
+            "time": "2023-02-03T23:44:31.498317Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649133",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.00012735",
+            "time": "2023-02-03T23:44:31.465967Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649132",
+            "product_id": "BTC-USD",
+            "price": "23456.35",
+            "size": "0.00941601",
+            "time": "2023-02-03T23:44:30.633053Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649131",
+            "product_id": "BTC-USD",
+            "price": "23456.35",
+            "size": "0.0117",
+            "time": "2023-02-03T23:44:30.633053Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649130",
+            "product_id": "BTC-USD",
+            "price": "23456.35",
+            "size": "0.00148981",
+            "time": "2023-02-03T23:44:30.633053Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649129",
+            "product_id": "BTC-USD",
+            "price": "23456.35",
+            "size": "0.00012429",
+            "time": "2023-02-03T23:44:29.958403Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649128",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.0000049",
+            "time": "2023-02-03T23:44:29.852161Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649127",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.00253219",
+            "time": "2023-02-03T23:44:29.364076Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649126",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.01217564",
+            "time": "2023-02-03T23:44:29.112336Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649125",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.00016922",
+            "time": "2023-02-03T23:44:28.788448Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649124",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.0049385",
+            "time": "2023-02-03T23:44:28.709070Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649123",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.00397709",
+            "time": "2023-02-03T23:44:28.693068Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649122",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.00119047",
+            "time": "2023-02-03T23:44:28.462748Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649121",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.00138793",
+            "time": "2023-02-03T23:44:28.462748Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649120",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.00229201",
+            "time": "2023-02-03T23:44:28.462748Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649119",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.00182362",
+            "time": "2023-02-03T23:44:27.788358Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649118",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.0263784",
+            "time": "2023-02-03T23:44:27.132309Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649117",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.00109771",
+            "time": "2023-02-03T23:44:24.253951Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649116",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.00005297",
+            "time": "2023-02-03T23:44:24.103710Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649115",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.0103924",
+            "time": "2023-02-03T23:44:23.744185Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649114",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.00175186",
+            "time": "2023-02-03T23:44:22.650757Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649113",
+            "product_id": "BTC-USD",
+            "price": "23456.36",
+            "size": "0.00021103",
+            "time": "2023-02-03T23:44:22.038272Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649112",
+            "product_id": "BTC-USD",
+            "price": "23456.49",
+            "size": "0.00389583",
+            "time": "2023-02-03T23:44:20.615080Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649111",
+            "product_id": "BTC-USD",
+            "price": "23456.35",
+            "size": "0.00045183",
+            "time": "2023-02-03T23:44:20.251231Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649110",
+            "product_id": "BTC-USD",
+            "price": "23456.49",
+            "size": "0.01217405",
+            "time": "2023-02-03T23:44:19.735205Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649109",
+            "product_id": "BTC-USD",
+            "price": "23456.35",
+            "size": "0.000016",
+            "time": "2023-02-03T23:44:19.150178Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649108",
+            "product_id": "BTC-USD",
+            "price": "23457.15",
+            "size": "0.00976744",
+            "time": "2023-02-03T23:44:18.829768Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649107",
+            "product_id": "BTC-USD",
+            "price": "23457.82",
+            "size": "0.00047801",
+            "time": "2023-02-03T23:44:17.459207Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649106",
+            "product_id": "BTC-USD",
+            "price": "23457.81",
+            "size": "0.01122199",
+            "time": "2023-02-03T23:44:17.459207Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649105",
+            "product_id": "BTC-USD",
+            "price": "23457.9",
+            "size": "0.0117",
+            "time": "2023-02-03T23:44:17.242336Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649104",
+            "product_id": "BTC-USD",
+            "price": "23457.9",
+            "size": "0.00230723",
+            "time": "2023-02-03T23:44:17.242336Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649103",
+            "product_id": "BTC-USD",
+            "price": "23457.91",
+            "size": "0.00004153",
+            "time": "2023-02-03T23:44:17.155779Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649102",
+            "product_id": "BTC-USD",
+            "price": "23457.91",
+            "size": "0.00034111",
+            "time": "2023-02-03T23:44:17.105105Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649101",
+            "product_id": "BTC-USD",
+            "price": "23457.91",
+            "size": "0.00451574",
+            "time": "2023-02-03T23:44:16.995105Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649100",
+            "product_id": "BTC-USD",
+            "price": "23457.91",
+            "size": "0.00034889",
+            "time": "2023-02-03T23:44:16.730029Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649099",
+            "product_id": "BTC-USD",
+            "price": "23457.91",
+            "size": "0.0003037",
+            "time": "2023-02-03T23:44:15.984983Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649098",
+            "product_id": "BTC-USD",
+            "price": "23457.91",
+            "size": "0.00409368",
+            "time": "2023-02-03T23:44:15.951216Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649097",
+            "product_id": "BTC-USD",
+            "price": "23458.32",
+            "size": "0.00063602",
+            "time": "2023-02-03T23:44:15.618912Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649096",
+            "product_id": "BTC-USD",
+            "price": "23458.32",
+            "size": "0.01844398",
+            "time": "2023-02-03T23:44:15.614629Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649095",
+            "product_id": "BTC-USD",
+            "price": "23458.32",
+            "size": "0.0009672",
+            "time": "2023-02-03T23:44:15.614629Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649094",
+            "product_id": "BTC-USD",
+            "price": "23458.32",
+            "size": "0.0000328",
+            "time": "2023-02-03T23:44:15.598708Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649093",
+            "product_id": "BTC-USD",
+            "price": "23457.9",
+            "size": "0.00005114",
+            "time": "2023-02-03T23:44:15.427455Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649092",
+            "product_id": "BTC-USD",
+            "price": "23460.46",
+            "size": "0.02122754",
+            "time": "2023-02-03T23:44:15.101647Z",
+            "side": "SELL",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649091",
+            "product_id": "BTC-USD",
+            "price": "23460.87",
+            "size": "0.00248826",
+            "time": "2023-02-03T23:44:15.058359Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649090",
+            "product_id": "BTC-USD",
+            "price": "23460.87",
+            "size": "0.00765925",
+            "time": "2023-02-03T23:44:15.058048Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649089",
+            "product_id": "BTC-USD",
+            "price": "23460.87",
+            "size": "0.00234075",
+            "time": "2023-02-03T23:44:15.058048Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649080",
+            "product_id": "BTC-USD",
+            "price": "23459.5",
+            "size": "0.0037583",
+            "time": "2023-02-03T23:44:14.065232Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649079",
+            "product_id": "BTC-USD",
+            "price": "23459.5",
+            "size": "0.00291536",
+            "time": "2023-02-03T23:44:14.065232Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649057",
+            "product_id": "BTC-USD",
+            "price": "23457.9",
+            "size": "0.00515477",
+            "time": "2023-02-03T23:44:11.918788Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649053",
+            "product_id": "BTC-USD",
+            "price": "23457.9",
+            "size": "0.00050483",
+            "time": "2023-02-03T23:44:09.414982Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649050",
+            "product_id": "BTC-USD",
+            "price": "23457.9",
+            "size": "0.00265",
+            "time": "2023-02-03T23:44:08.793315Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649049",
+            "product_id": "BTC-USD",
+            "price": "23457.9",
+            "size": "0.00003203",
+            "time": "2023-02-03T23:44:08.442669Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649048",
+            "product_id": "BTC-USD",
+            "price": "23458.79",
+            "size": "0.00414738",
+            "time": "2023-02-03T23:44:08.137929Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649047",
+            "product_id": "BTC-USD",
+            "price": "23459.81",
+            "size": "0.00134449",
+            "time": "2023-02-03T23:44:08.137929Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649046",
+            "product_id": "BTC-USD",
+            "price": "23459.81",
+            "size": "0.01015",
+            "time": "2023-02-03T23:44:08.137877Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649045",
+            "product_id": "BTC-USD",
+            "price": "23460.14",
+            "size": "0.0117",
+            "time": "2023-02-03T23:44:08.117906Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649044",
+            "product_id": "BTC-USD",
+            "price": "23460.14",
+            "size": "0.0066467",
+            "time": "2023-02-03T23:44:08.117906Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649043",
+            "product_id": "BTC-USD",
+            "price": "23460.14",
+            "size": "0.00244108",
+            "time": "2023-02-03T23:44:07.971787Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649040",
+            "product_id": "BTC-USD",
+            "price": "23460.14",
+            "size": "0.00091914",
+            "time": "2023-02-03T23:44:05.021900Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649039",
+            "product_id": "BTC-USD",
+            "price": "23460.14",
+            "size": "0.00046026",
+            "time": "2023-02-03T23:44:05.007324Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649031",
+            "product_id": "BTC-USD",
+            "price": "23460.14",
+            "size": "0.00123282",
+            "time": "2023-02-03T23:44:01.461744Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649025",
+            "product_id": "BTC-USD",
+            "price": "23460.2",
+            "size": "0.03122193",
+            "time": "2023-02-03T23:44:00.750925Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649024",
+            "product_id": "BTC-USD",
+            "price": "23460.2",
+            "size": "0.00224934",
+            "time": "2023-02-03T23:44:00.750925Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649015",
+            "product_id": "BTC-USD",
+            "price": "23459.81",
+            "size": "0.00020551",
+            "time": "2023-02-03T23:43:59.126353Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649014",
+            "product_id": "BTC-USD",
+            "price": "23459.95",
+            "size": "0.00121868",
+            "time": "2023-02-03T23:43:59.126353Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495649002",
+            "product_id": "BTC-USD",
+            "price": "23459.95",
+            "size": "0.00048155",
+            "time": "2023-02-03T23:43:56.431127Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648980",
+            "product_id": "BTC-USD",
+            "price": "23457.97",
+            "size": "0.00037351",
+            "time": "2023-02-03T23:43:51.120551Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648979",
+            "product_id": "BTC-USD",
+            "price": "23457.93",
+            "size": "0.01081812",
+            "time": "2023-02-03T23:43:50.789557Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648978",
+            "product_id": "BTC-USD",
+            "price": "23459.59",
+            "size": "0.00102089",
+            "time": "2023-02-03T23:43:50.789557Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648975",
+            "product_id": "BTC-USD",
+            "price": "23459.71",
+            "size": "0.0117",
+            "time": "2023-02-03T23:43:49.297848Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648974",
+            "product_id": "BTC-USD",
+            "price": "23459.72",
+            "size": "0.001",
+            "time": "2023-02-03T23:43:49.297848Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648971",
+            "product_id": "BTC-USD",
+            "price": "23459.8",
+            "size": "0.0117",
+            "time": "2023-02-03T23:43:48.754899Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648970",
+            "product_id": "BTC-USD",
+            "price": "23459.81",
+            "size": "0.001",
+            "time": "2023-02-03T23:43:48.754899Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648967",
+            "product_id": "BTC-USD",
+            "price": "23461.27",
+            "size": "0.0117",
+            "time": "2023-02-03T23:43:48.452646Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648966",
+            "product_id": "BTC-USD",
+            "price": "23461.42",
+            "size": "0.00001235",
+            "time": "2023-02-03T23:43:48.452646Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648965",
+            "product_id": "BTC-USD",
+            "price": "23461.42",
+            "size": "0.09234656",
+            "time": "2023-02-03T23:43:48.400495Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648964",
+            "product_id": "BTC-USD",
+            "price": "23461.46",
+            "size": "0.00000344",
+            "time": "2023-02-03T23:43:48.400495Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648963",
+            "product_id": "BTC-USD",
+            "price": "23461.46",
+            "size": "0.00104",
+            "time": "2023-02-03T23:43:48.396399Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648962",
+            "product_id": "BTC-USD",
+            "price": "23464.13",
+            "size": "0.0117",
+            "time": "2023-02-03T23:43:47.480390Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648960",
+            "product_id": "BTC-USD",
+            "price": "23464.75",
+            "size": "0.0117",
+            "time": "2023-02-03T23:43:47.467977Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648959",
+            "product_id": "BTC-USD",
+            "price": "23465.12",
+            "size": "0.0117",
+            "time": "2023-02-03T23:43:47.212157Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648958",
+            "product_id": "BTC-USD",
+            "price": "23465.68",
+            "size": "0.0117",
+            "time": "2023-02-03T23:43:47.210857Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        },
+        {
+            "trade_id": "495648957",
+            "product_id": "BTC-USD",
+            "price": "23465.94",
+            "size": "0.00149062",
+            "time": "2023-02-03T23:43:47.210857Z",
+            "side": "BUY",
+            "bid": "",
+            "ask": ""
+        }
+    ],
+    "best_bid": "23457.25",
+    "best_ask": "23457.38"
+}

@@ -33,7 +33,7 @@ class Account:
     def __init__(
             self, uuid: UUID, name: str, currency: str, available_balance: dict, default: bool,
         active: bool, created_at: datetime, updated_at: datetime, deleted_at: datetime, type: str, ready: bool,
-            hold: AvailableBalance,  error=None) -> None:
+            hold: dict,  error=None) -> None:
         self.uuid = uuid
         self.name = name
         self.currency = currency
@@ -45,7 +45,7 @@ class Account:
         self.deleted_at = deleted_at
         self.type = type
         self.ready = ready
-        self.hold = hold
+        self.hold = AvailableBalance(**hold) if hold is not None else None
 
         self.error = error
 

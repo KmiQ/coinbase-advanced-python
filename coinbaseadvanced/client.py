@@ -7,7 +7,8 @@ import json
 from typing import List
 from enum import Enum
 from datetime import datetime
-from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage
+from coinbaseadvanced.models.fees import TransactionsSummary
+from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage, TradesPage
 from coinbaseadvanced.models.accounts import AccountsPage, Account
 from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage
 
@@ -317,6 +318,50 @@ class CoinbaseAdvancedTradeAPIClient(object):
         product_candles = CandlesPage.from_response(response)
         return product_candles
 
+    def get_trades(
+            self, product_id: str, limit: int) -> TradesPage:
+        request_path = f"/api/v3/brokerage/products/{product_id}/ticker"
+        method = "GET"
+
+        query_params = ''
+
+        query_params = self._next_param(query_params) + 'limit=' + str(limit)
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+
+        trades_page = TradesPage.from_response(response)
+        return trades_page
+
+    # Fees #
+
+    def get_transactions_summary(self, start_date: datetime = None, end_date: datetime = None,
+                                 user_native_currency: str = "USD", product_type: PRODUCT_TYPE = None):
+        request_path = '/api/v3/brokerage/transaction_summary'
+        method = "GET"
+
+        query_params = ''
+
+        if start_date is not None:
+            query_params = self._next_param(query_params) + 'start_date=' + start_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        if end_date is not None:
+            query_params = self._next_param(query_params) + 'end_date=' + end_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        if user_native_currency is not None:
+            query_params = self._next_param(query_params) + 'user_native_currency='+user_native_currency
+
+        if product_type is not None:
+            query_params = self._next_param(query_params) + 'product_type='+product_type.value
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+
+        page = TransactionsSummary.from_response(response)
+        return page
+
     # Helpers #
 
     def _build_request_headers(self, method, request_path, body=''):
@@ -409,5 +454,9 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 #     "ALGO-USD", start_date=datetime(2023, 1, 1),
 #     end_date=datetime(2023, 1, 31),
 #     granularity=GRANULARITY.ONE_DAY)
+
+#trades = client.get_trades("BTC-USD", limit=100)
+
+#transactions_summary = client.get_transactions_summary(datetime(2023, 1, 1), datetime(2023, 1, 31))
 
 a = 5
