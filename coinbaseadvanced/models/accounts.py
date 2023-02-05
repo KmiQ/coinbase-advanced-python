@@ -1,3 +1,7 @@
+"""
+Object models for account related endpoints args and response.
+"""
+
 import json
 from uuid import UUID
 from datetime import datetime
@@ -6,6 +10,10 @@ import requests
 
 
 class AvailableBalance:
+    """
+    Available Balance object.
+    """
+
     value: str
     currency: str
 
@@ -15,6 +23,10 @@ class AvailableBalance:
 
 
 class Account:
+    """
+    Object representing an account.
+    """
+
     uuid: UUID
     name: str
     currency: str
@@ -31,13 +43,14 @@ class Account:
     error: dict
 
     def __init__(
-            self, uuid: UUID, name: str, currency: str, available_balance: dict, default: bool,
-        active: bool, created_at: datetime, updated_at: datetime, deleted_at: datetime, type: str, ready: bool,
-            hold: dict,  error=None) -> None:
+        self, uuid: UUID, name: str, currency: str, available_balance: dict, default: bool,
+            active: bool, created_at: datetime, updated_at: datetime, deleted_at: datetime,
+            type: str, ready: bool, hold: dict,  error=None) -> None:
         self.uuid = uuid
         self.name = name
         self.currency = currency
-        self.available_balance = AvailableBalance(**available_balance) if available_balance is not None else None
+        self.available_balance = AvailableBalance(**available_balance) \
+            if available_balance is not None else None
         self.default = default
         self.active = active
         self.created_at = created_at
@@ -51,10 +64,14 @@ class Account:
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'Account':
+        """
+        Factory method.
+        """
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(None, None, None, None, None, None, None, None, None, None, None, None, error=error_result)
+            return cls(None, None, None, None, None, None,
+                       None, None, None, None, None, None, error=error_result)
 
         result = json.loads(response.text)
         account_dict = result['account']
@@ -62,6 +79,10 @@ class Account:
 
 
 class AccountsPage:
+    """
+    Page of accounts.
+    """
+
     accounts: List[Account]
     has_next: bool
     cursor: str
@@ -76,7 +97,8 @@ class AccountsPage:
                  size: int,
                  error=None) -> None:
 
-        self.accounts = list(map(lambda x: Account(**x), accounts)) if accounts is not None else None
+        self.accounts = list(map(lambda x: Account(**x), accounts))\
+            if accounts is not None else None
 
         self.has_next = has_next
         self.cursor = cursor
@@ -86,6 +108,9 @@ class AccountsPage:
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'AccountsPage':
+        """
+        Factory Method.
+        """
 
         if not response.ok:
             error_result = json.loads(response.text)

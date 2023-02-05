@@ -1,12 +1,36 @@
+"""
+CoinbaseAdvancedTradeAPIClient unit tests.
+"""
+
 import unittest
 from unittest import mock
 from datetime import datetime
 
-from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, SIDE, STOP_DIRECTION, GRANULARITY
-from tests.fixtures.fixtures import fixture_default_failure_response, fixture_get_account_success_response, fixture_list_accounts_success_response, fixture_create_limit_order_success_response, fixture_create_stop_limit_order_success_response, fixture_create_buy_market_order_success_response, fixture_create_sell_market_order_success_response, fixture_default_order_failure_response, fixture_cancel_orders_success_response, fixture_list_orders_success_response, fixture_list_fills_success_response, fixture_get_order_success_response, fixture_list_products_success_response, fixture_get_product_success_response, fixture_get_product_candles_success_response, fixture_get_trades_success_response, fixture_get_transactions_summary_success_response
+from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, Side, StopDirection, Granularity
+from tests.fixtures.fixtures import \
+    fixture_default_failure_response, \
+    fixture_get_account_success_response,\
+    fixture_list_accounts_success_response,\
+    fixture_create_limit_order_success_response, \
+    fixture_create_stop_limit_order_success_response, \
+    fixture_create_buy_market_order_success_response, \
+    fixture_create_sell_market_order_success_response,\
+    fixture_default_order_failure_response, \
+    fixture_cancel_orders_success_response,\
+    fixture_list_orders_success_response,\
+    fixture_list_fills_success_response,\
+    fixture_get_order_success_response, \
+    fixture_list_products_success_response,\
+    fixture_get_product_success_response, \
+    fixture_get_product_candles_success_response, \
+    fixture_get_trades_success_response, \
+    fixture_get_transactions_summary_success_response
 
 
 class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
+    """
+    Unit tests for CoinbaseAdvancedTradeAPIClient.
+    """
 
     def test_client_creation_should_pass(self):
         client = CoinbaseAdvancedTradeAPIClient(
@@ -23,7 +47,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        account = client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
+        account = client.get_account('b04445c9853222')
 
         # Check input
 
@@ -31,7 +55,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
 
         for call in call_args:
             args, kwargs = call
-            self.assertIn('https://api.coinbase.com/api/v3/brokerage/accounts/b044449a-38a3-5b8f-a506-4a65c9853222', args)
+            self.assertIn('https://api.coinbase.com/api/v3/brokerage/accounts/b04445c9853222', args)
 
             headers = kwargs['headers']
             self.assertIn('accept', headers)
@@ -156,7 +180,11 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='lknalksdj89asdkl', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        order_created = client.create_limit_order("lknalksdj89asdkl", "ALGO-USD", SIDE.BUY, ".19", 5)
+        order_created = client.create_limit_order("lknalksdj89asdkl",
+                                                  "ALGO-USD",
+                                                  Side.BUY,
+                                                  ".19",
+                                                  5)
 
         # Check input
 
@@ -204,15 +232,25 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='lknalksdj89asdkl', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        order_created = client.create_stop_limit_order("mklansdu8wehr", "ALGO-USD", SIDE.BUY, .18,
-                                                       STOP_DIRECTION.DOWN, .16, 7, datetime(2023, 5, 9, 15))
+        order_created = client.create_stop_limit_order(
+            "mklansdu8wehr",
+            "ALGO-USD",
+            Side.BUY,
+            .18,
+            StopDirection.DOWN,
+            .16,
+            7,
+            datetime(2023, 5, 9, 15))
 
         # Check input
 
         call_args = mock_post.call_args_list
 
-        order_config = {'stop_limit_stop_limit_gtd': {'stop_price': '0.18', 'limit_price': '0.16',
-                                                      'base_size': '7', 'stop_direction': 'STOP_DIRECTION_STOP_DOWN', 'end_time': '2023-05-09T15:00:00Z'}}
+        order_config = {'stop_limit_stop_limit_gtd': {'stop_price': '0.18',
+                                                      'limit_price': '0.16',
+                                                      'base_size': '7',
+                                                      'stop_direction': 'STOP_DIRECTION_STOP_DOWN',
+                                                      'end_time': '2023-05-09T15:00:00Z'}}
 
         for call in call_args:
             args, kwargs = call
@@ -353,7 +391,11 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        order_created = client.create_limit_order("nlksdbnfgjd8y9mn,m234", "ALGO-USD", SIDE.BUY, ".19", 10000)
+        order_created = client.create_limit_order("nlksdbnfgjd8y9mn,m234",
+                                                  "ALGO-USD",
+                                                  Side.BUY,
+                                                  ".19",
+                                                  10000)
 
         # Check output
 
@@ -421,7 +463,9 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        orders_page = client.list_orders(start_date=datetime(2023, 1, 25), end_date=datetime(2023, 1, 30), limit=10)
+        orders_page = client.list_orders(start_date=datetime(2023, 1, 25),
+                                         end_date=datetime(2023, 1, 30),
+                                         limit=10)
 
         # Check input
 
@@ -469,7 +513,9 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        fills_page = client.list_fills(limit=5, start_date=datetime(2023, 1, 20), end_date=datetime(2023, 1, 30))
+        fills_page = client.list_fills(limit=5,
+                                       start_date=datetime(2023, 1, 20),
+                                       end_date=datetime(2023, 1, 30))
 
         # Check input
 
@@ -640,7 +686,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         product_candles = client.get_product_candles(
             "ALGO-USD", start_date=datetime(2023, 1, 1),
             end_date=datetime(2023, 1, 31),
-            granularity=GRANULARITY.ONE_DAY)
+            granularity=Granularity.ONE_DAY)
 
         # Check input
 
@@ -724,7 +770,9 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        transactions_summary = client.get_transactions_summary(datetime(2023, 1, 1), datetime(2023, 1, 31))
+        transactions_summary = client.get_transactions_summary(datetime(2023, 1, 1),
+                                                               datetime(2023, 1, 31)
+                                                               )
 
         # Check input
 

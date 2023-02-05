@@ -1,3 +1,7 @@
+"""
+API Client for Coinbase Advanced Trade endpoints.
+"""
+
 from typing import List
 from datetime import datetime
 
@@ -8,16 +12,27 @@ import json
 import requests
 
 from coinbaseadvanced.models.fees import TransactionsSummary
-from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage, TradesPage, PRODUCT_TYPE, GRANULARITY
+from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage,\
+    TradesPage, ProductType, Granularity
 from coinbaseadvanced.models.accounts import AccountsPage, Account
-from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage, SIDE, STOP_DIRECTION, ORDER_TYPE
+from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation,\
+    FillsPage, Side, StopDirection, OrderType
 
 
 class CoinbaseAdvancedTradeAPIClient(object):
-    def __init__(self, api_key: str, secret_key: str, base_url: str = 'https://api.coinbase.com') -> None:
+    """
+    API Client for Coinbase Advanced Trade endpoints.
+    """
+
+    def __init__(self,
+                 api_key: str,
+                 secret_key: str,
+                 base_url: str = 'https://api.coinbase.com',
+                 timeout: int = 10) -> None:
         self._base_url = base_url
         self._api_key = api_key
         self._secret_key = secret_key
+        self.timeout = timeout
 
     # Accounts #
 
@@ -31,7 +46,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
                with pagination and the cursor value in the response can be passed
                as cursor parameter in the subsequent request.
 
-        - cursor: Cursor used for pagination. When provided, the response returns responses after this cursor.
+        - cursor: Cursor used for pagination. When provided, the response returns
+                  responses after this cursor.
 
         """
 
@@ -44,7 +60,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
+        response = requests.get(self._base_url+request_path+query_params,
+                                headers=headers,
+                                timeout=self.timeout)
 
         page = AccountsPage.from_response(response)
         return page
@@ -63,14 +81,17 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path, headers=headers, timeout=10)
+        response = requests.get(self._base_url+request_path, headers=headers, timeout=self.timeout)
 
         account = Account.from_response(response)
         return account
 
     # Orders #
 
-    def create_buy_market_order(self, client_order_id: str, product_id: str, quote_size: float) -> Order:
+    def create_buy_market_order(self,
+                                client_order_id: str,
+                                product_id: str,
+                                quote_size: float) -> Order:
         """
         Create a buy type market order.
 
@@ -86,9 +107,12 @@ class CoinbaseAdvancedTradeAPIClient(object):
             }
         }
 
-        return self.create_order(client_order_id, product_id, SIDE.BUY, order_configuration)
+        return self.create_order(client_order_id, product_id, Side.BUY, order_configuration)
 
-    def create_sell_market_order(self, client_order_id: str, product_id: str, base_size: float) -> Order:
+    def create_sell_market_order(self,
+                                 client_order_id: str,
+                                 product_id: str,
+                                 base_size: float) -> Order:
         """
         Create a sell type market order.
 
@@ -104,11 +128,17 @@ class CoinbaseAdvancedTradeAPIClient(object):
             }
         }
 
-        return self.create_order(client_order_id, product_id, SIDE.SELL, order_configuration)
+        return self.create_order(client_order_id, product_id, Side.SELL, order_configuration)
 
     def create_limit_order(
-            self, client_order_id: str, product_id: str, side: SIDE, limit_price: float, base_size: float,
-            cancel_time: datetime = None, post_only: bool = None) -> Order:
+            self,
+            client_order_id: str,
+            product_id: str,
+            side: Side,
+            limit_price: float,
+            base_size: float,
+            cancel_time: datetime = None,
+            post_only: bool = None) -> Order:
         """
         Create a limit order.
 
@@ -141,8 +171,15 @@ class CoinbaseAdvancedTradeAPIClient(object):
         return self.create_order(client_order_id, product_id, side, order_configuration)
 
     def create_stop_limit_order(
-            self, client_order_id: str, product_id: str, side: SIDE, stop_price: float, stop_direction: STOP_DIRECTION,
-            limit_price: float, base_size: float, cancel_time: datetime = None) -> Order:
+            self,
+            client_order_id: str,
+            product_id: str,
+            side: Side,
+            stop_price: float,
+            stop_direction: StopDirection,
+            limit_price: float,
+            base_size: float,
+            cancel_time: datetime = None) -> Order:
         """
         Create a limit order.
 
@@ -181,7 +218,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def create_order(self, client_order_id: str,
                      product_id: str,
-                     side: SIDE,
+                     side: Side,
                      order_configuration: dict) -> Order:
         """
         Create an order with a specified product_id (asset-pair), side (buy/sell), etc.
@@ -203,7 +240,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
         }
 
         headers = self._build_request_headers(method, request_path, json.dumps(payload))
-        response = requests.post(self._base_url+request_path, json=payload, headers=headers, timeout=10)
+        response = requests.post(self._base_url+request_path,
+                                 json=payload, headers=headers,
+                                 timeout=self.timeout)
 
         order = Order.from_create_order_response(response)
         return order
@@ -224,15 +263,26 @@ class CoinbaseAdvancedTradeAPIClient(object):
         }
 
         headers = self._build_request_headers(method, request_path, json.dumps(payload))
-        response = requests.post(self._base_url+request_path, json=payload, headers=headers, timeout=10)
+        response = requests.post(self._base_url+request_path,
+                                 json=payload,
+                                 headers=headers,
+                                 timeout=self.timeout)
 
         cancellation_result = OrderBatchCancellation.from_response(response)
         return cancellation_result
 
     def list_orders(
-            self, product_id: str = None, order_status: List[str] = None, limit: int = 999, start_date: datetime = None,
-            end_date: datetime = None, user_native_currency: str = None, order_type: ORDER_TYPE = None, order_side: SIDE = None,
-            cursor: str = None, product_type: PRODUCT_TYPE = None) -> OrdersPage:
+            self,
+            product_id: str = None,
+            order_status: List[str] = None,
+            limit: int = 999,
+            start_date: datetime = None,
+            end_date: datetime = None,
+            user_native_currency: str = None,
+            order_type: OrderType = None,
+            order_side: Side = None,
+            cursor: str = None,
+            product_type: ProductType = None) -> OrdersPage:
         """
         Get a list of orders filtered by optional query parameters (product_id, order_status, etc).
 
@@ -278,13 +328,16 @@ class CoinbaseAdvancedTradeAPIClient(object):
             query_params = self._next_param(query_params) + 'limit='+str(limit)
 
         if start_date is not None:
-            query_params = self._next_param(query_params) + 'start_date=' + start_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+            query_params = self._next_param(query_params) \
+                + 'start_date=' + start_date.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         if end_date is not None:
-            query_params = self._next_param(query_params) + 'end_date=' + end_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+            query_params = self._next_param(query_params) \
+                + 'end_date=' + end_date.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         if user_native_currency is not None:
-            query_params = self._next_param(query_params) + 'user_native_currency=' + user_native_currency
+            query_params = self._next_param(query_params) \
+                + 'user_native_currency=' + user_native_currency
 
         if order_type is not None:
             query_params = self._next_param(query_params) + 'order_type=' + order_type.value
@@ -300,7 +353,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
+        response = requests.get(self._base_url+request_path+query_params,
+                                headers=headers,
+                                timeout=self.timeout)
 
         page = OrdersPage.from_response(response)
         return page
@@ -347,17 +402,21 @@ class CoinbaseAdvancedTradeAPIClient(object):
             query_params = self._next_param(query_params) + 'limit='+str(limit)
 
         if start_date is not None:
-            query_params = self._next_param(query_params) + 'start_date=' + start_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+            query_params = self._next_param(query_params) \
+                + 'start_date=' + start_date.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         if end_date is not None:
-            query_params = self._next_param(query_params) + 'end_date=' + end_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+            query_params = self._next_param(query_params) \
+                + 'end_date=' + end_date.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         if cursor is not None:
             query_params = self._next_param(query_params) + 'cursor=' + cursor
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
+        response = requests.get(self._base_url+request_path+query_params,
+                                headers=headers,
+                                timeout=self.timeout)
 
         page = FillsPage.from_response(response)
         return page
@@ -375,7 +434,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path, headers=headers, timeout=10)
+        response = requests.get(self._base_url+request_path, headers=headers, timeout=self.timeout)
 
         order = Order.from_get_order_response(response)
         return order
@@ -385,7 +444,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
     def list_products(self,
                       limit: int = None,
                       offset: int = None,
-                      product_type: PRODUCT_TYPE = None) -> ProductsPage:
+                      product_type: ProductType = None) -> ProductsPage:
         """
         Get a list of the available currency pairs for trading.
 
@@ -411,7 +470,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
+        response = requests.get(self._base_url+request_path+query_params,
+                                headers=headers,
+                                timeout=self.timeout)
 
         page = ProductsPage.from_response(response)
         return page
@@ -429,7 +490,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path, headers=headers, timeout=10)
+        response = requests.get(self._base_url+request_path, headers=headers, timeout=self.timeout)
 
         product = Product.from_response(response)
         return product
@@ -439,7 +500,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
             product_id: str,
             start_date: datetime,
             end_date: datetime,
-            granularity: GRANULARITY) -> CandlesPage:
+            granularity: Granularity) -> CandlesPage:
         """
         Get rates for a single product by product ID, grouped in buckets.
 
@@ -461,7 +522,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
+        response = requests.get(self._base_url+request_path+query_params,
+                                headers=headers,
+                                timeout=self.timeout)
 
         product_candles = CandlesPage.from_response(response)
         return product_candles
@@ -486,7 +549,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
+        response = requests.get(self._base_url+request_path+query_params,
+                                headers=headers,
+                                timeout=self.timeout)
 
         trades_page = TradesPage.from_response(response)
         return trades_page
@@ -497,7 +562,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                  start_date: datetime = None,
                                  end_date: datetime = None,
                                  user_native_currency: str = "USD",
-                                 product_type: PRODUCT_TYPE = None):
+                                 product_type: ProductType = None):
         """
         Get a summary of transactions with fee tiers, total volume, and fees.
         """
@@ -508,20 +573,25 @@ class CoinbaseAdvancedTradeAPIClient(object):
         query_params = ''
 
         if start_date is not None:
-            query_params = self._next_param(query_params) + 'start_date=' + start_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+            query_params = self._next_param(query_params) \
+                + 'start_date=' + start_date.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         if end_date is not None:
-            query_params = self._next_param(query_params) + 'end_date=' + end_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+            query_params = self._next_param(query_params) \
+                + 'end_date=' + end_date.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         if user_native_currency is not None:
-            query_params = self._next_param(query_params) + 'user_native_currency='+user_native_currency
+            query_params = self._next_param(query_params) \
+                + 'user_native_currency='+user_native_currency
 
         if product_type is not None:
             query_params = self._next_param(query_params) + 'product_type='+product_type.value
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
+        response = requests.get(self._base_url+request_path+query_params,
+                                headers=headers,
+                                timeout=self.timeout)
 
         page = TransactionsSummary.from_response(response)
         return page
