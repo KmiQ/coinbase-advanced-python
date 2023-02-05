@@ -2,7 +2,7 @@ import unittest
 from unittest import mock
 from datetime import datetime
 
-from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, Side, StopDirection, GRANULARITY
+from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, Side, StopDirection, Granularity
 from tests.fixtures.fixtures import fixture_default_failure_response, fixture_get_account_success_response, fixture_list_accounts_success_response, fixture_create_limit_order_success_response, fixture_create_stop_limit_order_success_response, fixture_create_buy_market_order_success_response, fixture_create_sell_market_order_success_response, fixture_default_order_failure_response, fixture_cancel_orders_success_response, fixture_list_orders_success_response, fixture_list_fills_success_response, fixture_get_order_success_response, fixture_list_products_success_response, fixture_get_product_success_response, fixture_get_product_candles_success_response, fixture_get_trades_success_response, fixture_get_transactions_summary_success_response
 
 
@@ -640,7 +640,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         product_candles = client.get_product_candles(
             "ALGO-USD", start_date=datetime(2023, 1, 1),
             end_date=datetime(2023, 1, 31),
-            granularity=GRANULARITY.ONE_DAY)
+            granularity=Granularity.ONE_DAY)
 
         # Check input
 

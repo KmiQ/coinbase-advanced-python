@@ -1,3 +1,7 @@
+"""
+Object models for products related endpoints args and response.
+"""
+
 from uuid import UUID
 from datetime import datetime
 from typing import List
@@ -7,11 +11,19 @@ import json
 import requests
 
 
-class PRODUCT_TYPE(Enum):
+class ProductType(Enum):
+    """
+    Enum representing different product types.
+    """
+
     SPOT = "SPOT"
 
 
-class GRANULARITY(Enum):
+class Granularity(Enum):
+    """
+    Enum representing time range for product candles.
+    """
+
     UNKNOWN = "UNKNOWN_GRANULARITY"
     ONE_MINUTE = "ONE_MINUTE"
     FIVE_MINUTE = "FIVE_MINUTE"
@@ -24,6 +36,10 @@ class GRANULARITY(Enum):
 
 
 class Product:
+    """
+    Object representing a product.
+    """
+
     product_id: str
     price: str
     price_percentage_change_24h: str
@@ -58,13 +74,39 @@ class Product:
 
     error: dict
 
-    def __init__(self, product_id: str, price: str, price_percentage_change_24h: str, volume_24h: int,
-                 volume_percentage_change_24h: str, base_increment: str, quote_increment: str, quote_min_size: str,
-                 quote_max_size: int, base_min_size: str, base_max_size: int, base_name: str, quote_name: str,
-                 watched: bool, is_disabled: bool, new: bool, status: str, cancel_only: bool, limit_only: bool,
-                 post_only: bool, trading_disabled: bool, auction_mode: bool, product_type: str, quote_currency_id: str,
-                 base_currency_id: str, mid_market_price: str, fcm_trading_session_details: str, alias: str,
-                 alias_to: list, base_display_symbol: str, quote_display_symbol: str, error: dict = None) -> None:
+    def __init__(self,
+                 product_id: str,
+                 price: str,
+                 price_percentage_change_24h: str,
+                 volume_24h: int,
+                 volume_percentage_change_24h: str,
+                 base_increment: str,
+                 quote_increment: str,
+                 quote_min_size: str,
+                 quote_max_size: int,
+                 base_min_size: str,
+                 base_max_size: int,
+                 base_name: str,
+                 quote_name: str,
+                 watched: bool,
+                 is_disabled: bool,
+                 new: bool,
+                 status: str,
+                 cancel_only: bool,
+                 limit_only: bool,
+                 post_only: bool,
+                 trading_disabled: bool,
+                 auction_mode: bool,
+                 product_type: str,
+                 quote_currency_id: str,
+                 base_currency_id: str,
+                 mid_market_price: str,
+                 fcm_trading_session_details: str,
+                 alias: str,
+                 alias_to: list,
+                 base_display_symbol: str,
+                 quote_display_symbol: str,
+                 error: dict = None) -> None:
         self.product_id = product_id
         self.price = price
         self.price_percentage_change_24h = price_percentage_change_24h
@@ -101,12 +143,17 @@ class Product:
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'Product':
+        """
+        Factory Method.
+        """
 
         if not response.ok:
             error_result = json.loads(response.text)
             return cls(
-                None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None, None, None, None, None, None, None, None, error=error_result)
+                None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, None, None,
+                None, None, None, None, error=error_result)
 
         result = json.loads(response.text)
         product_dict = result
@@ -114,18 +161,28 @@ class Product:
 
 
 class ProductsPage:
+    """
+    Products Page.
+    """
+
     products: List[Product]
     num_products: int
 
     error: dict
 
-    def __init__(self, products: List[Product], num_products: int, error=None) -> None:
-        self.products = list(map(lambda x: Product(**x), products)) if products is not None else None
+    def __init__(self, products: List[Product], num_products: int, error: dict = None) -> None:
+        self.products = list(map(lambda x: Product(**x), products)) \
+            if products is not None else None
 
         self.num_products = num_products
 
+        self.error = error
+
     @classmethod
     def from_response(cls, response: requests.Response) -> 'ProductsPage':
+        """
+        Factory Method.
+        """
 
         if not response.ok:
             error_result = json.loads(response.text)
@@ -136,6 +193,10 @@ class ProductsPage:
 
 
 class Candle:
+    """
+    Candle object.
+    """
+
     start: int
     low: str
     high: str
@@ -153,6 +214,10 @@ class Candle:
 
 
 class CandlesPage:
+    """
+    Page of product candles.
+    """
+
     candles: List[Candle]
 
     error: dict
@@ -164,6 +229,9 @@ class CandlesPage:
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'CandlesPage':
+        """
+        Factory Method.
+        """
 
         if not response.ok:
             error_result = json.loads(response.text)
@@ -174,6 +242,10 @@ class CandlesPage:
 
 
 class Trade:
+    """
+    Trade object data.
+    """
+
     trade_id: UUID
     product_id: str
     price: str
@@ -183,7 +255,15 @@ class Trade:
     bid: str
     ask: str
 
-    def __init__(self, trade_id: UUID, product_id: str, price: str, size: int, time: datetime, side: str, bid: str, ask: str) -> None:
+    def __init__(self,
+                 trade_id: UUID,
+                 product_id: str,
+                 price: str,
+                 size: int,
+                 time: datetime,
+                 side: str,
+                 bid: str,
+                 ask: str) -> None:
         self.trade_id = trade_id
         self.product_id = product_id
         self.price = price
@@ -195,13 +275,21 @@ class Trade:
 
 
 class TradesPage:
+    """
+    Page of trades.
+    """
+
     trades: List[Trade]
     best_bid: str
     best_ask: str
 
     error: dict
 
-    def __init__(self, trades: List[Trade], best_bid: str, best_ask: str, error: dict = None) -> None:
+    def __init__(self,
+                 trades: List[Trade],
+                 best_bid: str,
+                 best_ask: str,
+                 error: dict = None) -> None:
         self.trades = list(map(lambda x: Trade(**x), trades)) if trades is not None else None
         self.best_bid = best_bid
         self.best_ask = best_ask
@@ -210,6 +298,9 @@ class TradesPage:
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'TradesPage':
+        """
+        Factory Method.
+        """
 
         if not response.ok:
             error_result = json.loads(response.text)

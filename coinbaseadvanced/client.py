@@ -13,7 +13,7 @@ import requests
 
 from coinbaseadvanced.models.fees import TransactionsSummary
 from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage,\
-    TradesPage, PRODUCT_TYPE, GRANULARITY
+    TradesPage, ProductType, Granularity
 from coinbaseadvanced.models.accounts import AccountsPage, Account
 from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation,\
     FillsPage, Side, StopDirection, OrderType
@@ -282,7 +282,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
             order_type: OrderType = None,
             order_side: Side = None,
             cursor: str = None,
-            product_type: PRODUCT_TYPE = None) -> OrdersPage:
+            product_type: ProductType = None) -> OrdersPage:
         """
         Get a list of orders filtered by optional query parameters (product_id, order_status, etc).
 
@@ -444,7 +444,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
     def list_products(self,
                       limit: int = None,
                       offset: int = None,
-                      product_type: PRODUCT_TYPE = None) -> ProductsPage:
+                      product_type: ProductType = None) -> ProductsPage:
         """
         Get a list of the available currency pairs for trading.
 
@@ -500,7 +500,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
             product_id: str,
             start_date: datetime,
             end_date: datetime,
-            granularity: GRANULARITY) -> CandlesPage:
+            granularity: Granularity) -> CandlesPage:
         """
         Get rates for a single product by product ID, grouped in buckets.
 
@@ -562,7 +562,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                  start_date: datetime = None,
                                  end_date: datetime = None,
                                  user_native_currency: str = "USD",
-                                 product_type: PRODUCT_TYPE = None):
+                                 product_type: ProductType = None):
         """
         Get a summary of transactions with fee tiers, total volume, and fees.
         """

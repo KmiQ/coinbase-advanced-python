@@ -1,15 +1,28 @@
+"""
+Object models for fees related endpoints args and response.
+"""
+
 import json
 import requests
 
 
 class FeeTier:
+    """
+    Fee Tier object.
+    """
+
     pricing_tier: str
     usd_from: int
     usd_to: str
     taker_fee_rate: str
     maker_fee_rate: str
 
-    def __init__(self, pricing_tier: str, usd_from: int, usd_to: str, taker_fee_rate: str, maker_fee_rate: str) -> None:
+    def __init__(self,
+                 pricing_tier: str,
+                 usd_from: int,
+                 usd_to: str,
+                 taker_fee_rate: str,
+                 maker_fee_rate: str) -> None:
         self.pricing_tier = pricing_tier
         self.usd_from = usd_from
         self.usd_to = usd_to
@@ -18,6 +31,10 @@ class FeeTier:
 
 
 class GoodsAndServicesTax:
+    """
+    Object representing Goods and Services Tax data.
+    """
+
     rate: str
     type: str
 
@@ -27,6 +44,10 @@ class GoodsAndServicesTax:
 
 
 class MarginRate:
+    """
+    Margin Rate.
+    """
+
     value: str
 
     def __init__(self, value: str) -> None:
@@ -34,6 +55,10 @@ class MarginRate:
 
 
 class TransactionsSummary:
+    """
+    Transactions Summary.
+    """
+
     total_volume: int
     total_fees: int
     fee_tier: FeeTier
@@ -47,8 +72,8 @@ class TransactionsSummary:
     error: dict
 
     def __init__(self, total_volume: int, total_fees: int, fee_tier: dict, margin_rate: dict,
-                 goods_and_services_tax: dict, advanced_trade_only_volume: int,
-                 advanced_trade_only_fees: int, coinbase_pro_volume: int, coinbase_pro_fees: int, error=None) -> None:
+                 goods_and_services_tax: dict, advanced_trade_only_volume: int, advanced_trade_only_fees: int,
+                 coinbase_pro_volume: int, coinbase_pro_fees: int, error=None) -> None:
         self.total_volume = total_volume
         self.total_fees = total_fees
         self.fee_tier = FeeTier(**fee_tier) if fee_tier is not None else None
@@ -64,6 +89,9 @@ class TransactionsSummary:
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'TransactionsSummary':
+        """
+        Factory Method.
+        """
 
         if not response.ok:
             error_result = json.loads(response.text)
