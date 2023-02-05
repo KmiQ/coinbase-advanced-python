@@ -1,4 +1,8 @@
-from typing import Optional, List
+"""
+Object models for order's related endpoints args and response.
+"""
+
+from typing import List
 from datetime import datetime
 from enum import Enum
 
@@ -6,18 +10,30 @@ import json
 import requests
 
 
-class SIDE(Enum):
+class Side(Enum):
+    """
+    Enum representing whether "BUY" or "SELL" order.
+    """
+
     BUY = "BUY"
     SELL = "SELL"
 
 
-class STOP_DIRECTION(Enum):
+class StopDirection(Enum):
+    """
+    Enum direction in an stop order context.
+    """
+
     UNKNOWN = "UNKNOWN_STOP_DIRECTION"
     UP = "STOP_DIRECTION_STOP_UP"
     DOWN = "STOP_DIRECTION_STOP_DOWN"
 
 
-class ORDER_TYPE(Enum):
+class OrderType(Enum):
+    """
+    Enum representing different order types.
+    """
+
     UNKNOWN_ORDER_TYPE = "UNKNOWN_ORDER_TYPE"
     MARKET = "MARKET"
     LIMIT = "LIMIT"
@@ -26,6 +42,10 @@ class ORDER_TYPE(Enum):
 
 
 class OrderError:
+    """
+    Class encapsulating order error fields.
+    """
+
     error: str
     message: str
     error_details: str
@@ -41,76 +61,132 @@ class OrderError:
         self.new_order_failure_reason = new_order_failure_reason
 
 
-class LimitLimitGt:
+class LimitGTC:
+    """
+    Limit till cancelled order configuration.
+    """
+
     base_size: str
     limit_price: str
     post_only: bool
-    end_time: Optional[datetime]
 
-    def __init__(self, base_size: str, limit_price: str, post_only: bool, end_time: Optional[str]) -> None:
+    def __init__(self, base_size: str, limit_price: str, post_only: bool) -> None:
+        self.base_size = base_size
+        self.limit_price = limit_price
+        self.post_only = post_only
+
+
+class LimitGTD:
+    """
+    Limit till date order configuration.
+    """
+
+    base_size: str
+    limit_price: str
+    post_only: bool
+    end_time: datetime
+
+    def __init__(self, base_size: str, limit_price: str, post_only: bool, end_time: str) -> None:
         self.base_size = base_size
         self.limit_price = limit_price
         self.post_only = post_only
         self.end_time = datetime.strptime(end_time if len(
-            end_time) <= 27 else end_time[:26]+'Z', "%Y-%m-%dT%H:%M:%S.%fZ") if end_time is not None else None
+            end_time) <= 27 else end_time[:26]+'Z', "%Y-%m-%dT%H:%M:%SZ")
 
 
-class MarketMarketIoc:
+class MarketIOC:
+    """
+    Market order configuration.
+    """
+
     quote_size: str
     base_size: str
 
-    def __init__(self, quote_size: str, base_size: str) -> None:
+    def __init__(self, quote_size: str = None, base_size: str = None) -> None:
         self.quote_size = quote_size
         self.base_size = base_size
 
 
-class StopLimitStopLimitGtc:
+class StopLimitGTC:
+    """
+    Stop-Limit till cancelled order configuration.
+    """
+
     base_size: str
     limit_price: str
     stop_price: str
     stop_direction: str
 
-    def __init__(self, base_size: str, limit_price: str, stop_price: str, stop_direction: str) -> None:
+    def __init__(self,
+                 base_size: str,
+                 limit_price: str,
+                 stop_price: str,
+                 stop_direction: str) -> None:
         self.base_size = base_size
         self.limit_price = limit_price
         self.stop_price = stop_price
         self.stop_direction = stop_direction
 
 
-class StopLimitStopLimitGtd:
+class StopLimitGTD:
+    """
+    Stop-Limit till date order configuration.
+    """
+
     base_size: float
     limit_price: str
     stop_price: str
     end_time: datetime
     stop_direction: str
 
-    def __init__(self, base_size: float, limit_price: str, stop_price: str, end_time: str, stop_direction: str) -> None:
+    def __init__(self,
+                 base_size: float,
+                 limit_price: str,
+                 stop_price: str,
+                 end_time: str,
+                 stop_direction: str) -> None:
         self.base_size = base_size
         self.limit_price = limit_price
         self.stop_price = stop_price
         self.end_time = datetime.strptime(end_time if len(
-            end_time) <= 27 else end_time[:26]+'Z', "%Y-%m-%dT%H:%M:%S.%fZ") if end_time is not None else None
+            end_time) <= 27 else end_time[:26]+'Z', "%Y-%m-%dT%H:%M:%SZ")
         self.stop_direction = stop_direction
 
 
 class OrderConfiguration:
-    market_market_ioc: MarketMarketIoc
-    limit_limit_gtc: LimitLimitGt
-    limit_limit_gtd: LimitLimitGt
-    stop_limit_stop_limit_gtc: StopLimitStopLimitGtc
-    stop_limit_stop_limit_gtd: StopLimitStopLimitGtd
+    """
+    Order Configuration. One of four possible fields should only be settled.
+    """
 
-    def __init__(self, market_market_ioc: MarketMarketIoc = None, limit_limit_gtc: LimitLimitGt = None,
-                 limit_limit_gtd: LimitLimitGt = None, stop_limit_stop_limit_gtc: StopLimitStopLimitGtc = None,
-                 stop_limit_stop_limit_gtd: StopLimitStopLimitGtd = None) -> None:
-        self.market_market_ioc = market_market_ioc
-        self.limit_limit_gtc = limit_limit_gtc
-        self.limit_limit_gtd = limit_limit_gtd
-        self.stop_limit_stop_limit_gtc = stop_limit_stop_limit_gtc
-        self.stop_limit_stop_limit_gtd = stop_limit_stop_limit_gtd
+    market_market_ioc: MarketIOC
+    limit_limit_gtc: LimitGTC
+    limit_limit_gtd: LimitGTD
+    stop_limit_stop_limit_gtc: StopLimitGTC
+    stop_limit_stop_limit_gtd: StopLimitGTD
+
+    def __init__(self, market_market_ioc: dict = None, limit_limit_gtc: dict = None,
+                 limit_limit_gtd: dict = None, stop_limit_stop_limit_gtc: dict = None,
+                 stop_limit_stop_limit_gtd: dict = None) -> None:
+        self.market_market_ioc = MarketIOC(
+            **market_market_ioc) if market_market_ioc is not None else None
+        self.limit_limit_gtc = LimitGTC(
+            **limit_limit_gtc) if limit_limit_gtc is not None else None
+        self.limit_limit_gtd = LimitGTD(
+            **limit_limit_gtd) if limit_limit_gtd is not None else None
+        self.stop_limit_stop_limit_gtc = StopLimitGTC(
+            **stop_limit_stop_limit_gtc) if stop_limit_stop_limit_gtc is not None else None
+        self.stop_limit_stop_limit_gtd = StopLimitGTD(
+            **stop_limit_stop_limit_gtd) if stop_limit_stop_limit_gtd is not None else None
 
 
 class Order:
+    """
+    Class reprensenting an order. This support the `create_order*` endpoints
+    and the `get_order` endpoint.
+    Fields will be filled depending on which endpoint generated the order since
+    not all of them are returned at creation time.
+    """
+
     order_id: str
     product_id: str
     side: str
@@ -180,8 +256,9 @@ class Order:
         self.user_id = user_id
         self.status = status
         self.time_in_force = time_in_force
-        self.created_time = datetime.strptime(created_time if len(
-            created_time) <= 27 else created_time[:26]+'Z', "%Y-%m-%dT%H:%M:%S.%fZ") if created_time is not None else None
+        self.created_time = datetime.strptime(
+            created_time if len(created_time) <= 27 else
+            created_time[:26]+'Z', "%Y-%m-%dT%H:%M:%S.%fZ") if created_time is not None else None
         self.completion_percentage = completion_percentage
         self.filled_size = filled_size
         self.average_filled_price = average_filled_price
@@ -206,20 +283,25 @@ class Order:
 
     @classmethod
     def from_create_order_response(cls, response: requests.Response) -> 'Order':
+        """
+        Factory method from the `create_order` response object.
+        """
 
         if not response.ok:
             error_result = json.loads(response.text)
             return cls(
-                None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None, None, None, None, error_result, None)
+                None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, None, None, error_result, None)
 
         result = json.loads(response.text)
 
         if not result['success']:
             error_response = result['error_response']
             return cls(
-                None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None, None, result['failure_reason'],
+                None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, result['failure_reason'],
                 error_response)
 
         success_response = result['success_response']
@@ -228,12 +310,16 @@ class Order:
 
     @classmethod
     def from_get_order_response(cls, response: requests.Response) -> 'Order':
+        """
+        Factory method for creation from the `get_order` response object.
+        """
 
         if not response.ok:
             error_result = json.loads(response.text)
             return cls(
-                None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None, None, None, None, error_result, None)
+                None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, None, None, error_result, None)
 
         result = json.loads(response.text)
 
@@ -243,6 +329,10 @@ class Order:
 
 
 class OrdersPage:
+    """
+    Orders page.
+    """
+
     orders: List[Order]
     has_next: bool
     cursor: str
@@ -267,6 +357,9 @@ class OrdersPage:
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'OrdersPage':
+        """
+        Factory Method.
+        """
 
         if not response.ok:
             error_result = json.loads(response.text)
@@ -277,6 +370,10 @@ class OrdersPage:
 
 
 class OrderCancellation:
+    """
+    Order cancellation.
+    """
+
     success: bool
     failure_reason: str
     order_id: str
@@ -288,6 +385,10 @@ class OrderCancellation:
 
 
 class OrderBatchCancellation:
+    """
+    Batch/Page of order cancellations.
+    """
+
     results: List[OrderCancellation]
 
     error: dict
@@ -295,8 +396,13 @@ class OrderBatchCancellation:
     def __init__(self, results: List[OrderCancellation], error: str = None) -> None:
         self.results = results
 
+        self.error = error
+
     @classmethod
     def from_response(cls, response: requests.Response) -> 'Order':
+        """
+        Factory method.
+        """
 
         if not response.ok:
             error_result = json.loads(response.text)
@@ -308,6 +414,10 @@ class OrderBatchCancellation:
 
 
 class Fill:
+    """
+    Object representing an order filled.
+    """
+
     entry_id: str
     trade_id: str
     order_id: str
@@ -324,9 +434,21 @@ class Fill:
     side: str
 
     def __init__(
-            self, entry_id: str, trade_id: str, order_id: str, trade_time: str, trade_type: str, price: str,
-            size: str, commission: str, product_id: str, sequence_timestamp: str, liquidity_indicator: str,
-            size_in_quote: bool, user_id: str, side: str) -> None:
+            self,
+            entry_id: str,
+            trade_id: str,
+            order_id: str,
+            trade_time: str,
+            trade_type: str,
+            price: str,
+            size: str,
+            commission: str,
+            product_id: str,
+            sequence_timestamp: str,
+            liquidity_indicator: str,
+            size_in_quote: bool,
+            user_id: str,
+            side: str) -> None:
         self.entry_id = entry_id
         self.trade_id = trade_id
         self.order_id = order_id
@@ -339,7 +461,7 @@ class Fill:
         self.commission = commission
         self.product_id = product_id
         self.sequence_timestamp = datetime.strptime(
-            sequence_timestamp if len(sequence_timestamp) <= 27 else sequence_timestamp[: 26] + 'Z',
+            sequence_timestamp if len(sequence_timestamp) <= 27 else sequence_timestamp[:26] + 'Z',
             "%Y-%m-%dT%H:%M:%S.%fZ") if sequence_timestamp is not None else None
         self.liquidity_indicator = liquidity_indicator
         self.size_in_quote = size_in_quote
@@ -348,6 +470,10 @@ class Fill:
 
 
 class FillsPage:
+    """
+    Page of orders filled.
+    """
+
     fills: List[Fill]
     cursor: str
 
@@ -366,6 +492,9 @@ class FillsPage:
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'FillsPage':
+        """
+        Factory Method.
+        """
 
         if not response.ok:
             error_result = json.loads(response.text)
