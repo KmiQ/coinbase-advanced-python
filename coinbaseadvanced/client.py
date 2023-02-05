@@ -7,8 +7,10 @@ import json
 from typing import List
 from enum import Enum
 from datetime import datetime
-from models.accounts import AccountsPage, Account
-from models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage
+from coinbaseadvanced.models.fees import TransactionsSummary
+from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage, TradesPage
+from coinbaseadvanced.models.accounts import AccountsPage, Account
+from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage
 
 
 class SIDE(Enum):
@@ -34,8 +36,20 @@ class PRODUCT_TYPE(Enum):
     SPOT = "SPOT"
 
 
+class GRANULARITY(Enum):
+    UNKNOWN = "UNKNOWN_GRANULARITY"
+    ONE_MINUTE = "ONE_MINUTE"
+    FIVE_MINUTE = "FIVE_MINUTE"
+    FIFTEEN_MINUTE = "FIFTEEN_MINUTE"
+    THIRTY_MINUTE = "THIRTY_MINUTE"
+    ONE_HOUR = "ONE_HOUR"
+    TWO_HOUR = "TWO_HOUR"
+    SIX_HOUR = "SIX_HOUR"
+    ONE_DAY = "ONE_DAY"
+
+
 class CoinbaseAdvancedTradeAPIClient(object):
-    def __init__(self, api_key: str, secret_key: str, base_url: str = 'https://coinbase.com') -> None:
+    def __init__(self, api_key: str, secret_key: str, base_url: str = 'https://api.coinbase.com') -> None:
         self._base_url = base_url
         self._api_key = api_key
         self._secret_key = secret_key
@@ -251,6 +265,103 @@ class CoinbaseAdvancedTradeAPIClient(object):
         order = Order.from_get_order_response(response)
         return order
 
+    # Products #
+
+    def list_products(self, limit: int = None, offset: int = None, product_type: PRODUCT_TYPE = None) -> ProductsPage:
+        request_path = '/api/v3/brokerage/products'
+        method = "GET"
+
+        query_params = ''
+
+        if limit is not None:
+            query_params = self._next_param(query_params) + 'limit='+str(limit)
+
+        if offset is not None:
+            query_params = self._next_param(query_params) + 'offset='+str(offset)
+
+        if product_type is not None:
+            query_params = self._next_param(query_params) + 'product_type=' + product_type.value
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+
+        page = ProductsPage.from_response(response)
+        return page
+
+    def get_product(self, product_id: str) -> Product:
+        request_path = f"/api/v3/brokerage/products/{product_id}"
+        method = "GET"
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path, headers=headers)
+
+        product = Product.from_response(response)
+        return product
+
+    def get_product_candles(
+            self, product_id: str, start_date: datetime, end_date: datetime, granularity: GRANULARITY) -> CandlesPage:
+        request_path = f"/api/v3/brokerage/products/{product_id}/candles"
+        method = "GET"
+
+        query_params = ''
+
+        query_params = self._next_param(query_params) + 'start=' + str(int(start_date.timestamp()))
+        query_params = self._next_param(query_params) + 'end=' + str(int(end_date.timestamp()))
+        query_params = self._next_param(query_params) + 'granularity=' + granularity.value
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+
+        product_candles = CandlesPage.from_response(response)
+        return product_candles
+
+    def get_trades(
+            self, product_id: str, limit: int) -> TradesPage:
+        request_path = f"/api/v3/brokerage/products/{product_id}/ticker"
+        method = "GET"
+
+        query_params = ''
+
+        query_params = self._next_param(query_params) + 'limit=' + str(limit)
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+
+        trades_page = TradesPage.from_response(response)
+        return trades_page
+
+    # Fees #
+
+    def get_transactions_summary(self, start_date: datetime = None, end_date: datetime = None,
+                                 user_native_currency: str = "USD", product_type: PRODUCT_TYPE = None):
+        request_path = '/api/v3/brokerage/transaction_summary'
+        method = "GET"
+
+        query_params = ''
+
+        if start_date is not None:
+            query_params = self._next_param(query_params) + 'start_date=' + start_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        if end_date is not None:
+            query_params = self._next_param(query_params) + 'end_date=' + end_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        if user_native_currency is not None:
+            query_params = self._next_param(query_params) + 'user_native_currency='+user_native_currency
+
+        if product_type is not None:
+            query_params = self._next_param(query_params) + 'product_type='+product_type.value
+
+        headers = self._build_request_headers(method, request_path)
+
+        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+
+        page = TransactionsSummary.from_response(response)
+        return page
+
     # Helpers #
 
     def _build_request_headers(self, method, request_path, body=''):
@@ -281,13 +392,16 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
 
 # For Reading
-#client = CoinbaseAdvancedTradeAPIClient(api_key='hOOnWpN0x2zsu12i', secret_key='86s3z4DLYrFCw4QonF54u4CdirrbBSnw')
+# client = CoinbaseAdvancedTradeAPIClient(api_key='hOOnWpN0x2zsu12i', secret_key='86s3z4DLYrFCw4QonF54u4CdirrbBSnw')
+
+# page = client.list_accounts(limit=89898)  # Accounts: List Accounts
+
+# account = client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
 
 
 # Full Access to ALGO Wallet
 client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='HUbLt2GsnPOTTkl0t2wkFWn4RrznDJRM')
 
-# page = client.list_accounts()  # Accounts: List Accounts
 
 # if page.error:
 #    print(page.error)
@@ -300,7 +414,7 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 
 ############
 
-#account = client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
+# a = 5
 
 # if account.error:
 #    print(account.error)
@@ -309,25 +423,40 @@ client = CoinbaseAdvancedTradeAPIClient(api_key='Jk31IAjyWQEG3BfP', secret_key='
 
 ############
 
-#order = client.create_order("nkjsdfnw23", "ALGO-USD", "SELL", order_configuration)
+# order = client.create_order("nkjsdfnw23", "ALGO-USD", "SELL", order_configuration)
 
-#order = client.create_limit_order("jalksjd341", "ALGO-USD", "BUY", ".19", 5)
+#order = client.create_limit_order("nlksdbnfgjd8y9mn,m234", "ALGO-USD", SIDE.BUY, ".19", 10)
 
-# order = client.create_stop_limit_order("nkjansd89hasi", "ALGO-USD", "BUY", .18,
-#                                       "STOP_DIRECTION_STOP_DOWN", .16, 7, datetime(2023, 1, 9, 15))
+# order = client.create_stop_limit_order("mklansdu8wehr", "ALGO-USD", SIDE.BUY, .18,
+#                                       STOP_DIRECTION.DOWN, .16, 7, datetime(2023, 5, 9, 15))
 
-#order = client.create_buy_market_order("asdasd", "ALGO-USD", 3)
-#order = client.create_sell_market_order("njkasdh7", "ALGO-USD", 5)
+# order = client.create_buy_market_order("asdasd", "ALGO-USD", 1)
+# order = client.create_sell_market_order("njkasdh7", "ALGO-USD", 5)
 
-#order1 = client.create_limit_order("jbkjbdskfbg73ibukl", "ALGO-USD", SIDE.BUY, ".10", 5)
-#order2 = client.create_limit_order("ansjkdfb78y8", "ALGO-USD", SIDE.BUY, ".7", 5)
+#order1 = client.create_limit_order("k7999902", "ALGO-USD", SIDE.SELL, ".9", 5)
+#order2 = client.create_limit_order("j876789ks", "ALGO-USD", SIDE.SELL, ".9", 5)
 
-#cancellation_receipt = client.cancel_orders([order1.order_id, order2.order_id])
+#a = 5
+#cancellation_receipt = client.cancel_orders(['a', 'b'])
+
 #cancellation_receipt = client.cancel_orders([order2.order_id])
 
-#orders_page = client.list_orders(order_status=['OPEN'])
-#fills_page = client.list_fills()
+#orders_page = client.list_orders(start_date=datetime(2023, 1, 25), end_date=datetime(2023, 1, 30), limit=10, )
+#fills_page = client.list_fills(limit=5, start_date=datetime(2023, 1, 20), end_date=datetime(2023, 1, 30))
 
 #order = client.get_order("5fffa9e8-73db-4a2c-8b3f-08509203ac04")
+
+#product_page = client.list_products(limit=5)
+
+#product = client.get_product('BTC-USD')
+
+# candles = client.get_product_candles(
+#     "ALGO-USD", start_date=datetime(2023, 1, 1),
+#     end_date=datetime(2023, 1, 31),
+#     granularity=GRANULARITY.ONE_DAY)
+
+#trades = client.get_trades("BTC-USD", limit=100)
+
+#transactions_summary = client.get_transactions_summary(datetime(2023, 1, 1), datetime(2023, 1, 31))
 
 a = 5

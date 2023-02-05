@@ -1,0 +1,20 @@
+{
+    "success": true,
+    "failure_reason": "UNKNOWN_FAILURE_REASON",
+    "order_id": "1a88f3f2-1a02-4812-a227-a3d2c00e45ce",
+    "success_response": {
+        "order_id": "1a88f3f2-1a02-4812-a227-a3d2c00e45ce",
+        "product_id": "ALGO-USD",
+        "side": "BUY",
+        "client_order_id": "mklansdu8wehr"
+    },
+    "order_configuration": {
+        "stop_limit_stop_limit_gtd": {
+            "base_size": "7",
+            "limit_price": "0.16",
+            "stop_price": "0.18",
+            "end_time": "2023-05-09T15:00:00Z",
+            "stop_direction": "STOP_DIRECTION_STOP_DOWN"
+        }
+    }
+}

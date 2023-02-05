@@ -119,7 +119,7 @@ class Order:
     reject_message: str
     cancel_message: str
 
-    error: str
+    error: dict
     order_error: OrderError
 
     def __init__(self, order_id: str, product_id: str, side: str, client_order_id: str,
@@ -148,7 +148,7 @@ class Order:
                  reject_message: str = None,
                  cancel_message: str = None,
 
-                 error: str = None, order_error: dict = None) -> None:
+                 error: dict = None, order_error: dict = None) -> None:
         self.order_id = order_id
         self.product_id = product_id
         self.side = side
@@ -187,7 +187,7 @@ class Order:
     def from_create_order_response(cls, response: requests.Response) -> 'Order':
 
         if not response.ok:
-            error_result = response.text
+            error_result = json.loads(response.text)
             return cls(
                 None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
                 None, None, None, None, None, None, None, None, None, None, error_result, None)
@@ -209,7 +209,7 @@ class Order:
     def from_get_order_response(cls, response: requests.Response) -> 'Order':
 
         if not response.ok:
-            error_result = response.text
+            error_result = json.loads(response.text)
             return cls(
                 None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
                 None, None, None, None, None, None, None, None, None, None, error_result, None)
@@ -269,7 +269,7 @@ class OrderCancellation:
 class OrderBatchCancellation:
     results: List[OrderCancellation]
 
-    error: str
+    error: dict
 
     def __init__(self, results: List[OrderCancellation], error: str = None) -> None:
         self.results = results
@@ -278,7 +278,7 @@ class OrderBatchCancellation:
     def from_response(cls, response: requests.Response) -> 'Order':
 
         if not response.ok:
-            error_result = response.text
+            error_result = json.loads(response.text)
             return cls(None, error_result)
 
         result = json.loads(response.text)
