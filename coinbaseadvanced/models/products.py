@@ -1,9 +1,26 @@
 from uuid import UUID
 from datetime import datetime
 from typing import List
+from enum import Enum
 
 import json
 import requests
+
+
+class PRODUCT_TYPE(Enum):
+    SPOT = "SPOT"
+
+
+class GRANULARITY(Enum):
+    UNKNOWN = "UNKNOWN_GRANULARITY"
+    ONE_MINUTE = "ONE_MINUTE"
+    FIVE_MINUTE = "FIVE_MINUTE"
+    FIFTEEN_MINUTE = "FIFTEEN_MINUTE"
+    THIRTY_MINUTE = "THIRTY_MINUTE"
+    ONE_HOUR = "ONE_HOUR"
+    TWO_HOUR = "TWO_HOUR"
+    SIX_HOUR = "SIX_HOUR"
+    ONE_DAY = "ONE_DAY"
 
 
 class Product:

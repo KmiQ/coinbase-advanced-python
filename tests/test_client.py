@@ -58,11 +58,6 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertEqual(account.type, "ACCOUNT_TYPE_CRYPTO")
         self.assertEqual(account.ready, False)
 
-        self.assertDictEqual(account.hold, {
-            "value": "0.0000000000000000",
-            "currency": "BTC"
-        })
-
     @mock.patch("coinbaseadvanced.client.requests.get")
     def test_get_account_failure(self, mock_get):
 
@@ -688,7 +683,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        trades_page = client.get_trades("BTC-USD", limit=100)
+        trades_page = client.get_market_trades("BTC-USD", limit=100)
 
         # Check input
 

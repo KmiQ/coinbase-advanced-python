@@ -1,5 +1,4 @@
 from typing import List
-from enum import Enum
 from datetime import datetime
 
 import hmac
@@ -9,44 +8,9 @@ import json
 import requests
 
 from coinbaseadvanced.models.fees import TransactionsSummary
-from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage, TradesPage
+from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage, TradesPage, PRODUCT_TYPE, GRANULARITY
 from coinbaseadvanced.models.accounts import AccountsPage, Account
-from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage
-
-
-class SIDE(Enum):
-    BUY = "BUY"
-    SELL = "SELL"
-
-
-class STOP_DIRECTION(Enum):
-    UNKNOWN = "UNKNOWN_STOP_DIRECTION"
-    UP = "STOP_DIRECTION_STOP_UP"
-    DOWN = "STOP_DIRECTION_STOP_DOWN"
-
-
-class ORDER_TYPE(Enum):
-    UNKNOWN_ORDER_TYPE = "UNKNOWN_ORDER_TYPE"
-    MARKET = "MARKET"
-    LIMIT = "LIMIT"
-    STOP = "STOP"
-    STOP_LIMIT = "STOP_LIMIT"
-
-
-class PRODUCT_TYPE(Enum):
-    SPOT = "SPOT"
-
-
-class GRANULARITY(Enum):
-    UNKNOWN = "UNKNOWN_GRANULARITY"
-    ONE_MINUTE = "ONE_MINUTE"
-    FIVE_MINUTE = "FIVE_MINUTE"
-    FIFTEEN_MINUTE = "FIFTEEN_MINUTE"
-    THIRTY_MINUTE = "THIRTY_MINUTE"
-    ONE_HOUR = "ONE_HOUR"
-    TWO_HOUR = "TWO_HOUR"
-    SIX_HOUR = "SIX_HOUR"
-    ONE_DAY = "ONE_DAY"
+from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation, FillsPage, SIDE, STOP_DIRECTION, ORDER_TYPE
 
 
 class CoinbaseAdvancedTradeAPIClient(object):
@@ -90,7 +54,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         Get a list of information about an account, given an account UUID.
 
         Args:
-        - account_uuid: The account's UUID.
+        - account_id: The account's UUID.
 
         """
 
@@ -106,7 +70,16 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     # Orders #
 
-    def create_buy_market_order(self, client_order_id: str, product_id: str, quote_size: float):
+    def create_buy_market_order(self, client_order_id: str, product_id: str, quote_size: float) -> Order:
+        """
+        Create a buy type market order.
+
+        Args:
+        - client_order_id: Client set unique uuid for this order
+        - product_id: The product this order was created for e.g. 'BTC-USD'
+        - quote_size: Amount of quote currency to spend on order. Required for BUY orders.
+        """
+
         order_configuration = {
             "market_market_ioc": {
                 "quote_size": str(quote_size),
@@ -115,7 +88,16 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         return self.create_order(client_order_id, product_id, SIDE.BUY, order_configuration)
 
-    def create_sell_market_order(self, client_order_id: str, product_id: str, base_size: float):
+    def create_sell_market_order(self, client_order_id: str, product_id: str, base_size: float) -> Order:
+        """
+        Create a sell type market order.
+
+        Args:
+        - client_order_id: Client set unique uuid for this order
+        - product_id: The product this order was created for e.g. 'BTC-USD'
+        - base_size: Amount of base currency to spend on order. Required for SELL orders.
+        """
+
         order_configuration = {
             "market_market_ioc": {
                 "base_size": str(base_size),
@@ -126,7 +108,19 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def create_limit_order(
             self, client_order_id: str, product_id: str, side: SIDE, limit_price: float, base_size: float,
-            cancel_time: datetime = None, post_only: bool = None):
+            cancel_time: datetime = None, post_only: bool = None) -> Order:
+        """
+        Create a limit order.
+
+        Args:
+        - client_order_id: Client set unique uuid for this order
+        - product_id: The product this order was created for e.g. 'BTC-USD'
+        - side: Possible values: [UNKNOWN_ORDER_SIDE, BUY, SELL]
+        - limit_price: Ceiling price for which the order should get filled
+        - base_size: Amount of base currency to spend on order
+        - cancel_time: Time at which the order should be cancelled if it's not filled.
+        - post_only: Post only limit order
+        """
 
         order_configuration = {}
 
@@ -148,7 +142,25 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def create_stop_limit_order(
             self, client_order_id: str, product_id: str, side: SIDE, stop_price: float, stop_direction: STOP_DIRECTION,
-            limit_price: float, base_size: float, cancel_time: datetime = None):
+            limit_price: float, base_size: float, cancel_time: datetime = None) -> Order:
+        """
+        Create a limit order.
+
+        Args:
+        - client_order_id: Client set unique uuid for this order
+        - product_id: The product this order was created for e.g. 'BTC-USD'
+        - side: Possible values: [UNKNOWN_ORDER_SIDE, BUY, SELL]
+        - stop_price: Price at which the order should trigger
+            - if stop direction is Up, then the order will trigger when
+              the last trade price goes above this, otherwise order will trigger
+              when last trade price goes below this price.
+        - stop_direction: Possible values:
+            - [UNKNOWN_STOP_DIRECTION, STOP_DIRECTION_STOP_UP, STOP_DIRECTION_STOP_DOWN]
+        - limit_price: Ceiling price for which the order should get filled
+        - base_size: Amount of base currency to spend on order
+        - cancel_time: Time at which the order should be cancelled if it's not filled.
+        - post_only: Post only limit order
+        """
 
         order_configuration = {}
 
@@ -167,7 +179,19 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         return self.create_order(client_order_id, product_id, side, order_configuration)
 
-    def create_order(self, client_order_id: str, product_id: str, side: SIDE, order_configuration: dict) -> Order:
+    def create_order(self, client_order_id: str,
+                     product_id: str,
+                     side: SIDE,
+                     order_configuration: dict) -> Order:
+        """
+        Create an order with a specified product_id (asset-pair), side (buy/sell), etc.
+
+        Maximum Open Orders Per Product:
+        The maximum number of OPEN orders you can have for a given product_id is 500.
+        If you have 500 open orders for a product_id at submission, new orders placed
+        for that product enter a failed state immediately.
+        """
+
         request_path = "/api/v3/brokerage/orders"
         method = "POST"
 
@@ -185,6 +209,13 @@ class CoinbaseAdvancedTradeAPIClient(object):
         return order
 
     def cancel_orders(self, order_ids: list) -> OrderBatchCancellation:
+        """
+        Initiate cancel requests for one or more orders.
+
+        Args:
+        - order_ids: The IDs of orders cancel requests should be initiated for.
+        """
+
         request_path = "/api/v3/brokerage/orders/batch_cancel/"
         method = "POST"
 
@@ -202,6 +233,36 @@ class CoinbaseAdvancedTradeAPIClient(object):
             self, product_id: str = None, order_status: List[str] = None, limit: int = 999, start_date: datetime = None,
             end_date: datetime = None, user_native_currency: str = None, order_type: ORDER_TYPE = None, order_side: SIDE = None,
             cursor: str = None, product_type: PRODUCT_TYPE = None) -> OrdersPage:
+        """
+        Get a list of orders filtered by optional query parameters (product_id, order_status, etc).
+
+        Args:
+        - product_id: Optional string of the product ID.
+                      Defaults to null, or fetch for all products.
+        - order_status: A list of order statuses.
+        - limit: A pagination limit with no default set.
+                 If has_next is true, additional orders are available
+                 to be fetched with pagination; also the cursor value
+                 in the response can be passed as cursor parameter in
+                 the subsequent request.
+        - start_date: Start date to fetch orders from, inclusive.
+        - end_date: An optional end date for the query window, exclusive.
+                    If provided only orders with creation time before
+                    this date will be returned.
+        - user_native_currency: String of the users native currency. Default is USD.
+        - order_type: Type of orders to return. Default is to return all order types.
+            - MARKET: A market order
+            - LIMIT: A limit order
+            - STOP: A stop order is an order that becomes a market order when triggered
+            - STOP_LIMIT: A stop order is a limit order that doesn't go on the book until
+                          it hits the stop price.
+        - order_side: Only orders matching this side are returned. Default is to return all sides.
+        - cursor: Cursor used for pagination.
+                  When provided, the response returns responses after this cursor.
+        - product_type: Only orders matching this product type are returned.
+                        Default is to return all product types.
+        """
+
         request_path = '/api/v3/brokerage/orders/historical/batch'
         method = "GET"
 
@@ -245,7 +306,32 @@ class CoinbaseAdvancedTradeAPIClient(object):
         return page
 
     def list_fills(self, order_id: str = None, product_id: str = None, start_date: datetime = None,
-                   end_date: datetime = None, cursor: str = None, limit: int = 100):
+                   end_date: datetime = None, cursor: str = None, limit: int = 100) -> FillsPage:
+        """
+        Get a list of fills filtered by optional query parameters (product_id, order_id, etc).
+
+        Args:
+        - order_id: ID of order.
+        - product_id: Optional string of the product ID.
+                      Defaults to null, or fetch for all products.
+        - start_date: Start date to fetch orders from, inclusive.
+        - end_date: An optional end date for the query window, exclusive.
+                    If provided only orders with creation time before
+                    this date will be returned.
+        - cursor: Cursor used for pagination.
+                  When provided, the response returns responses after this cursor.
+                - limit: A pagination limit with no default set.
+                 If has_next is true, additional orders are available
+                 to be fetched with pagination; also the cursor value
+                 in the response can be passed as cursor parameter in
+                 the subsequent request.
+        - limit: A pagination limit with no default set.
+                 If has_next is true, additional orders are available
+                 to be fetched with pagination; also the cursor value
+                 in the response can be passed as cursor parameter in
+                 the subsequent request.
+        """
+
         request_path = '/api/v3/brokerage/orders/historical/fills'
         method = "GET"
 
@@ -277,19 +363,38 @@ class CoinbaseAdvancedTradeAPIClient(object):
         return page
 
     def get_order(self, order_id: str) -> Order:
+        """
+        Get a single order by order ID.
+
+        Args:
+        - order_id: ID of order.
+        """
+
         request_path = f"/api/v3/brokerage/orders/historical/{order_id}"
         method = "GET"
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path, headers=headers)
+        response = requests.get(self._base_url+request_path, headers=headers, timeout=10)
 
         order = Order.from_get_order_response(response)
         return order
 
     # Products #
 
-    def list_products(self, limit: int = None, offset: int = None, product_type: PRODUCT_TYPE = None) -> ProductsPage:
+    def list_products(self,
+                      limit: int = None,
+                      offset: int = None,
+                      product_type: PRODUCT_TYPE = None) -> ProductsPage:
+        """
+        Get a list of the available currency pairs for trading.
+
+         Args:
+        - limit: A limit describing how many products to return.
+        - offset: Number of products to offset before returning.
+        - product_type: Type of products to return.
+        """
+
         request_path = '/api/v3/brokerage/products'
         method = "GET"
 
@@ -312,18 +417,39 @@ class CoinbaseAdvancedTradeAPIClient(object):
         return page
 
     def get_product(self, product_id: str) -> Product:
+        """
+        Get information on a single product by product ID.
+
+        Args:
+        - product_id: The trading pair to get information for.
+        """
+
         request_path = f"/api/v3/brokerage/products/{product_id}"
         method = "GET"
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path, headers=headers)
+        response = requests.get(self._base_url+request_path, headers=headers, timeout=10)
 
         product = Product.from_response(response)
         return product
 
     def get_product_candles(
-            self, product_id: str, start_date: datetime, end_date: datetime, granularity: GRANULARITY) -> CandlesPage:
+            self,
+            product_id: str,
+            start_date: datetime,
+            end_date: datetime,
+            granularity: GRANULARITY) -> CandlesPage:
+        """
+        Get rates for a single product by product ID, grouped in buckets.
+
+        Args:
+        - product_id: The trading pair.
+        - start: Timestamp for starting range of aggregations, in UNIX time.
+        - end: Timestamp for ending range of aggregations, in UNIX time.
+        - granularity: The time slice value for each candle.
+        """
+
         request_path = f"/api/v3/brokerage/products/{product_id}/candles"
         method = "GET"
 
@@ -340,8 +466,17 @@ class CoinbaseAdvancedTradeAPIClient(object):
         product_candles = CandlesPage.from_response(response)
         return product_candles
 
-    def get_trades(
+    def get_market_trades(
             self, product_id: str, limit: int) -> TradesPage:
+        """
+        Get snapshot information, by product ID, about the last trades (ticks),
+        best bid/ask, and 24h volume.
+
+        Args:
+        - product_id: The trading pair, i.e., 'BTC-USD'.
+        - limit: Number of trades to return.
+        """
+
         request_path = f"/api/v3/brokerage/products/{product_id}/ticker"
         method = "GET"
 
@@ -358,8 +493,15 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     # Fees #
 
-    def get_transactions_summary(self, start_date: datetime = None, end_date: datetime = None,
-                                 user_native_currency: str = "USD", product_type: PRODUCT_TYPE = None):
+    def get_transactions_summary(self,
+                                 start_date: datetime = None,
+                                 end_date: datetime = None,
+                                 user_native_currency: str = "USD",
+                                 product_type: PRODUCT_TYPE = None):
+        """
+        Get a summary of transactions with fee tiers, total volume, and fees.
+        """
+
         request_path = '/api/v3/brokerage/transaction_summary'
         method = "GET"
 
