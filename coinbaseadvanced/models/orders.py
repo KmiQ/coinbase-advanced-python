@@ -1,7 +1,28 @@
 from typing import Optional, List
 from datetime import datetime
+from enum import Enum
+
 import json
 import requests
+
+
+class SIDE(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+
+
+class STOP_DIRECTION(Enum):
+    UNKNOWN = "UNKNOWN_STOP_DIRECTION"
+    UP = "STOP_DIRECTION_STOP_UP"
+    DOWN = "STOP_DIRECTION_STOP_DOWN"
+
+
+class ORDER_TYPE(Enum):
+    UNKNOWN_ORDER_TYPE = "UNKNOWN_ORDER_TYPE"
+    MARKET = "MARKET"
+    LIMIT = "LIMIT"
+    STOP = "STOP"
+    STOP_LIMIT = "STOP_LIMIT"
 
 
 class OrderError:
