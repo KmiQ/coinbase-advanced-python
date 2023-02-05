@@ -1,5 +1,5 @@
 """
-Object models for order's related endpoints args and response.
+Object models for order related endpoints args and response.
 """
 
 from typing import List
