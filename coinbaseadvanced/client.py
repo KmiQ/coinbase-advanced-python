@@ -58,6 +58,19 @@ class CoinbaseAdvancedTradeAPIClient(object):
     # Accounts #
 
     def list_accounts(self, limit: int = 49, cursor: str = None) -> AccountsPage:
+        """
+        Get a list of authenticated accounts for the current user.
+
+        Args:
+        - limit: A pagination limit with default of 49 and maximum of 250.
+               If has_next is true, additional orders are available to be fetched
+               with pagination and the cursor value in the response can be passed
+               as cursor parameter in the subsequent request.
+
+        - cursor: Cursor used for pagination. When provided, the response returns responses after this cursor.
+
+        """
+
         request_path = '/api/v3/brokerage/accounts'
         method = "GET"
         query_params = '?limit='+str(limit)
@@ -73,6 +86,14 @@ class CoinbaseAdvancedTradeAPIClient(object):
         return page
 
     def get_account(self, account_id: str) -> Account:
+        """
+        Get a list of information about an account, given an account UUID.
+
+        Args:
+        - account_uuid: The account's UUID.
+
+        """
+
         request_path = f"/api/v3/brokerage/accounts/{account_id}"
         method = "GET"
 
