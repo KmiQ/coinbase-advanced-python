@@ -1,12 +1,13 @@
-import hmac
-import hashlib
-import time
-import requests
-import json
-
 from typing import List
 from enum import Enum
 from datetime import datetime
+
+import hmac
+import hashlib
+import time
+import json
+import requests
+
 from coinbaseadvanced.models.fees import TransactionsSummary
 from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage, TradesPage
 from coinbaseadvanced.models.accounts import AccountsPage, Account
@@ -66,7 +67,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
 
         page = AccountsPage.from_response(response)
         return page
@@ -77,7 +78,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path, headers=headers)
+        response = requests.get(self._base_url+request_path, headers=headers, timeout=10)
 
         account = Account.from_response(response)
         return account
@@ -157,7 +158,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         }
 
         headers = self._build_request_headers(method, request_path, json.dumps(payload))
-        response = requests.post(self._base_url+request_path, json=payload, headers=headers)
+        response = requests.post(self._base_url+request_path, json=payload, headers=headers, timeout=10)
 
         order = Order.from_create_order_response(response)
         return order
@@ -171,7 +172,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         }
 
         headers = self._build_request_headers(method, request_path, json.dumps(payload))
-        response = requests.post(self._base_url+request_path, json=payload, headers=headers)
+        response = requests.post(self._base_url+request_path, json=payload, headers=headers, timeout=10)
 
         cancellation_result = OrderBatchCancellation.from_response(response)
         return cancellation_result
@@ -217,7 +218,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
 
         page = OrdersPage.from_response(response)
         return page
@@ -249,7 +250,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
 
         page = FillsPage.from_response(response)
         return page
@@ -284,7 +285,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
 
         page = ProductsPage.from_response(response)
         return page
@@ -313,7 +314,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
 
         product_candles = CandlesPage.from_response(response)
         return product_candles
@@ -329,7 +330,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
 
         trades_page = TradesPage.from_response(response)
         return trades_page
@@ -357,7 +358,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         headers = self._build_request_headers(method, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers)
+        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=10)
 
         page = TransactionsSummary.from_response(response)
         return page
