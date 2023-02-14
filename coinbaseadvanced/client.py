@@ -38,6 +38,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def list_accounts(self, limit: int = 49, cursor: str = None) -> AccountsPage:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getaccounts
+
         Get a list of authenticated accounts for the current user.
 
         Args:
@@ -69,6 +71,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def get_account(self, account_id: str) -> Account:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getaccount
+
         Get a list of information about an account, given an account UUID.
 
         Args:
@@ -93,6 +97,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                 product_id: str,
                                 quote_size: float) -> Order:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
+
         Create a buy type market order.
 
         Args:
@@ -114,6 +120,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                  product_id: str,
                                  base_size: float) -> Order:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
+
         Create a sell type market order.
 
         Args:
@@ -140,6 +148,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             cancel_time: datetime = None,
             post_only: bool = None) -> Order:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
+
         Create a limit order.
 
         Args:
@@ -181,7 +191,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
             base_size: float,
             cancel_time: datetime = None) -> Order:
         """
-        Create a limit order.
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
+
+        Create a stop-limit order.
 
         Args:
         - client_order_id: Client set unique uuid for this order
@@ -221,6 +233,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
                      side: Side,
                      order_configuration: dict) -> Order:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
+
         Create an order with a specified product_id (asset-pair), side (buy/sell), etc.
 
         Maximum Open Orders Per Product:
@@ -249,6 +263,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def cancel_orders(self, order_ids: list) -> OrderBatchCancellation:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_cancelorders
+
         Initiate cancel requests for one or more orders.
 
         Args:
@@ -284,6 +300,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             cursor: str = None,
             product_type: ProductType = None) -> OrdersPage:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_gethistoricalorders
+
         Get a list of orders filtered by optional query parameters (product_id, order_status, etc).
 
         Args:
@@ -363,6 +381,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
     def list_fills(self, order_id: str = None, product_id: str = None, start_date: datetime = None,
                    end_date: datetime = None, cursor: str = None, limit: int = 100) -> FillsPage:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getfills
+
         Get a list of fills filtered by optional query parameters (product_id, order_id, etc).
 
         Args:
@@ -423,6 +443,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def get_order(self, order_id: str) -> Order:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_gethistoricalorder
+
         Get a single order by order ID.
 
         Args:
@@ -446,6 +468,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
                       offset: int = None,
                       product_type: ProductType = None) -> ProductsPage:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getproducts
+
         Get a list of the available currency pairs for trading.
 
          Args:
@@ -479,6 +503,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def get_product(self, product_id: str) -> Product:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getproduct
+
         Get information on a single product by product ID.
 
         Args:
@@ -502,6 +528,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             end_date: datetime,
             granularity: Granularity) -> CandlesPage:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getcandles
+
         Get rates for a single product by product ID, grouped in buckets.
 
         Args:
@@ -532,6 +560,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
     def get_market_trades(
             self, product_id: str, limit: int) -> TradesPage:
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getmarkettrades
+
         Get snapshot information, by product ID, about the last trades (ticks),
         best bid/ask, and 24h volume.
 
@@ -564,6 +594,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                  user_native_currency: str = "USD",
                                  product_type: ProductType = None):
         """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_gettransactionsummary
+
         Get a summary of transactions with fee tiers, total volume, and fees.
         """
 
