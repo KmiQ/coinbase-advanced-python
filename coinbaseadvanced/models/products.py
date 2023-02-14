@@ -7,6 +7,8 @@ from datetime import datetime
 from typing import List
 from enum import Enum
 
+from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
+
 import json
 import requests
 
@@ -72,8 +74,6 @@ class Product:
     base_display_symbol: str
     quote_display_symbol: str
 
-    error: dict
-
     def __init__(self,
                  product_id: str,
                  price: str,
@@ -106,7 +106,7 @@ class Product:
                  alias_to: list,
                  base_display_symbol: str,
                  quote_display_symbol: str,
-                 error: dict = None) -> None:
+                 ) -> None:
         self.product_id = product_id
         self.price = price
         self.price_percentage_change_24h = price_percentage_change_24h
@@ -139,8 +139,6 @@ class Product:
         self.base_display_symbol = base_display_symbol
         self.quote_display_symbol = quote_display_symbol
 
-        self.error = error
-
     @classmethod
     def from_response(cls, response: requests.Response) -> 'Product':
         """
@@ -149,11 +147,7 @@ class Product:
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(
-                None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None, None, None,
-                None, None, None, None, error=error_result)
+            raise CoinbaseAdvancedTradeAPIError(error=error_result)
 
         result = json.loads(response.text)
         product_dict = result
@@ -168,15 +162,11 @@ class ProductsPage:
     products: List[Product]
     num_products: int
 
-    error: dict
-
-    def __init__(self, products: List[Product], num_products: int, error: dict = None) -> None:
+    def __init__(self, products: List[Product], num_products: int) -> None:
         self.products = list(map(lambda x: Product(**x), products)) \
             if products is not None else None
 
         self.num_products = num_products
-
-        self.error = error
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'ProductsPage':
@@ -186,7 +176,7 @@ class ProductsPage:
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(None, None, error=error_result)
+            raise CoinbaseAdvancedTradeAPIError(error=error_result)
 
         result = json.loads(response.text)
         return cls(**result)
@@ -220,12 +210,8 @@ class CandlesPage:
 
     candles: List[Candle]
 
-    error: dict
-
-    def __init__(self, candles: List[Candle], error: dict = None) -> None:
+    def __init__(self, candles: List[Candle]) -> None:
         self.candles = list(map(lambda x: Candle(**x), candles)) if candles is not None else None
-
-        self.error = error
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'CandlesPage':
@@ -235,7 +221,7 @@ class CandlesPage:
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(None, error=error_result)
+            raise CoinbaseAdvancedTradeAPIError(error=error_result)
 
         result = json.loads(response.text)
         return cls(**result)
@@ -283,18 +269,14 @@ class TradesPage:
     best_bid: str
     best_ask: str
 
-    error: dict
-
     def __init__(self,
                  trades: List[Trade],
                  best_bid: str,
                  best_ask: str,
-                 error: dict = None) -> None:
+                 ) -> None:
         self.trades = list(map(lambda x: Trade(**x), trades)) if trades is not None else None
         self.best_bid = best_bid
         self.best_ask = best_ask
-
-        self.error = error
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'TradesPage':
@@ -304,7 +286,7 @@ class TradesPage:
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(None, None, None, error=error_result)
+            raise CoinbaseAdvancedTradeAPIError(error=error_result)
 
         result = json.loads(response.text)
         return cls(**result)

@@ -5,6 +5,8 @@ Object models for fees related endpoints args and response.
 import json
 import requests
 
+from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
+
 
 class FeeTier:
     """
@@ -69,11 +71,9 @@ class TransactionsSummary:
     coinbase_pro_volume: int
     coinbase_pro_fees: int
 
-    error: dict
-
     def __init__(self, total_volume: int, total_fees: int, fee_tier: dict, margin_rate: dict,
                  goods_and_services_tax: dict, advanced_trade_only_volume: int, advanced_trade_only_fees: int,
-                 coinbase_pro_volume: int, coinbase_pro_fees: int, error=None) -> None:
+                 coinbase_pro_volume: int, coinbase_pro_fees: int) -> None:
         self.total_volume = total_volume
         self.total_fees = total_fees
         self.fee_tier = FeeTier(**fee_tier) if fee_tier is not None else None
@@ -85,8 +85,6 @@ class TransactionsSummary:
         self.coinbase_pro_volume = coinbase_pro_volume
         self.coinbase_pro_fees = coinbase_pro_fees
 
-        self.error = error
-
     @classmethod
     def from_response(cls, response: requests.Response) -> 'TransactionsSummary':
         """
@@ -95,7 +93,7 @@ class TransactionsSummary:
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(None, None, None, None, None, None, None, None, None, error=error_result)
+            raise CoinbaseAdvancedTradeAPIError(error=error_result)
 
         result = json.loads(response.text)
         return cls(**result)

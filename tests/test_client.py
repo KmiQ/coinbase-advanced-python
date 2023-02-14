@@ -7,6 +7,7 @@ from unittest import mock
 from datetime import datetime
 
 from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, Side, StopDirection, Granularity
+from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 from tests.fixtures.fixtures import \
     fixture_default_failure_response, \
     fixture_get_account_success_response,\
@@ -91,16 +92,14 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        account = client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
-
-        # Check output
-
-        self.assertIsNotNone(account)
-        self.assertDictEqual(account.error, {
-            "error": "unknown",
-            "error_details": "some error details here",
-            "message": "some additional message here"
-        })
+        try:
+            client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
+        except CoinbaseAdvancedTradeAPIError as api_error:
+            self.assertDictEqual(api_error.error, {
+                "error": "unknown",
+                "error_details": "some error details here",
+                "message": "some additional message here"
+            })
 
     @mock.patch("coinbaseadvanced.client.requests.get")
     def test_list_accounts_success(self, mock_get):
@@ -149,8 +148,6 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIsNotNone(account.hold)
             self.assertIsNotNone(account.ready)
 
-            self.assertIsNone(account.error)
-
     @mock.patch("coinbaseadvanced.client.requests.get")
     def test_list_accounts_failure(self, mock_get):
 
@@ -160,16 +157,15 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        page = client.list_accounts()
-
         # Check output
-
-        self.assertIsNotNone(page)
-        self.assertDictEqual(page.error, {
-            "error": "unknown",
-            "error_details": "some error details here",
-            "message": "some additional message here"
-        })
+        try:
+            client.list_accounts()
+        except CoinbaseAdvancedTradeAPIError as page_error:
+            self.assertDictEqual(page_error.error, {
+                "error": "unknown",
+                "error_details": "some error details here",
+                "message": "some additional message here"
+            })
 
     @mock.patch("coinbaseadvanced.client.requests.post")
     def test_create_limit_order_success(self, mock_post):
@@ -391,33 +387,33 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        order_created = client.create_limit_order("nlksdbnfgjd8y9mn,m234",
-                                                  "ALGO-USD",
-                                                  Side.BUY,
-                                                  ".19",
-                                                  10000)
-
         # Check output
 
-        self.assertIsNotNone(order_created)
-        self.assertDictEqual(order_created.error, {
-            "success": False,
-            "failure_reason": "UNKNOWN_FAILURE_REASON",
-            "order_id": "",
-            "error_response": {
-                "error": "INSUFFICIENT_FUND",
-                "message": "Insufficient balance in source account",
-                "error_details": "",
-                "preview_failure_reason": "PREVIEW_INSUFFICIENT_FUND"
-            },
-            "order_configuration": {
-                "limit_limit_gtc": {
-                    "base_size": "10000",
-                    "limit_price": ".19",
-                    "post_only": False
+        try:
+            client.create_limit_order("nlksdbnfgjd8y9mn,m234",
+                                      "ALGO-USD",
+                                      Side.BUY,
+                                      ".19",
+                                      10000)
+        except CoinbaseAdvancedTradeAPIError as order_error:
+            self.assertDictEqual(order_error.error, {
+                "success": False,
+                "failure_reason": "UNKNOWN_FAILURE_REASON",
+                "order_id": "",
+                "error_response": {
+                    "error": "INSUFFICIENT_FUND",
+                    "message": "Insufficient balance in source account",
+                    "error_details": "",
+                    "preview_failure_reason": "PREVIEW_INSUFFICIENT_FUND"
+                },
+                "order_configuration": {
+                    "limit_limit_gtc": {
+                        "base_size": "10000",
+                        "limit_price": ".19",
+                        "post_only": False
+                    }
                 }
-            }
-        })
+            })
 
     @mock.patch("coinbaseadvanced.client.requests.post")
     def test_cancel_orders_success(self, mock_post):
@@ -501,8 +497,6 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIsNotNone(order.created_time)
             self.assertIsNotNone(order.settled)
             self.assertIsNotNone(order.filled_size)
-
-            self.assertIsNone(order.error)
 
     @mock.patch("coinbaseadvanced.client.requests.get")
     def test_list_fills_success(self, mock_get):

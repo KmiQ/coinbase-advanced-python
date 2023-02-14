@@ -8,6 +8,8 @@ from datetime import datetime
 from typing import List
 import requests
 
+from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
+
 
 class AvailableBalance:
     """
@@ -40,12 +42,10 @@ class Account:
     ready: bool
     hold: AvailableBalance
 
-    error: dict
-
     def __init__(
         self, uuid: UUID, name: str, currency: str, available_balance: dict, default: bool,
             active: bool, created_at: datetime, updated_at: datetime, deleted_at: datetime,
-            type: str, ready: bool, hold: dict,  error=None) -> None:
+            type: str, ready: bool, hold: dict) -> None:
         self.uuid = uuid
         self.name = name
         self.currency = currency
@@ -60,8 +60,6 @@ class Account:
         self.ready = ready
         self.hold = AvailableBalance(**hold) if hold is not None else None
 
-        self.error = error
-
     @classmethod
     def from_response(cls, response: requests.Response) -> 'Account':
         """
@@ -70,8 +68,7 @@ class Account:
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(None, None, None, None, None, None,
-                       None, None, None, None, None, None, error=error_result)
+            raise CoinbaseAdvancedTradeAPIError(error=error_result)
 
         result = json.loads(response.text)
         account_dict = result['account']
@@ -88,14 +85,12 @@ class AccountsPage:
     cursor: str
     size: int
 
-    error: dict
-
     def __init__(self,
                  accounts: List[dict],
                  has_next: bool,
                  cursor: str,
                  size: int,
-                 error=None) -> None:
+                 ) -> None:
 
         self.accounts = list(map(lambda x: Account(**x), accounts))\
             if accounts is not None else None
@@ -103,8 +98,6 @@ class AccountsPage:
         self.has_next = has_next
         self.cursor = cursor
         self.size = size
-
-        self.error = error
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'AccountsPage':
@@ -114,7 +107,7 @@ class AccountsPage:
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(None, None, None, None, error=error_result)
+            raise CoinbaseAdvancedTradeAPIError(error=error_result)
 
         result = json.loads(response.text)
         return cls(**result)

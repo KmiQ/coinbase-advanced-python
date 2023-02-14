@@ -6,6 +6,8 @@ from typing import List
 from datetime import datetime
 from enum import Enum
 
+from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
+
 import json
 import requests
 
@@ -216,7 +218,6 @@ class Order:
     reject_message: str
     cancel_message: str
 
-    error: dict
     order_error: OrderError
 
     def __init__(self, order_id: str, product_id: str, side: str, client_order_id: str,
@@ -245,7 +246,7 @@ class Order:
                  reject_message: str = None,
                  cancel_message: str = None,
 
-                 error: dict = None, order_error: dict = None) -> None:
+                 order_error: dict = None) -> None:
         self.order_id = order_id
         self.product_id = product_id
         self.side = side
@@ -278,7 +279,6 @@ class Order:
         self.reject_message = reject_message
         self.cancel_message = cancel_message
 
-        self.error = error
         self.order_error = OrderError(**order_error) if order_error is not None else None
 
     @classmethod
@@ -289,10 +289,7 @@ class Order:
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(
-                None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None, None, None, error_result, None)
+            raise CoinbaseAdvancedTradeAPIError(error=error_result)
 
         result = json.loads(response.text)
 
@@ -301,7 +298,7 @@ class Order:
             return cls(
                 None, None, None, None, None, None, None, None, None,
                 None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None, result['failure_reason'],
+                None, None, None, None, None, None, None,
                 error_response)
 
         success_response = result['success_response']
@@ -316,10 +313,7 @@ class Order:
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(
-                None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None, None, None, error_result, None)
+            raise CoinbaseAdvancedTradeAPIError(error=error_result)
 
         result = json.loads(response.text)
 
@@ -338,22 +332,18 @@ class OrdersPage:
     cursor: str
     sequence: int
 
-    error: dict
-
     def __init__(self,
                  orders: List[dict],
                  has_next: bool,
                  cursor: str,
                  sequence: int,
-                 error=None) -> None:
+                 ) -> None:
 
         self.orders = list(map(lambda x: Order(**x), orders)) if orders is not None else None
 
         self.has_next = has_next
         self.cursor = cursor
         self.sequence = sequence
-
-        self.error = error
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'OrdersPage':
@@ -363,7 +353,7 @@ class OrdersPage:
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(None, None, None, None, error=error_result)
+            raise CoinbaseAdvancedTradeAPIError(error=error_result)
 
         result = json.loads(response.text)
         return cls(**result)
@@ -391,12 +381,8 @@ class OrderBatchCancellation:
 
     results: List[OrderCancellation]
 
-    error: dict
-
-    def __init__(self, results: List[OrderCancellation], error: str = None) -> None:
+    def __init__(self, results: List[OrderCancellation]) -> None:
         self.results = results
-
-        self.error = error
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'Order':
@@ -406,7 +392,7 @@ class OrderBatchCancellation:
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(None, error_result)
+            raise CoinbaseAdvancedTradeAPIError(error=error_result)
 
         result = json.loads(response.text)
 
@@ -477,18 +463,14 @@ class FillsPage:
     fills: List[Fill]
     cursor: str
 
-    error: dict
-
     def __init__(self,
                  fills: List[dict],
                  cursor: str,
-                 error=None) -> None:
+                 ) -> None:
 
         self.fills = list(map(lambda x: Fill(**x), fills)) if fills is not None else None
 
         self.cursor = cursor
-
-        self.error = error
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'FillsPage':
@@ -498,7 +480,7 @@ class FillsPage:
 
         if not response.ok:
             error_result = json.loads(response.text)
-            return cls(None, None, error=error_result)
+            raise CoinbaseAdvancedTradeAPIError(error=error_result)
 
         result = json.loads(response.text)
         return cls(**result)
