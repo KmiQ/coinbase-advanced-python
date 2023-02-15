@@ -26,7 +26,7 @@ setup(
     long_description_content_type="text/markdown",
     url='https://github.com/KmiQ/coinbase-advanced-python/',
     author='Camilo Quintas',
-    author_email='valleycryptostreet@gmail.com',
+    author_email='kmiloc89@gmail.com',
     keywords=['api', 'coinbase', 'bitcoin', 'client'],
     install_requires=requirements,
     classifiers=[
