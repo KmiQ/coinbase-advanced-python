@@ -18,7 +18,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name='coinbaseadvanced',
     version=coinbaseadvanced.__version__,
-    packages=find_packages(),
+    packages=find_packages(exclude=['*.tests', '*.tests.*', 'tests.*', 'tests']),
     include_package_data=True,
     license='MIT',
     description='Coinbase Advanced Trade API client library.',
