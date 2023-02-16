@@ -179,14 +179,14 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         order_created = client.create_limit_order("lknalksdj89asdkl",
                                                   "ALGO-USD",
                                                   Side.BUY,
-                                                  ".19",
+                                                  .19,
                                                   5)
 
         # Check input
 
         call_args = mock_post.call_args_list
 
-        order_config = {'limit_limit_gtc': {'limit_price': '.19', 'base_size': '5'}}
+        order_config = {'limit_limit_gtc': {'limit_price': '0.19', 'base_size': '5'}}
 
         for call in call_args:
             args, kwargs = call
