@@ -25,6 +25,7 @@ setup(
     long_description=readme,
     long_description_content_type="text/markdown",
     url='https://github.com/KmiQ/coinbase-advanced-python/',
+    download_url=f"https://github.com/KmiQ/coinbase-advanced-python/archive/refs/tags/{coinbaseadvanced.__version__}.tar.gz",
     author='Camilo Quintas',
     author_email='kmiloc89@gmail.com',
     keywords=['api', 'coinbase', 'bitcoin', 'client'],
