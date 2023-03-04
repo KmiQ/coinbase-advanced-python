@@ -69,6 +69,28 @@ class CoinbaseAdvancedTradeAPIClient(object):
         page = AccountsPage.from_response(response)
         return page
 
+    def list_accounts_all(self, limit: int = 250, cursor: str = None) -> AccountsPage:
+        """
+        Get all authenticated accounts for the current user
+        
+        To minimize the number of calls the default limit has been 
+        increased to the maximum coinbase allows.
+        """
+
+        # get first page of accounts
+        full_page = self.list_accounts(limit)
+        # if there are more accounts to request, do so
+        while full_page.has_next:
+            page = self.list_accounts(limit, cursor = full_page.cursor)
+            # update the statistics and transfer the cursor and has_next flag
+            full_page.size += page.size
+            full_page.cursor = page.cursor
+            full_page.has_next = page.has_next
+            # extend the accounts list
+            full_page.accounts.extend(page.accounts)
+
+        return full_page
+
     def get_account(self, account_id: str) -> Account:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getaccount
