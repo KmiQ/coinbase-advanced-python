@@ -567,26 +567,30 @@ class CoinbaseAdvancedTradeAPIClient(object):
         Gets all requested product candles
         """
 
-        # calculate total requested time delta in minutes
-        diff = int((end_date - start_date) / timedelta(minutes=1))
-        print("diff in minutes: ", diff)
-
-        # calculate 300 granularity entries in minutes 
+        # pre-calculate 300 granularity entries in minutes 
         minutesX300 = Gran[granularity.value] * 300
-        print("300 x granularity: ", minutesX300)
-        print("Start: ", start_date.timestamp(), "End: ", end_date.timestamp())
 
         # run through from most recent to oldest
+
         loop_end_date = end_date
+        # calculate start date for 300 entries (max allowed by coinbase)
         loop_start_date = end_date - timedelta(minutes=minutesX300)
+        # avoid asking for more than requested
         if loop_start_date < start_date:
             loop_start_date = start_date
+        # get the initial batch of candles
         product_candles = self.get_product_candles(product_id, loop_start_date, loop_end_date, granularity)
+
+        # while we still have not gotten all the requested candles loop until all are requested
         while loop_start_date > start_date:
+            # offset end by one granularity to avoid duplicates
             loop_end_date = loop_start_date - timedelta(minutes=Gran[granularity.value])
+            # recalculate start for the previous (older) 300 candles
             loop_start_date = loop_end_date - timedelta(minutes=minutesX300)
+            # avoid asking for more than requested
             if loop_start_date < start_date:
                 loop_start_date = start_date
+            # get the next batch and extend the list
             product_candles.candles.extend(self.get_product_candles(product_id, loop_start_date, loop_end_date,granularity).candles)
         
         return product_candles
