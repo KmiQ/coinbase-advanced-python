@@ -3,7 +3,7 @@ API Client for Coinbase Advanced Trade endpoints.
 """
 
 from typing import List
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import hmac
 import hashlib
@@ -13,7 +13,7 @@ import requests
 
 from coinbaseadvanced.models.fees import TransactionsSummary
 from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage,\
-    TradesPage, ProductType, Granularity
+    TradesPage, ProductType, Granularity, Gran
 from coinbaseadvanced.models.accounts import AccountsPage, Account
 from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation,\
     FillsPage, Side, StopDirection, OrderType
@@ -555,6 +555,40 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                 timeout=self.timeout)
 
         product_candles = CandlesPage.from_response(response)
+        return product_candles
+
+    def get_product_candles_all(
+           self,
+            product_id: str,
+            start_date: datetime,
+            end_date: datetime,
+            granularity: Granularity) -> CandlesPage:
+        """
+        Gets all requested product candles
+        """
+
+        # calculate total requested time delta in minutes
+        diff = int((end_date - start_date) / timedelta(minutes=1))
+        print("diff in minutes: ", diff)
+
+        # calculate 300 granularity entries in minutes 
+        minutesX300 = Gran[granularity.value] * 300
+        print("300 x granularity: ", minutesX300)
+        print("Start: ", start_date.timestamp(), "End: ", end_date.timestamp())
+
+        # run through from most recent to oldest
+        loop_end_date = end_date
+        loop_start_date = end_date - timedelta(minutes=minutesX300)
+        if loop_start_date < start_date:
+            loop_start_date = start_date
+        product_candles = self.get_product_candles(product_id, loop_start_date, loop_end_date, granularity)
+        while loop_start_date > start_date:
+            loop_end_date = loop_start_date - timedelta(minutes=Gran[granularity.value])
+            loop_start_date = loop_end_date - timedelta(minutes=minutesX300)
+            if loop_start_date < start_date:
+                loop_start_date = start_date
+            product_candles.candles.extend(self.get_product_candles(product_id, loop_start_date, loop_end_date,granularity).candles)
+        
         return product_candles
 
     def get_market_trades(
