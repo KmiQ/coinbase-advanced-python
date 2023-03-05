@@ -13,7 +13,7 @@ import requests
 
 from coinbaseadvanced.models.fees import TransactionsSummary
 from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage,\
-    TradesPage, ProductType, Granularity, Gran
+    Candle, TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
 from coinbaseadvanced.models.accounts import AccountsPage, Account
 from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation,\
     FillsPage, Side, StopDirection, OrderType
@@ -68,28 +68,6 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         page = AccountsPage.from_response(response)
         return page
-
-    def list_accounts_all(self, limit: int = 250, cursor: str = None) -> AccountsPage:
-        """
-        Get all authenticated accounts for the current user
-        
-        To minimize the number of calls the default limit has been 
-        increased to the maximum coinbase allows.
-        """
-
-        # get first page of accounts
-        full_page = self.list_accounts(limit)
-        # if there are more accounts to request, do so
-        while full_page.has_next:
-            page = self.list_accounts(limit, cursor = full_page.cursor)
-            # update the statistics and transfer the cursor and has_next flag
-            full_page.size += page.size
-            full_page.cursor = page.cursor
-            full_page.has_next = page.has_next
-            # extend the accounts list
-            full_page.accounts.extend(page.accounts)
-
-        return full_page
 
     def get_account(self, account_id: str) -> Account:
         """
@@ -589,31 +567,30 @@ class CoinbaseAdvancedTradeAPIClient(object):
         Gets all requested product candles
         """
 
-        # pre-calculate 300 granularity entries in minutes 
-        minutesX300 = Gran[granularity.value] * 300
+        # pre-calculate granularity entries in minutes 
+        granularity_minutes = timedelta(minutes=GRANULARITY_MAP_IN_MINUTES[granularity.value])
+        # request size of 300 (max allowed by coinbase)
+        granularity_minutes_x300 = granularity_minutes * 300
 
-        # run through from most recent to oldest
+        product_candles = CandlesPage({})
 
-        loop_end_date = end_date
-        # calculate start date for 300 entries (max allowed by coinbase)
-        loop_start_date = end_date - timedelta(minutes=minutesX300)
-        # avoid asking for more than requested
-        if loop_start_date < start_date:
-            loop_start_date = start_date
-        # get the initial batch of candles
-        product_candles = self.get_product_candles(product_id, loop_start_date, loop_end_date, granularity)
+        # run through from most recent to oldest to preserve time order in list
+
+        end = end_date
+        # calculate start date
+        begin = end_date - granularity_minutes_x300
 
         # while we still have not gotten all the requested candles loop until all are requested
-        while loop_start_date > start_date:
-            # offset end by one granularity to avoid duplicates
-            loop_end_date = loop_start_date - timedelta(minutes=Gran[granularity.value])
-            # recalculate start for the previous (older) 300 candles
-            loop_start_date = loop_end_date - timedelta(minutes=minutesX300)
+        while end > start_date:
             # avoid asking for more than requested
-            if loop_start_date < start_date:
-                loop_start_date = start_date
+            if begin < start_date:
+                begin = start_date
             # get the next batch and extend the list
-            product_candles.candles.extend(self.get_product_candles(product_id, loop_start_date, loop_end_date,granularity).candles)
+            product_candles.candles.extend(self.get_product_candles(product_id, begin, end,granularity).candles)
+            # offset end by one granularity to avoid duplicates
+            end = begin - granularity_minutes
+            # recalculate start for the previous (older) 300 candles
+            begin = begin - (granularity_minutes_x300 + granularity_minutes)
         
         return product_candles
 
