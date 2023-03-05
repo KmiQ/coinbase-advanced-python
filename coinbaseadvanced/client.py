@@ -18,7 +18,6 @@ from coinbaseadvanced.models.accounts import AccountsPage, Account
 from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation,\
     FillsPage, Side, StopDirection, OrderType
 
-
 class CoinbaseAdvancedTradeAPIClient(object):
     """
     API Client for Coinbase Advanced Trade endpoints.
@@ -68,6 +67,28 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         page = AccountsPage.from_response(response)
         return page
+
+    def list_accounts_all(self, limit: int = 250, cursor: str = None) -> AccountsPage:
+        """
+        Get all authenticated accounts for the current user
+        
+        To minimize the number of calls the default limit has been 
+        increased to the maximum coinbase allows.
+        """
+
+        full_page = AccountsPage([], has_next=True, cursor=cursor, size=0)
+
+        # if there are more accounts to request, do so
+        while full_page.has_next:
+            page = self.list_accounts(limit, cursor = full_page.cursor)
+            # update the statistics and transfer the cursor and has_next flag
+            full_page.size += page.size
+            full_page.cursor = page.cursor
+            full_page.has_next = page.has_next
+            # extend the accounts list
+            full_page.accounts.extend(page.accounts)
+
+        return full_page
 
     def get_account(self, account_id: str) -> Account:
         """
@@ -440,6 +461,22 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         page = FillsPage.from_response(response)
         return page
+
+    def list_fills_all(self, order_id: str = None, product_id: str = None, start_date: datetime = None,
+                   end_date: datetime = None, cursor: str = None, limit: int = 100) -> FillsPage:
+
+        fills = FillsPage(fills=[], cursor=cursor)
+
+        loop_again = True
+        while loop_again:
+            response = self.list_fills(order_id=order_id, product_id=product_id, start_date=start_date,
+                end_date=end_date, cursor=fills.cursor, limit=limit)
+            fills.cursor = response.cursor
+            fills.fills.extend(response.fills)
+            if fills.cursor == '':
+                loop_again = False
+        
+        return fills
 
     def get_order(self, order_id: str) -> Order:
         """
