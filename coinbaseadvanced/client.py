@@ -399,6 +399,40 @@ class CoinbaseAdvancedTradeAPIClient(object):
         page = OrdersPage.from_response(response)
         return page
 
+    def list_orders_all(
+            self,
+            product_id: str = None,
+            order_status: List[str] = None,
+            limit: int = 999,
+            start_date: datetime = None,
+            end_date: datetime = None,
+            user_native_currency: str = None,
+            order_type: OrderType = None,
+            order_side: Side = None,
+            cursor: str = None,
+            product_type: ProductType = None) -> OrdersPage:
+        
+        orders_page = OrdersPage([], has_next=True, cursor=cursor, sequence=0)
+
+        while orders_page.has_next:
+            page = self.list_orders(
+                product_id=product_id, 
+                order_status=order_status, 
+                limit=limit,
+                start_date=start_date,
+                end_date=end_date,
+                user_native_currency=user_native_currency,
+                order_type=order_type,
+                order_side=order_side,
+                cursor=orders_page.cursor,
+                product_type=product_type )
+            orders_page.has_next = page.has_next
+            orders_page.cursor = page.cursor
+            orders_page.sequence = page.sequence
+            orders_page.orders.extend(page.orders)
+
+        return orders_page
+
     def list_fills(self, order_id: str = None, product_id: str = None, start_date: datetime = None,
                    end_date: datetime = None, cursor: str = None, limit: int = 100) -> FillsPage:
         """
@@ -467,14 +501,11 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         fills = FillsPage(fills=[], cursor=cursor)
 
-        loop_again = True
-        while loop_again:
+        while fills.cursor != '':
             response = self.list_fills(order_id=order_id, product_id=product_id, start_date=start_date,
                 end_date=end_date, cursor=fills.cursor, limit=limit)
             fills.cursor = response.cursor
             fills.fills.extend(response.fills)
-            if fills.cursor == '':
-                loop_again = False
         
         return fills
 
@@ -623,7 +654,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
             if begin < start_date:
                 begin = start_date
             # get the next batch and extend the list
-            product_candles.candles.extend(self.get_product_candles(product_id, begin, end,granularity).candles)
+            product_candles.candles.extend(self.get_product_candles(product_id, begin, end, granularity).candles)
             # offset end by one granularity to avoid duplicates
             end = begin - granularity_minutes
             # recalculate start for the previous (older) 300 candles
