@@ -43,6 +43,14 @@ class OrderType(Enum):
     STOP_LIMIT = "STOP_LIMIT"
 
 
+class OrderPlacementSource(Enum):
+    """
+    Enum representing placements source for an order.
+    """
+    UNKNOWN = "UNKNOWN_PLACEMENT_SOURCE"
+    RETAIL_ADVANCDED = "RETAIL_ADVANCED"
+
+
 class OrderError:
     """
     Class encapsulating order error fields.
@@ -217,6 +225,8 @@ class Order:
     product_type: str
     reject_message: str
     cancel_message: str
+    order_placement_source: str
+    outstanding_hold_amount: str
 
     order_error: OrderError
 
@@ -245,6 +255,8 @@ class Order:
                  product_type: str = None,
                  reject_message: str = None,
                  cancel_message: str = None,
+                 order_placement_source: str = None,
+                 outstanding_hold_amount: str = None,
 
                  order_error: dict = None) -> None:
         self.order_id = order_id
@@ -278,6 +290,8 @@ class Order:
         self.product_type = product_type
         self.reject_message = reject_message
         self.cancel_message = cancel_message
+        self.order_placement_source = order_placement_source
+        self.outstanding_hold_amount = outstanding_hold_amount
 
         self.order_error = OrderError(**order_error) if order_error is not None else None
 
