@@ -288,8 +288,7 @@ class Order:
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
 
@@ -312,8 +311,7 @@ class Order:
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
 

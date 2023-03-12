@@ -12,8 +12,11 @@ class CoinbaseAdvancedTradeAPIError(Exception):
     and represent the default generic error when endpoint request fail.
     """
 
-    def __init__(self, error: dict):
-        self.error = error
+    def __init__(self, error_dict: dict):
+        self.error_dict = error_dict
+
+    def __str__(self):
+        return str(self.error_dict)
 
     @classmethod
     def not_ok_response(cls, response: requests.Response) -> 'CoinbaseAdvancedTradeAPIError':
@@ -26,4 +29,4 @@ class CoinbaseAdvancedTradeAPIError(Exception):
         except ValueError as error:
             error_result = {'reason': response.text}
 
-        return cls(error=error_result)
+        return cls(error_dict=error_result)
