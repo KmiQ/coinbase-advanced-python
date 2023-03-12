@@ -67,8 +67,7 @@ class Account:
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
         account_dict = result['account']
@@ -106,8 +105,7 @@ class AccountsPage:
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
         return cls(**result)

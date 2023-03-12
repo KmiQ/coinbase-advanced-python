@@ -95,7 +95,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         try:
             client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
         except CoinbaseAdvancedTradeAPIError as api_error:
-            self.assertDictEqual(api_error.error, {
+            self.assertDictEqual(api_error.error_dict, {
                 "error": "unknown",
                 "error_details": "some error details here",
                 "message": "some additional message here"
@@ -161,7 +161,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         try:
             client.list_accounts()
         except CoinbaseAdvancedTradeAPIError as page_error:
-            self.assertDictEqual(page_error.error, {
+            self.assertDictEqual(page_error.error_dict, {
                 "error": "unknown",
                 "error_details": "some error details here",
                 "message": "some additional message here"
@@ -396,7 +396,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
                                       ".19",
                                       10000)
         except CoinbaseAdvancedTradeAPIError as order_error:
-            self.assertDictEqual(order_error.error, {
+            self.assertDictEqual(order_error.error_dict, {
                 "success": False,
                 "failure_reason": "UNKNOWN_FAILURE_REASON",
                 "order_id": "",
@@ -689,7 +689,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         for call in call_args:
             args, kwargs = call
             self.assertIn(
-                'https://api.coinbase.com/api/v3/brokerage/products/ALGO-USD/candles?start=1672549200&end=1675141200&granularity=ONE_DAY',
+                'https://api.coinbase.com/api/v3/brokerage/products/ALGO-USD/candles?start=1672560000&end=1675152000&granularity=ONE_DAY',
                 args)
 
             headers = kwargs['headers']
