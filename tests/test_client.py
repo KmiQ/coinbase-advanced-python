@@ -689,7 +689,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         for call in call_args:
             args, kwargs = call
             self.assertIn(
-                'https://api.coinbase.com/api/v3/brokerage/products/ALGO-USD/candles?start=1672549200&end=1675141200&granularity=ONE_DAY',
+                'https://api.coinbase.com/api/v3/brokerage/products/ALGO-USD/candles?start=1672560000&end=1675152000&granularity=ONE_DAY',
                 args)
 
             headers = kwargs['headers']
