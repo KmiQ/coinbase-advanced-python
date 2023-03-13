@@ -4,7 +4,7 @@ CoinbaseAdvancedTradeAPIClient unit tests.
 
 import unittest
 from unittest import mock
-from datetime import datetime
+from datetime import datetime, timezone
 
 from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, Side, StopDirection, Granularity
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
@@ -727,8 +727,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
         product_candles = client.get_product_candles(
-            "ALGO-USD", start_date=datetime(2023, 1, 1),
-            end_date=datetime(2023, 1, 31),
+            "ALGO-USD", start_date=datetime(2023, 1, 1, tzinfo=timezone.utc),
+            end_date=datetime(2023, 1, 31, tzinfo=timezone.utc),
             granularity=Granularity.ONE_DAY)
 
         # Check input
@@ -738,7 +738,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         for call in call_args:
             args, kwargs = call
             self.assertIn(
-                'https://api.coinbase.com/api/v3/brokerage/products/ALGO-USD/candles?start=1672560000&end=1675152000&granularity=ONE_DAY',
+                'https://api.coinbase.com/api/v3/brokerage/products/ALGO-USD/candles?start=1672531200&end=1675123200&granularity=ONE_DAY',
                 args)
 
             headers = kwargs['headers']
