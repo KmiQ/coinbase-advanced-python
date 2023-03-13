@@ -106,7 +106,7 @@ class Product:
                  alias: str,
                  alias_to: list,
                  base_display_symbol: str,
-                 quote_display_symbol: str,
+                 quote_display_symbol: str, **kwargs
                  ) -> None:
         self.product_id = product_id
         self.price = price
@@ -147,8 +147,7 @@ class Product:
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
         product_dict = result
@@ -163,7 +162,7 @@ class ProductsPage:
     products: List[Product]
     num_products: int
 
-    def __init__(self, products: List[Product], num_products: int) -> None:
+    def __init__(self, products: List[Product], num_products: int, **kwargs) -> None:
         self.products = list(map(lambda x: Product(**x), products)) \
             if products is not None else None
 
@@ -176,8 +175,7 @@ class ProductsPage:
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
         return cls(**result)
@@ -195,7 +193,7 @@ class Candle:
     close: str
     volume: int
 
-    def __init__(self, start: int, low: str, high: str, open: str, close: str, volume: int) -> None:
+    def __init__(self, start: int, low: str, high: str, open: str, close: str, volume: int, **kwargs) -> None:
         self.start = start
         self.low = low
         self.high = high
@@ -211,7 +209,7 @@ class CandlesPage:
 
     candles: List[Candle]
 
-    def __init__(self, candles: List[Candle]) -> None:
+    def __init__(self, candles: List[Candle], **kwargs) -> None:
         self.candles = list(map(lambda x: Candle(**x), candles)) if candles is not None else None
 
     @classmethod
@@ -221,8 +219,7 @@ class CandlesPage:
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
         return cls(**result)
@@ -250,7 +247,7 @@ class Trade:
                  time: datetime,
                  side: str,
                  bid: str,
-                 ask: str) -> None:
+                 ask: str, **kwargs) -> None:
         self.trade_id = trade_id
         self.product_id = product_id
         self.price = price
@@ -273,7 +270,7 @@ class TradesPage:
     def __init__(self,
                  trades: List[Trade],
                  best_bid: str,
-                 best_ask: str,
+                 best_ask: str, **kwargs
                  ) -> None:
         self.trades = list(map(lambda x: Trade(**x), trades)) if trades is not None else None
         self.best_bid = best_bid
@@ -286,8 +283,7 @@ class TradesPage:
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
         return cls(**result)

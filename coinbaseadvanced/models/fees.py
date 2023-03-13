@@ -24,7 +24,7 @@ class FeeTier:
                  usd_from: int,
                  usd_to: str,
                  taker_fee_rate: str,
-                 maker_fee_rate: str) -> None:
+                 maker_fee_rate: str, **kwargs) -> None:
         self.pricing_tier = pricing_tier
         self.usd_from = usd_from
         self.usd_to = usd_to
@@ -40,7 +40,7 @@ class GoodsAndServicesTax:
     rate: str
     type: str
 
-    def __init__(self, rate: str, type: str) -> None:
+    def __init__(self, rate: str, type: str, **kwargs) -> None:
         self.rate = rate
         self.type = type
 
@@ -52,7 +52,7 @@ class MarginRate:
 
     value: str
 
-    def __init__(self, value: str) -> None:
+    def __init__(self, value: str, **kwargs) -> None:
         self.value = value
 
 
@@ -73,7 +73,7 @@ class TransactionsSummary:
 
     def __init__(self, total_volume: int, total_fees: int, fee_tier: dict, margin_rate: dict,
                  goods_and_services_tax: dict, advanced_trade_only_volume: int, advanced_trade_only_fees: int,
-                 coinbase_pro_volume: int, coinbase_pro_fees: int) -> None:
+                 coinbase_pro_volume: int, coinbase_pro_fees: int, **kwargs) -> None:
         self.total_volume = total_volume
         self.total_fees = total_fees
         self.fee_tier = FeeTier(**fee_tier) if fee_tier is not None else None
@@ -92,8 +92,7 @@ class TransactionsSummary:
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
         return cls(**result)

@@ -15,7 +15,7 @@ from coinbaseadvanced.models.fees import TransactionsSummary
 from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage,\
     TradesPage, ProductType, Granularity, Gran
 from coinbaseadvanced.models.accounts import AccountsPage, Account
-from coinbaseadvanced.models.orders import OrdersPage, Order, OrderBatchCancellation,\
+from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Order, OrderBatchCancellation,\
     FillsPage, Side, StopDirection, OrderType
 
 
@@ -298,7 +298,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
             order_type: OrderType = None,
             order_side: Side = None,
             cursor: str = None,
-            product_type: ProductType = None) -> OrdersPage:
+            product_type: ProductType = None,
+            order_placement_source: OrderPlacementSource = None,
+    ) -> OrdersPage:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_gethistoricalorders
 
@@ -329,6 +331,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
                   When provided, the response returns responses after this cursor.
         - product_type: Only orders matching this product type are returned.
                         Default is to return all product types.
+        - order_placement_source: String. Only orders matching this placement source are returned.
+                                  Default is to return RETAIL_ADVANCED placement source.
         """
 
         request_path = '/api/v3/brokerage/orders/historical/batch'
@@ -368,6 +372,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         if product_type is not None:
             query_params = self._next_param(query_params) + 'product_type=' + product_type.value
+
+        if order_placement_source is not None:
+            query_params = self._next_param(query_params) + 'order_placement_source=' + order_placement_source.value
 
         headers = self._build_request_headers(method, request_path)
 
