@@ -19,7 +19,7 @@ class AvailableBalance:
     value: str
     currency: str
 
-    def __init__(self, value: str, currency: str) -> None:
+    def __init__(self, value: str, currency: str, **kwargs) -> None:
         self.value = value
         self.currency = currency
 
@@ -45,7 +45,7 @@ class Account:
     def __init__(
         self, uuid: UUID, name: str, currency: str, available_balance: dict, default: bool,
             active: bool, created_at: datetime, updated_at: datetime, deleted_at: datetime,
-            type: str, ready: bool, hold: dict) -> None:
+            type: str, ready: bool, hold: dict, **kwargs) -> None:
         self.uuid = uuid
         self.name = name
         self.currency = currency
@@ -89,6 +89,7 @@ class AccountsPage:
                  has_next: bool,
                  cursor: str,
                  size: int,
+                 **kwargs
                  ) -> None:
 
         self.accounts = list(map(lambda x: Account(**x), accounts))\
