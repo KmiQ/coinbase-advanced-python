@@ -35,7 +35,8 @@
             "reject_message": "",
             "cancel_message": "User requested cancel",
             "order_placement_source": "UNKNOWN_PLACEMENT_SOURCE",
-            "outstanding_hold_amount": "0"
+            "outstanding_hold_amount": "0",
+            "extra_unnamed_arg": "0"
         },
         {
             "order_id": "5f96405c-2246-445f-8eb8-839a63c1fe71",

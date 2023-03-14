@@ -4,7 +4,7 @@ CoinbaseAdvancedTradeAPIClient unit tests.
 
 import unittest
 from unittest import mock
-from datetime import datetime
+from datetime import datetime, timezone
 
 from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, Side, StopDirection, Granularity
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
@@ -21,6 +21,7 @@ from tests.fixtures.fixtures import \
     fixture_cancel_orders_success_response,\
     fixture_list_orders_success_response,\
     fixture_list_orders_all_success_response,\
+    fixture_list_orders_with_extra_unnamed_success_response,\
     fixture_list_fills_success_response,\
     fixture_list_fills_all_success_response,\
     fixture_get_order_success_response, \
@@ -98,7 +99,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         try:
             client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
         except CoinbaseAdvancedTradeAPIError as api_error:
-            self.assertDictEqual(api_error.error, {
+            self.assertDictEqual(api_error.error_dict, {
                 "error": "unknown",
                 "error_details": "some error details here",
                 "message": "some additional message here"
@@ -211,7 +212,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         try:
             client.list_accounts()
         except CoinbaseAdvancedTradeAPIError as page_error:
-            self.assertDictEqual(page_error.error, {
+            self.assertDictEqual(page_error.error_dict, {
                 "error": "unknown",
                 "error_details": "some error details here",
                 "message": "some additional message here"
@@ -446,7 +447,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
                                       ".19",
                                       10000)
         except CoinbaseAdvancedTradeAPIError as order_error:
-            self.assertDictEqual(order_error.error, {
+            self.assertDictEqual(order_error.error_dict, {
                 "success": False,
                 "failure_reason": "UNKNOWN_FAILURE_REASON",
                 "order_id": "",
@@ -547,6 +548,55 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIsNotNone(order.created_time)
             self.assertIsNotNone(order.settled)
             self.assertIsNotNone(order.filled_size)
+
+    @mock.patch("coinbaseadvanced.client.requests.get")
+    def test_list_orders_with_extra_unnamed_arg_success(self, mock_get):
+
+        mock_resp = fixture_list_orders_with_extra_unnamed_success_response()
+        mock_get.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        orders_page = client.list_orders(start_date=datetime(2023, 1, 25),
+                                         end_date=datetime(2023, 1, 30),
+                                         limit=10)
+
+        # Check input
+
+        call_args = mock_get.call_args_list
+
+        for call in call_args:
+            args, kwargs = call
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/orders/historical/batch?limit=10&start_date=2023-01-25T00:00:00Z&end_date=2023-01-30T00:00:00Z',
+                args)
+
+            headers = kwargs['headers']
+            self.assertIn('accept', headers)
+            self.assertIn('CB-ACCESS-KEY', headers)
+            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
+            self.assertIn('CB-ACCESS-SIGN', headers)
+
+        # Check output
+
+        self.assertIsNotNone(orders_page)
+        self.assertEqual(orders_page.has_next, True)
+        self.assertIsNotNone(orders_page.cursor)
+
+        orders = orders_page.orders
+        self.assertEqual(len(orders), 10)
+
+        for order in orders:
+            self.assertIsNotNone(order)
+            self.assertIsNotNone(order.order_id)
+            self.assertIsNotNone(order.product_id)
+            self.assertIsNotNone(order.status)
+            self.assertIsNotNone(order.time_in_force)
+            self.assertIsNotNone(order.created_time)
+            self.assertIsNotNone(order.settled)
+            self.assertIsNotNone(order.filled_size)
+
 
     @mock.patch("coinbaseadvanced.client.requests.get")
     def test_list_orders_all_success(self, mock_get):
@@ -823,8 +873,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
         product_candles = client.get_product_candles(
-            "ALGO-USD", start_date=datetime(2023, 1, 1),
-            end_date=datetime(2023, 1, 31),
+            "ALGO-USD", start_date=datetime(2023, 1, 1, tzinfo=timezone.utc),
+            end_date=datetime(2023, 1, 31, tzinfo=timezone.utc),
             granularity=Granularity.ONE_DAY)
 
         # Check input
@@ -834,7 +884,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         for call in call_args:
             args, kwargs = call
             self.assertIn(
-                'https://api.coinbase.com/api/v3/brokerage/products/ALGO-USD/candles?start=1672549200&end=1675141200&granularity=ONE_DAY',
+                'https://api.coinbase.com/api/v3/brokerage/products/ALGO-USD/candles?start=1672531200&end=1675123200&granularity=ONE_DAY',
                 args)
 
             headers = kwargs['headers']

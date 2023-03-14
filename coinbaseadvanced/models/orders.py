@@ -43,6 +43,14 @@ class OrderType(Enum):
     STOP_LIMIT = "STOP_LIMIT"
 
 
+class OrderPlacementSource(Enum):
+    """
+    Enum representing placements source for an order.
+    """
+    UNKNOWN = "UNKNOWN_PLACEMENT_SOURCE"
+    RETAIL_ADVANCDED = "RETAIL_ADVANCED"
+
+
 class OrderError:
     """
     Class encapsulating order error fields.
@@ -55,7 +63,7 @@ class OrderError:
     new_order_failure_reason: str
 
     def __init__(self, error: str = '', message: str = '', error_details: str = '',
-                 preview_failure_reason: str = '', new_order_failure_reason: str = '') -> None:
+                 preview_failure_reason: str = '', new_order_failure_reason: str = '', **kwargs) -> None:
         self.error = error
         self.message = message
         self.error_details = error_details
@@ -72,7 +80,7 @@ class LimitGTC:
     limit_price: str
     post_only: bool
 
-    def __init__(self, base_size: str, limit_price: str, post_only: bool) -> None:
+    def __init__(self, base_size: str, limit_price: str, post_only: bool, **kwargs) -> None:
         self.base_size = base_size
         self.limit_price = limit_price
         self.post_only = post_only
@@ -88,7 +96,7 @@ class LimitGTD:
     post_only: bool
     end_time: datetime
 
-    def __init__(self, base_size: str, limit_price: str, post_only: bool, end_time: str) -> None:
+    def __init__(self, base_size: str, limit_price: str, post_only: bool, end_time: str, **kwargs) -> None:
         self.base_size = base_size
         self.limit_price = limit_price
         self.post_only = post_only
@@ -104,7 +112,7 @@ class MarketIOC:
     quote_size: str
     base_size: str
 
-    def __init__(self, quote_size: str = None, base_size: str = None) -> None:
+    def __init__(self, quote_size: str = None, base_size: str = None, **kwargs) -> None:
         self.quote_size = quote_size
         self.base_size = base_size
 
@@ -123,7 +131,7 @@ class StopLimitGTC:
                  base_size: str,
                  limit_price: str,
                  stop_price: str,
-                 stop_direction: str) -> None:
+                 stop_direction: str, **kwargs) -> None:
         self.base_size = base_size
         self.limit_price = limit_price
         self.stop_price = stop_price
@@ -146,7 +154,7 @@ class StopLimitGTD:
                  limit_price: str,
                  stop_price: str,
                  end_time: str,
-                 stop_direction: str) -> None:
+                 stop_direction: str, **kwargs) -> None:
         self.base_size = base_size
         self.limit_price = limit_price
         self.stop_price = stop_price
@@ -168,7 +176,7 @@ class OrderConfiguration:
 
     def __init__(self, market_market_ioc: dict = None, limit_limit_gtc: dict = None,
                  limit_limit_gtd: dict = None, stop_limit_stop_limit_gtc: dict = None,
-                 stop_limit_stop_limit_gtd: dict = None) -> None:
+                 stop_limit_stop_limit_gtd: dict = None, **kwargs) -> None:
         self.market_market_ioc = MarketIOC(
             **market_market_ioc) if market_market_ioc is not None else None
         self.limit_limit_gtc = LimitGTC(
@@ -250,7 +258,7 @@ class Order(dict):
                  order_placement_source: str = None,
                  outstanding_hold_amount: str = None,
 
-                 order_error: dict = None) -> None:
+                 order_error: dict = None, **kwargs) -> None:
         self.order_id = order_id
         self.product_id = product_id
         self.side = side
@@ -294,8 +302,7 @@ class Order(dict):
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
 
@@ -318,8 +325,7 @@ class Order(dict):
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
 
@@ -342,7 +348,7 @@ class OrdersPage:
                  orders: List[dict],
                  has_next: bool,
                  cursor: str,
-                 sequence: int,
+                 sequence: int, **kwargs
                  ) -> None:
 
         self.orders = list(map(lambda x: Order(**x), orders)) if orders is not None else None
@@ -358,8 +364,7 @@ class OrdersPage:
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
         return cls(**result)
@@ -374,7 +379,7 @@ class OrderCancellation:
     failure_reason: str
     order_id: str
 
-    def __init__(self, success: bool, failure_reason: str, order_id: str) -> None:
+    def __init__(self, success: bool, failure_reason: str, order_id: str, **kwargs) -> None:
         self.success = success
         self.failure_reason = failure_reason
         self.order_id = order_id
@@ -387,7 +392,7 @@ class OrderBatchCancellation:
 
     results: List[OrderCancellation]
 
-    def __init__(self, results: List[OrderCancellation]) -> None:
+    def __init__(self, results: List[OrderCancellation], **kwargs) -> None:
         self.results = results
 
     @classmethod
@@ -397,8 +402,7 @@ class OrderBatchCancellation:
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
 
@@ -440,7 +444,7 @@ class Fill:
             liquidity_indicator: str,
             size_in_quote: bool,
             user_id: str,
-            side: str) -> None:
+            side: str, **kwargs) -> None:
         self.entry_id = entry_id
         self.trade_id = trade_id
         self.order_id = order_id
@@ -471,7 +475,7 @@ class FillsPage:
 
     def __init__(self,
                  fills: List[dict],
-                 cursor: str,
+                 cursor: str, **kwargs
                  ) -> None:
 
         self.fills = list(map(lambda x: Fill(**x), fills)) if fills is not None else None
@@ -485,8 +489,7 @@ class FillsPage:
         """
 
         if not response.ok:
-            error_result = json.loads(response.text)
-            raise CoinbaseAdvancedTradeAPIError(error=error_result)
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
         result = json.loads(response.text)
         return cls(**result)
