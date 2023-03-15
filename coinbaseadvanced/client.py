@@ -3,7 +3,7 @@ API Client for Coinbase Advanced Trade endpoints.
 """
 
 from typing import List
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import hmac
 import hashlib
@@ -13,11 +13,10 @@ import requests
 
 from coinbaseadvanced.models.fees import TransactionsSummary
 from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage,\
-    TradesPage, ProductType, Granularity
+    Candle, TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
 from coinbaseadvanced.models.accounts import AccountsPage, Account
 from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Order, OrderBatchCancellation,\
     FillsPage, Side, StopDirection, OrderType
-
 
 class CoinbaseAdvancedTradeAPIClient(object):
     """
@@ -68,6 +67,28 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         page = AccountsPage.from_response(response)
         return page
+
+    def list_accounts_all(self, limit: int = 250, cursor: str = None) -> AccountsPage:
+        """
+        Get all authenticated accounts for the current user
+        
+        To minimize the number of calls the default limit has been 
+        increased to the maximum coinbase allows.
+        """
+
+        full_page = AccountsPage([], has_next=True, cursor=cursor, size=0)
+
+        # if there are more accounts to request, do so
+        while full_page.has_next:
+            page = self.list_accounts(limit, cursor = full_page.cursor)
+            # update the statistics and transfer the cursor and has_next flag
+            full_page.size += page.size
+            full_page.cursor = page.cursor
+            full_page.has_next = page.has_next
+            # extend the accounts list
+            full_page.accounts.extend(page.accounts)
+
+        return full_page
 
     def get_account(self, account_id: str) -> Account:
         """
@@ -385,6 +406,40 @@ class CoinbaseAdvancedTradeAPIClient(object):
         page = OrdersPage.from_response(response)
         return page
 
+    def list_orders_all(
+            self,
+            product_id: str = None,
+            order_status: List[str] = None,
+            limit: int = 999,
+            start_date: datetime = None,
+            end_date: datetime = None,
+            user_native_currency: str = None,
+            order_type: OrderType = None,
+            order_side: Side = None,
+            cursor: str = None,
+            product_type: ProductType = None) -> OrdersPage:
+        
+        orders_page = OrdersPage([], has_next=True, cursor=cursor, sequence=0)
+
+        while orders_page.has_next:
+            page = self.list_orders(
+                product_id=product_id, 
+                order_status=order_status, 
+                limit=limit,
+                start_date=start_date,
+                end_date=end_date,
+                user_native_currency=user_native_currency,
+                order_type=order_type,
+                order_side=order_side,
+                cursor=orders_page.cursor,
+                product_type=product_type )
+            orders_page.has_next = page.has_next
+            orders_page.cursor = page.cursor
+            orders_page.sequence = page.sequence
+            orders_page.orders.extend(page.orders)
+
+        return orders_page
+
     def list_fills(self, order_id: str = None, product_id: str = None, start_date: datetime = None,
                    end_date: datetime = None, cursor: str = None, limit: int = 100) -> FillsPage:
         """
@@ -447,6 +502,19 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         page = FillsPage.from_response(response)
         return page
+
+    def list_fills_all(self, order_id: str = None, product_id: str = None, start_date: datetime = None,
+                   end_date: datetime = None, cursor: str = None, limit: int = 100) -> FillsPage:
+
+        fills = FillsPage(fills=[], cursor=cursor)
+
+        while fills.cursor != '':
+            response = self.list_fills(order_id=order_id, product_id=product_id, start_date=start_date,
+                end_date=end_date, cursor=fills.cursor, limit=limit)
+            fills.cursor = response.cursor
+            fills.fills.extend(response.fills)
+        
+        return fills
 
     def get_order(self, order_id: str) -> Order:
         """
@@ -562,6 +630,43 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                 timeout=self.timeout)
 
         product_candles = CandlesPage.from_response(response)
+        return product_candles
+
+    def get_product_candles_all(
+           self,
+            product_id: str,
+            start_date: datetime,
+            end_date: datetime,
+            granularity: Granularity) -> CandlesPage:
+        """
+        Gets all requested product candles
+        """
+
+        # pre-calculate granularity entries in minutes 
+        granularity_minutes = timedelta(minutes=GRANULARITY_MAP_IN_MINUTES[granularity.value])
+        # request size of 300 (max allowed by coinbase)
+        granularity_minutes_x300 = granularity_minutes * 300
+
+        product_candles = CandlesPage({})
+
+        # run through from most recent to oldest to preserve time order in list
+
+        end = end_date
+        # calculate start date
+        begin = end_date - granularity_minutes_x300
+
+        # while we still have not gotten all the requested candles loop until all are requested
+        while end > start_date:
+            # avoid asking for more than requested
+            if begin < start_date:
+                begin = start_date
+            # get the next batch and extend the list
+            product_candles.candles.extend(self.get_product_candles(product_id, begin, end, granularity).candles)
+            # offset end by one granularity to avoid duplicates
+            end = begin - granularity_minutes
+            # recalculate start for the previous (older) 300 candles
+            begin = begin - (granularity_minutes_x300 + granularity_minutes)
+        
         return product_candles
 
     def get_market_trades(

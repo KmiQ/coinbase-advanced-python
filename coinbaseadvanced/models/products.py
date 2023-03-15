@@ -20,6 +20,16 @@ class ProductType(Enum):
 
     SPOT = "SPOT"
 
+GRANULARITY_MAP_IN_MINUTES = {
+    "ONE_MINUTE": 1,
+    "FIVE_MINUTE": 5,
+    "FIFTEEN_MINUTE": 15,
+    "THIRTY_MINUTE": 30,
+    "ONE_HOUR": 60,
+    "TWO_HOUR": 120,
+    "SIX_HOUR": 360,
+    "ONE_DAY": 1440,
+}
 
 class Granularity(Enum):
     """

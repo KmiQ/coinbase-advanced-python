@@ -42,6 +42,14 @@ def fixture_list_accounts_success_response() -> str:
             text=content)
 
 
+def fixture_list_accounts_all_success_response() -> str:
+    with open('tests/fixtures/list_accounts_all_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
 def fixture_create_limit_order_success_response() -> str:
     with open('tests/fixtures/create_limit_order_success_response.json', 'r', encoding="utf-8") as file:
         content = file.read()
@@ -98,6 +106,13 @@ def fixture_list_orders_success_response() -> str:
             text=content)
 
 
+def fixture_list_orders_all_success_response() -> str:
+    with open('tests/fixtures/list_orders_all_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)
+
 def fixture_list_orders_with_extra_unnamed_success_response() -> str:
     with open('tests/fixtures/list_orders_with_extra_unnamed_success_response.json', 'r', encoding="utf-8") as file:
         content = file.read()
@@ -108,6 +123,14 @@ def fixture_list_orders_with_extra_unnamed_success_response() -> str:
 
 def fixture_list_fills_success_response() -> str:
     with open('tests/fixtures/list_fills_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_list_fills_all_success_response() -> str:
+    with open('tests/fixtures/list_fills_all_success_response.json', 'r', encoding="utf-8") as file:
         content = file.read()
         return fixtured_mock_response(
             ok=True,

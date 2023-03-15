@@ -1,0 +1,987 @@
+{
+    "accounts": [
+        {
+            "uuid": "242dbe36-9cc4-54a8-9843-f60cad1fcf3c",
+            "name": "SAND Wallet",
+            "currency": "SAND",
+            "available_balance": {
+                "value": "242.2100000000000000",
+                "currency": "SAND"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-12-26T19:26:12.417Z",
+            "updated_at": "2022-12-26T19:27:03.892Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "SAND"
+            }
+        },
+        {
+            "uuid": "c9337bc3-51b1-534d-af52-d0daec7f191e",
+            "name": "CRO Wallet",
+            "currency": "CRO",
+            "available_balance": {
+                "value": "489.7000000000000000",
+                "currency": "CRO"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-12-26T19:24:42.828Z",
+            "updated_at": "2022-12-26T22:45:09.800Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "CRO"
+            }
+        },
+        {
+            "uuid": "abcaea58-9571-56cf-8b6c-99d2d2a78ec8",
+            "name": "WAMPL Wallet",
+            "currency": "WAMPL",
+            "available_balance": {
+                "value": "1.9080000000000000",
+                "currency": "WAMPL"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:16:20.098Z",
+            "updated_at": "2022-11-17T23:16:33.892Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "WAMPL"
+            }
+        },
+        {
+            "uuid": "4d98abbf-1418-5737-8d73-474a77eb7a58",
+            "name": "SYN Wallet",
+            "currency": "SYN",
+            "available_balance": {
+                "value": "10.1700000000000000",
+                "currency": "SYN"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:16:15.104Z",
+            "updated_at": "2022-11-17T23:16:28.037Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "SYN"
+            }
+        },
+        {
+            "uuid": "c7d412fc-ac8d-52f4-b1e5-67f9a86cf294",
+            "name": "SWFTC Wallet",
+            "currency": "SWFTC",
+            "available_balance": {
+                "value": "5984.0000000000000000",
+                "currency": "SWFTC"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:16:15.136Z",
+            "updated_at": "2022-11-17T23:16:28.063Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "SWFTC"
+            }
+        },
+        {
+            "uuid": "4ee67585-abb4-55e7-8327-ee70398b5d91",
+            "name": "TONE Wallet",
+            "currency": "TONE",
+            "available_balance": {
+                "value": "323.0000000000000000",
+                "currency": "TONE"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:16:15.113Z",
+            "updated_at": "2022-11-17T23:17:32.701Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "TONE"
+            }
+        },
+        {
+            "uuid": "76654437-36d6-5394-b0f1-2a6991041115",
+            "name": "RNDR Wallet",
+            "currency": "RNDR",
+            "available_balance": {
+                "value": "14.6100000000000000",
+                "currency": "RNDR"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:16:10.083Z",
+            "updated_at": "2022-11-17T23:16:31.175Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "RNDR"
+            }
+        },
+        {
+            "uuid": "0f858df3-4435-5976-a08f-a1d1dfc9f9c0",
+            "name": "STG Wallet",
+            "currency": "STG",
+            "available_balance": {
+                "value": "17.4000000000000000",
+                "currency": "STG"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:16:10.227Z",
+            "updated_at": "2022-11-17T23:17:32.681Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "STG"
+            }
+        },
+        {
+            "uuid": "d23b23d9-b496-50d1-a85c-24d3eb1d9f3d",
+            "name": "RARE Wallet",
+            "currency": "RARE",
+            "available_balance": {
+                "value": "65.8000000000000000",
+                "currency": "RARE"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:16:05.098Z",
+            "updated_at": "2022-11-17T23:16:19.116Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "RARE"
+            }
+        },
+        {
+            "uuid": "2f6d6c1b-8de5-56a2-9bb9-25606ad354ab",
+            "name": "PRQ Wallet",
+            "currency": "PRQ",
+            "available_balance": {
+                "value": "86.3000000000000000",
+                "currency": "PRQ"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:16:05.094Z",
+            "updated_at": "2022-11-17T23:17:32.658Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "PRQ"
+            }
+        },
+        {
+            "uuid": "d17d7ff2-21e3-5384-823e-490da2fbef2f",
+            "name": "OP Wallet",
+            "currency": "OP",
+            "available_balance": {
+                "value": "7.7900000000000000",
+                "currency": "OP"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:16:00.091Z",
+            "updated_at": "2022-11-17T23:16:12.763Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "OP"
+            }
+        },
+        {
+            "uuid": "e78d7ece-8e63-5651-96e1-1a2bac08121c",
+            "name": "PLU Wallet",
+            "currency": "PLU",
+            "available_balance": {
+                "value": "0.8400000000000000",
+                "currency": "PLU"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:16:00.099Z",
+            "updated_at": "2022-11-17T23:16:11.259Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "PLU"
+            }
+        },
+        {
+            "uuid": "98ba71a5-f169-5ed0-ba13-ccad5ea9215e",
+            "name": "PNG Wallet",
+            "currency": "PNG",
+            "available_balance": {
+                "value": "140.0000000000000000",
+                "currency": "PNG"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:16:00.124Z",
+            "updated_at": "2022-11-17T23:16:16.254Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "PNG"
+            }
+        },
+        {
+            "uuid": "dd6bbf63-6d3d-5271-9337-3321bbdfcb30",
+            "name": "OCEAN Wallet",
+            "currency": "OCEAN",
+            "available_balance": {
+                "value": "52.2000000000000000",
+                "currency": "OCEAN"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:55.099Z",
+            "updated_at": "2022-11-17T23:16:08.579Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "OCEAN"
+            }
+        },
+        {
+            "uuid": "fc2d8469-6f57-5842-860e-e5da7a3536ac",
+            "name": "NEAR Wallet",
+            "currency": "NEAR",
+            "available_balance": {
+                "value": "3.6780000000000000",
+                "currency": "NEAR"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:55.112Z",
+            "updated_at": "2022-11-17T23:16:06.209Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "NEAR"
+            }
+        },
+        {
+            "uuid": "aca5ad67-6654-52ab-92d3-ef1c60d59162",
+            "name": "NEST Wallet",
+            "currency": "NEST",
+            "available_balance": {
+                "value": "350.0000000000000000",
+                "currency": "NEST"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:55.091Z",
+            "updated_at": "2022-11-17T23:16:08.611Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "NEST"
+            }
+        },
+        {
+            "uuid": "b25baf7e-3589-5dfd-84e6-e21f3163a68b",
+            "name": "NCT Wallet",
+            "currency": "NCT",
+            "available_balance": {
+                "value": "876.0000000000000000",
+                "currency": "NCT"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:55.129Z",
+            "updated_at": "2022-11-17T23:16:08.639Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "NCT"
+            }
+        },
+        {
+            "uuid": "8df48318-b928-5a2c-9962-a021e8f3ee78",
+            "name": "MATH Wallet",
+            "currency": "MATH",
+            "available_balance": {
+                "value": "47.4000000000000000",
+                "currency": "MATH"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:50.120Z",
+            "updated_at": "2022-11-17T23:16:06.241Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "MATH"
+            }
+        },
+        {
+            "uuid": "f7a9e11a-1409-564a-b758-44a307331404",
+            "name": "KSM Wallet",
+            "currency": "KSM",
+            "available_balance": {
+                "value": "0.2811000000000000",
+                "currency": "KSM"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:45.090Z",
+            "updated_at": "2022-11-17T23:16:01.287Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "KSM"
+            }
+        },
+        {
+            "uuid": "3963ecda-0228-5c9c-a06c-890a5d546e01",
+            "name": "INDEX Wallet",
+            "currency": "INDEX",
+            "available_balance": {
+                "value": "3.5810000000000000",
+                "currency": "INDEX"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:45.084Z",
+            "updated_at": "2022-11-17T23:16:01.312Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "INDEX"
+            }
+        },
+        {
+            "uuid": "7358e05d-b264-5db0-b6b8-b36a7c87e4ad",
+            "name": "INJ Wallet",
+            "currency": "INJ",
+            "available_balance": {
+                "value": "3.9700000000000000",
+                "currency": "INJ"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:45.087Z",
+            "updated_at": "2022-11-17T23:16:01.337Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "INJ"
+            }
+        },
+        {
+            "uuid": "7304be97-0c2b-52c1-afdd-4cd447ef6ddd",
+            "name": "GMT Wallet",
+            "currency": "GMT",
+            "available_balance": {
+                "value": "17.1800000000000000",
+                "currency": "GMT"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:40.101Z",
+            "updated_at": "2022-11-17T23:15:55.981Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "GMT"
+            }
+        },
+        {
+            "uuid": "3445a9d2-7e52-5521-88f1-8dc3eade491e",
+            "name": "FORT Wallet",
+            "currency": "FORT",
+            "available_balance": {
+                "value": "43.5300000000000000",
+                "currency": "FORT"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:40.091Z",
+            "updated_at": "2022-11-17T23:15:56.007Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "FORT"
+            }
+        },
+        {
+            "uuid": "0b196afb-27d2-5e3b-a0aa-3ba491ce807e",
+            "name": "GAL Wallet",
+            "currency": "GAL",
+            "available_balance": {
+                "value": "4.7950000000000000",
+                "currency": "GAL"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:40.132Z",
+            "updated_at": "2022-11-17T23:15:56.047Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "GAL"
+            }
+        },
+        {
+            "uuid": "80af3cec-8e1d-5797-ba73-270adb9995cf",
+            "name": "ELA Wallet",
+            "currency": "ELA",
+            "available_balance": {
+                "value": "5.7900000000000000",
+                "currency": "ELA"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:35.120Z",
+            "updated_at": "2022-11-17T23:16:06.432Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "ELA"
+            }
+        },
+        {
+            "uuid": "4a7e630e-3017-57d2-9beb-5ae72ee0bf40",
+            "name": "DYP Wallet",
+            "currency": "DYP",
+            "available_balance": {
+                "value": "36.8000000000000000",
+                "currency": "DYP"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:35.089Z",
+            "updated_at": "2022-11-17T23:16:03.250Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "DYP"
+            }
+        },
+        {
+            "uuid": "26867307-d655-5152-899b-328fe3a8d03c",
+            "name": "CVX Wallet",
+            "currency": "CVX",
+            "available_balance": {
+                "value": "1.7490000000000000",
+                "currency": "CVX"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:30.097Z",
+            "updated_at": "2022-11-17T23:15:40.972Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "CVX"
+            }
+        },
+        {
+            "uuid": "c8e83736-c8eb-535d-83d3-5cfbf9c3a272",
+            "name": "DESO Wallet",
+            "currency": "DESO",
+            "available_balance": {
+                "value": "0.6280000000000000",
+                "currency": "DESO"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:30.111Z",
+            "updated_at": "2022-11-17T23:15:42.894Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "DESO"
+            }
+        },
+        {
+            "uuid": "968bff1e-8698-5bb9-a82c-e060a0262ede",
+            "name": "BOBA Wallet",
+            "currency": "BOBA",
+            "available_balance": {
+                "value": "35.0000000000000000",
+                "currency": "BOBA"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:25.111Z",
+            "updated_at": "2022-11-17T23:15:56.093Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "BOBA"
+            }
+        },
+        {
+            "uuid": "31e94446-45db-5f1e-a359-02378e88e3aa",
+            "name": "C98 Wallet",
+            "currency": "C98",
+            "available_balance": {
+                "value": "25.4700000000000000",
+                "currency": "C98"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:25.109Z",
+            "updated_at": "2022-11-17T23:15:36.760Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "C98"
+            }
+        },
+        {
+            "uuid": "5a90dcd9-735e-5622-81c0-6def232a16cd",
+            "name": "CELR Wallet",
+            "currency": "CELR",
+            "available_balance": {
+                "value": "629.0000000000000000",
+                "currency": "CELR"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:25.113Z",
+            "updated_at": "2022-11-17T23:15:38.878Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "CELR"
+            }
+        },
+        {
+            "uuid": "5fb89962-6d3c-537d-92f7-a2fa8a7ee396",
+            "name": "BIT Wallet",
+            "currency": "BIT",
+            "available_balance": {
+                "value": "23.3700000000000000",
+                "currency": "BIT"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:20.089Z",
+            "updated_at": "2022-11-17T23:15:45.951Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "BIT"
+            }
+        },
+        {
+            "uuid": "fb3cb67d-fcc8-571b-800d-63e4e2a74815",
+            "name": "ATA Wallet",
+            "currency": "ATA",
+            "available_balance": {
+                "value": "65.6000000000000000",
+                "currency": "ATA"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:15.090Z",
+            "updated_at": "2022-11-17T23:15:36.731Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "ATA"
+            }
+        },
+        {
+            "uuid": "f5cb23d5-d03c-506c-b3ce-344e1fe8c06a",
+            "name": "AST Wallet",
+            "currency": "AST",
+            "available_balance": {
+                "value": "79.3000000000000000",
+                "currency": "AST"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:15.106Z",
+            "updated_at": "2022-11-17T23:15:31.309Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "AST"
+            }
+        },
+        {
+            "uuid": "b0b2b316-aa60-5292-9ad0-6c537f66b356",
+            "name": "AIOZ Wallet",
+            "currency": "AIOZ",
+            "available_balance": {
+                "value": "155.0000000000000000",
+                "currency": "AIOZ"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:15.121Z",
+            "updated_at": "2022-11-17T23:15:27.990Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "AIOZ"
+            }
+        },
+        {
+            "uuid": "0ffea955-7a67-50a0-a37e-86c4b67db8c4",
+            "name": "ABT Wallet",
+            "currency": "ABT",
+            "available_balance": {
+                "value": "68.4000000000000000",
+                "currency": "ABT"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:10.092Z",
+            "updated_at": "2022-11-17T23:15:22.521Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "ABT"
+            }
+        },
+        {
+            "uuid": "d0fcf18f-72b3-5f5b-bb7f-be0931da1f3d",
+            "name": "ZEN Wallet",
+            "currency": "ZEN",
+            "available_balance": {
+                "value": "19.0830000000000000",
+                "currency": "ZEN"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:10.092Z",
+            "updated_at": "2022-11-17T23:17:32.620Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "ZEN"
+            }
+        },
+        {
+            "uuid": "b5afd996-10b1-5285-b1a3-44585ea9e23a",
+            "name": "UNFI Wallet",
+            "currency": "UNFI",
+            "available_balance": {
+                "value": "127.7400000000000000",
+                "currency": "UNFI"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:05.128Z",
+            "updated_at": "2022-11-17T23:16:28.993Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "UNFI"
+            }
+        },
+        {
+            "uuid": "3a7fbe1a-f653-5cde-be57-47ad636954ab",
+            "name": "WCFG Wallet",
+            "currency": "WCFG",
+            "available_balance": {
+                "value": "240.9400000000000000",
+                "currency": "WCFG"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:05.099Z",
+            "updated_at": "2022-11-17T23:16:32.001Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "WCFG"
+            }
+        },
+        {
+            "uuid": "b5aab92e-4d2a-52d0-b9d2-73c69432fd20",
+            "name": "VGX Wallet",
+            "currency": "VGX",
+            "available_balance": {
+                "value": "489.0100000000000000",
+                "currency": "VGX"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:05.089Z",
+            "updated_at": "2022-11-17T23:17:32.596Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "VGX"
+            }
+        },
+        {
+            "uuid": "fc1030e5-58c1-57b4-9024-e25df5ef05ca",
+            "name": "XYO Wallet",
+            "currency": "XYO",
+            "available_balance": {
+                "value": "55530.9000000000000000",
+                "currency": "XYO"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:05.210Z",
+            "updated_at": "2022-11-17T23:16:32.026Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "XYO"
+            }
+        },
+        {
+            "uuid": "5a6aa20d-cab1-5547-a129-166d0c2cc4de",
+            "name": "WLUNA Wallet",
+            "currency": "WLUNA",
+            "available_balance": {
+                "value": "2.3360000000000000",
+                "currency": "WLUNA"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:05.097Z",
+            "updated_at": "2022-11-17T23:15:21.124Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "WLUNA"
+            }
+        },
+        {
+            "uuid": "546298d5-7940-556f-89f7-83396c27fb1b",
+            "name": "TRIBE Wallet",
+            "currency": "TRIBE",
+            "available_balance": {
+                "value": "1905.6000000000000000",
+                "currency": "TRIBE"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:00.091Z",
+            "updated_at": "2022-11-17T23:15:16.121Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "TRIBE"
+            }
+        },
+        {
+            "uuid": "25ac5aa2-ce5a-502d-9edb-b191161938c1",
+            "name": "SUKU Wallet",
+            "currency": "SUKU",
+            "available_balance": {
+                "value": "4215.8000000000000000",
+                "currency": "SUKU"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:00.082Z",
+            "updated_at": "2022-11-17T23:16:22.734Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "SUKU"
+            }
+        },
+        {
+            "uuid": "19291610-8a07-53cc-9ac9-18688c1f19b4",
+            "name": "TRAC Wallet",
+            "currency": "TRAC",
+            "available_balance": {
+                "value": "1328.6000000000000000",
+                "currency": "TRAC"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:00.095Z",
+            "updated_at": "2022-11-17T23:16:32.097Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "TRAC"
+            }
+        },
+        {
+            "uuid": "e6fe873b-94d2-5b02-89a6-309d5af2e6ba",
+            "name": "STX Wallet",
+            "currency": "STX",
+            "available_balance": {
+                "value": "287.5300000000000000",
+                "currency": "STX"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:00.092Z",
+            "updated_at": "2022-11-17T23:16:24.614Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "STX"
+            }
+        },
+        {
+            "uuid": "fe9670f9-a16f-5eb2-92fa-82f06487754b",
+            "name": "TRB Wallet",
+            "currency": "TRB",
+            "available_balance": {
+                "value": "43.7000000000000000",
+                "currency": "TRB"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:00.089Z",
+            "updated_at": "2022-11-17T23:16:29.038Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "TRB"
+            }
+        },
+        {
+            "uuid": "3c6159a7-300b-59bb-b4ae-b6657665f2bd",
+            "name": "SUPER Wallet",
+            "currency": "SUPER",
+            "available_balance": {
+                "value": "1498.0300000000000000",
+                "currency": "SUPER"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:00.084Z",
+            "updated_at": "2022-11-17T23:16:32.126Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "SUPER"
+            }
+        },
+        {
+            "uuid": "45df616a-ebaa-56d9-926c-013e1a6481fc",
+            "name": "TRU Wallet",
+            "currency": "TRU",
+            "available_balance": {
+                "value": "828.6000000000000000",
+                "currency": "TRU"
+            },
+            "default": true,
+            "active": true,
+            "created_at": "2022-11-17T23:15:00.104Z",
+            "updated_at": "2022-11-17T23:16:27.544Z",
+            "deleted_at": null,
+            "type": "ACCOUNT_TYPE_CRYPTO",
+            "ready": true,
+            "hold": {
+                "value": "0.0000000000000000",
+                "currency": "TRU"
+            }
+        }
+    ],
+    "has_next": false,
+    "cursor": null,
+    "size": 49
+}
