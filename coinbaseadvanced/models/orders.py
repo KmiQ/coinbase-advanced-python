@@ -189,7 +189,7 @@ class OrderConfiguration:
             **stop_limit_stop_limit_gtd) if stop_limit_stop_limit_gtd is not None else None
 
 
-class Order(dict):
+class Order:
     """
     Class reprensenting an order. This support the `create_order*` endpoints
     and the `get_order` endpoint.
