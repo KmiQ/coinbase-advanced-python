@@ -28,6 +28,9 @@ from tests.fixtures.fixtures import \
     fixture_list_products_success_response,\
     fixture_get_product_success_response, \
     fixture_get_product_candles_success_response, \
+    fixture_get_product_candles_all_call_1_success_response,\
+    fixture_get_product_candles_all_call_2_success_response,\
+    fixture_get_product_candles_all_call_3_success_response,\
     fixture_get_trades_success_response, \
     fixture_get_transactions_summary_success_response
 
@@ -597,7 +600,6 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIsNotNone(order.settled)
             self.assertIsNotNone(order.filled_size)
 
-
     @mock.patch("coinbaseadvanced.client.requests.get")
     def test_list_orders_all_success(self, mock_get):
 
@@ -608,8 +610,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
         orders_page = client.list_orders_all(start_date=datetime(2023, 1, 25),
-                                         end_date=datetime(2023, 1, 30),
-                                         limit=10)
+                                             end_date=datetime(2023, 1, 30),
+                                             limit=10)
 
         # Check input
 
@@ -703,8 +705,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
         fills_page = client.list_fills_all(limit=5,
-                                       start_date=datetime(2023, 1, 20),
-                                       end_date=datetime(2023, 1, 30))
+                                           start_date=datetime(2023, 1, 20),
+                                           end_date=datetime(2023, 1, 30))
 
         # Check input
 
@@ -912,43 +914,35 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
     @mock.patch("coinbaseadvanced.client.requests.get")
     def test_get_product_candles_all(self, mock_get):
 
-        mock_resp = fixture_get_product_candles_success_response()
-        mock_get.return_value = mock_resp
+        mock_get.side_effect = [
+            fixture_get_product_candles_all_call_1_success_response(),
+            fixture_get_product_candles_all_call_2_success_response(),
+            fixture_get_product_candles_all_call_3_success_response(),
+        ]
 
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
         product_candles = client.get_product_candles_all(
-            "ALGO-USD", start_date=datetime(2023, 1, 1),
-            end_date=datetime(2023, 1, 31),
+            "ALGO-USD", start_date=datetime(2021, 1, 1, tzinfo=timezone.utc),
+            end_date=datetime(2023, 2, 20, tzinfo=timezone.utc),
             granularity=Granularity.ONE_DAY)
-
-        # Check input
-
-        call_args = mock_get.call_args_list
-
-        for call in call_args:
-            args, kwargs = call
-            self.assertIn(
-                'https://api.coinbase.com/api/v3/brokerage/products/ALGO-USD/candles?start=1672549200&end=1675141200&granularity=ONE_DAY',
-                args)
-
-            headers = kwargs['headers']
-            self.assertIn('accept', headers)
-            self.assertIn('CB-ACCESS-KEY', headers)
-            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
-            self.assertIn('CB-ACCESS-SIGN', headers)
 
         # Check output
 
         self.assertIsNotNone(product_candles)
 
         candles = product_candles.candles
-        self.assertEqual(len(candles), 30)
+        self.assertEqual(len(candles), 781)
 
+        previous_candle_start = float('inf')
         for candle in candles:
             self.assertIsNotNone(candle)
+
             self.assertIsNotNone(candle.start)
+            self.assertLess(int(candle.start), previous_candle_start)
+            previous_candle_start = int(candle.start)
+
             self.assertIsNotNone(candle.high)
             self.assertIsNotNone(candle.low)
             self.assertIsNotNone(candle.open)
