@@ -73,7 +73,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         """
         Get all authenticated accounts for the current user
 
-        To minimize the number of calls the default limit has been 
+        To minimize the number of calls the default limit has been
         increased to the maximum coinbase allows.
         """
 
