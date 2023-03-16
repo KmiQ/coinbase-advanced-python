@@ -940,8 +940,6 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
 
         self.assertIsNotNone(trades_page)
 
-        trades = trades_page.trades
-
         for trade in trades_page:
             self.assertIsNotNone(trade)
             self.assertIsNotNone(trade.product_id)
