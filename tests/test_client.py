@@ -146,7 +146,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertEqual(page.has_next, True)
         self.assertIsNotNone(page.cursor)
 
-        for account in accounts:
+        for account in page:
             self.assertIsNotNone(account)
             self.assertIsNotNone(account.uuid)
             self.assertIsNotNone(account.name)
@@ -531,7 +531,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         orders = orders_page.orders
         self.assertEqual(len(orders), 10)
 
-        for order in orders:
+        for order in orders_page:
             self.assertIsNotNone(order)
             self.assertIsNotNone(order.order_id)
             self.assertIsNotNone(order.product_id)
@@ -660,7 +660,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         fills = fills_page.fills
         self.assertEqual(len(fills), 5)
 
-        for fill in fills:
+        for fill in fills_page:
             self.assertIsNotNone(fill)
             self.assertIsNotNone(fill.order_id)
             self.assertIsNotNone(fill.product_id)
@@ -777,7 +777,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         products = products_page.products
         self.assertEqual(len(products), 5)
 
-        for product in products:
+        for product in products_page:
             self.assertIsNotNone(product)
             self.assertIsNotNone(product.price)
             self.assertIsNotNone(product.product_id)
@@ -862,7 +862,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         candles = product_candles.candles
         self.assertEqual(len(candles), 30)
 
-        for candle in candles:
+        for candle in product_candles:
             self.assertIsNotNone(candle)
             self.assertIsNotNone(candle.start)
             self.assertIsNotNone(candle.high)
@@ -942,7 +942,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
 
         trades = trades_page.trades
 
-        for trade in trades:
+        for trade in trades_page:
             self.assertIsNotNone(trade)
             self.assertIsNotNone(trade.product_id)
             self.assertIsNotNone(trade.price)

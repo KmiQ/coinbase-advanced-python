@@ -20,6 +20,7 @@ class ProductType(Enum):
 
     SPOT = "SPOT"
 
+
 GRANULARITY_MAP_IN_MINUTES = {
     "ONE_MINUTE": 1,
     "FIVE_MINUTE": 5,
@@ -30,6 +31,7 @@ GRANULARITY_MAP_IN_MINUTES = {
     "SIX_HOUR": 360,
     "ONE_DAY": 1440,
 }
+
 
 class Granularity(Enum):
     """
@@ -189,6 +191,9 @@ class ProductsPage:
         result = json.loads(response.text)
         return cls(**result)
 
+    def __iter__(self):
+        return self.products.__iter__()
+
 
 class Candle:
     """
@@ -232,6 +237,9 @@ class CandlesPage:
 
         result = json.loads(response.text)
         return cls(**result)
+
+    def __iter__(self):
+        return self.candles.__iter__()
 
 
 class Trade:
@@ -296,3 +304,6 @@ class TradesPage:
 
         result = json.loads(response.text)
         return cls(**result)
+
+    def __iter__(self):
+        return self.trades.__iter__()
