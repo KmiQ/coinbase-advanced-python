@@ -110,3 +110,6 @@ class AccountsPage:
 
         result = json.loads(response.text)
         return cls(**result)
+
+    def __iter__(self):
+        return self.accounts.__iter__()
