@@ -23,6 +23,8 @@ class AvailableBalance:
         self.value = value
         self.currency = currency
 
+        self.kwargs = kwargs
+
 
 class Account:
     """
@@ -59,6 +61,8 @@ class Account:
         self.type = type
         self.ready = ready
         self.hold = AvailableBalance(**hold) if hold is not None else None
+
+        self.kwargs = kwargs
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'Account':
@@ -98,6 +102,8 @@ class AccountsPage:
         self.has_next = has_next
         self.cursor = cursor
         self.size = size
+
+        self.kwargs = kwargs
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'AccountsPage':
