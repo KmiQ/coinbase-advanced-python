@@ -369,6 +369,9 @@ class OrdersPage:
         result = json.loads(response.text)
         return cls(**result)
 
+    def __iter__(self):
+        return self.orders.__iter__()
+
 
 class OrderCancellation:
     """
@@ -493,3 +496,6 @@ class FillsPage:
 
         result = json.loads(response.text)
         return cls(**result)
+
+    def __iter__(self):
+        return self.fills.__iter__()

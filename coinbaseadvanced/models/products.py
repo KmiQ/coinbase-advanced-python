@@ -22,6 +22,18 @@ class ProductType(Enum):
 
 Gran = {"ONE_MINUTE": 1, "FIVE_MINUTE": 5, "FIFTEEN_MINUTE": 15, "THIRTY_MINUTE": 30, "ONE_HOUR": 60, "TWO_HOUR": 120, "SIX_HOUR": 360, "ONE_DAY": 720}
 
+GRANULARITY_MAP_IN_MINUTES = {
+    "ONE_MINUTE": 1,
+    "FIVE_MINUTE": 5,
+    "FIFTEEN_MINUTE": 15,
+    "THIRTY_MINUTE": 30,
+    "ONE_HOUR": 60,
+    "TWO_HOUR": 120,
+    "SIX_HOUR": 360,
+    "ONE_DAY": 1440,
+}
+
+
 class Granularity(Enum):
     """
     Enum representing time range for product candles.
@@ -180,6 +192,9 @@ class ProductsPage:
         result = json.loads(response.text)
         return cls(**result)
 
+    def __iter__(self):
+        return self.products.__iter__()
+
 
 class Candle:
     """
@@ -223,6 +238,9 @@ class CandlesPage:
 
         result = json.loads(response.text)
         return cls(**result)
+
+    def __iter__(self):
+        return self.candles.__iter__()
 
 
 class Trade:
@@ -287,3 +305,6 @@ class TradesPage:
 
         result = json.loads(response.text)
         return cls(**result)
+
+    def __iter__(self):
+        return self.trades.__iter__()
