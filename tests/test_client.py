@@ -579,6 +579,9 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         orders = orders_page.orders
         self.assertEqual(len(orders), 10)
 
+        first_order = orders[0]
+        self.assertEqual(first_order.kwargs['extra_unnamed_arg'], "0")
+
         for order in orders:
             self.assertIsNotNone(order)
             self.assertIsNotNone(order.order_id)

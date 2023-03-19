@@ -152,6 +152,8 @@ class Product:
         self.base_display_symbol = base_display_symbol
         self.quote_display_symbol = quote_display_symbol
 
+        self.kwargs = kwargs
+
     @classmethod
     def from_response(cls, response: requests.Response) -> 'Product':
         """
@@ -179,6 +181,8 @@ class ProductsPage:
             if products is not None else None
 
         self.num_products = num_products
+
+        self.kwargs = kwargs
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'ProductsPage':
@@ -216,6 +220,8 @@ class Candle:
         self.close = close
         self.volume = volume
 
+        self.kwargs = kwargs
+
 
 class CandlesPage:
     """
@@ -226,6 +232,8 @@ class CandlesPage:
 
     def __init__(self, candles: List[Candle], **kwargs) -> None:
         self.candles = list(map(lambda x: Candle(**x), candles)) if candles is not None else None
+
+        self.kwargs = kwargs
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'CandlesPage':
@@ -275,6 +283,8 @@ class Trade:
         self.bid = bid
         self.ask = ask
 
+        self.kwargs = kwargs
+
 
 class TradesPage:
     """
@@ -293,6 +303,8 @@ class TradesPage:
         self.trades = list(map(lambda x: Trade(**x), trades)) if trades is not None else None
         self.best_bid = best_bid
         self.best_ask = best_ask
+
+        self.kwargs = kwargs
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'TradesPage':

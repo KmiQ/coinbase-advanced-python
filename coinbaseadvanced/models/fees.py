@@ -31,6 +31,8 @@ class FeeTier:
         self.taker_fee_rate = taker_fee_rate
         self.maker_fee_rate = maker_fee_rate
 
+        self.kwargs = kwargs
+
 
 class GoodsAndServicesTax:
     """
@@ -44,6 +46,8 @@ class GoodsAndServicesTax:
         self.rate = rate
         self.type = type
 
+        self.kwargs = kwargs
+
 
 class MarginRate:
     """
@@ -54,6 +58,8 @@ class MarginRate:
 
     def __init__(self, value: str, **kwargs) -> None:
         self.value = value
+
+        self.kwargs = kwargs
 
 
 class TransactionsSummary:
@@ -84,6 +90,8 @@ class TransactionsSummary:
         self.advanced_trade_only_fees = advanced_trade_only_fees
         self.coinbase_pro_volume = coinbase_pro_volume
         self.coinbase_pro_fees = coinbase_pro_fees
+
+        self.kwargs = kwargs
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'TransactionsSummary':
