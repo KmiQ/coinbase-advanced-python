@@ -70,6 +70,8 @@ class OrderError:
         self.preview_failure_reason = preview_failure_reason
         self.new_order_failure_reason = new_order_failure_reason
 
+        self.kwargs = kwargs
+
 
 class LimitGTC:
     """
@@ -84,6 +86,8 @@ class LimitGTC:
         self.base_size = base_size
         self.limit_price = limit_price
         self.post_only = post_only
+
+        self.kwargs = kwargs
 
 
 class LimitGTD:
@@ -103,6 +107,8 @@ class LimitGTD:
         self.end_time = datetime.strptime(end_time if len(
             end_time) <= 27 else end_time[:26]+'Z', "%Y-%m-%dT%H:%M:%SZ")
 
+        self.kwargs = kwargs
+
 
 class MarketIOC:
     """
@@ -115,6 +121,8 @@ class MarketIOC:
     def __init__(self, quote_size: str = None, base_size: str = None, **kwargs) -> None:
         self.quote_size = quote_size
         self.base_size = base_size
+
+        self.kwargs = kwargs
 
 
 class StopLimitGTC:
@@ -136,6 +144,8 @@ class StopLimitGTC:
         self.limit_price = limit_price
         self.stop_price = stop_price
         self.stop_direction = stop_direction
+
+        self.kwargs = kwargs
 
 
 class StopLimitGTD:
@@ -162,6 +172,8 @@ class StopLimitGTD:
             end_time) <= 27 else end_time[:26]+'Z', "%Y-%m-%dT%H:%M:%SZ")
         self.stop_direction = stop_direction
 
+        self.kwargs = kwargs
+
 
 class OrderConfiguration:
     """
@@ -187,6 +199,8 @@ class OrderConfiguration:
             **stop_limit_stop_limit_gtc) if stop_limit_stop_limit_gtc is not None else None
         self.stop_limit_stop_limit_gtd = StopLimitGTD(
             **stop_limit_stop_limit_gtd) if stop_limit_stop_limit_gtd is not None else None
+
+        self.kwargs = kwargs
 
 
 class Order:
@@ -295,6 +309,8 @@ class Order:
 
         self.order_error = OrderError(**order_error) if order_error is not None else None
 
+        self.kwargs = kwargs
+
     @classmethod
     def from_create_order_response(cls, response: requests.Response) -> 'Order':
         """
@@ -357,6 +373,8 @@ class OrdersPage:
         self.cursor = cursor
         self.sequence = sequence
 
+        self.kwargs = kwargs
+
     @classmethod
     def from_response(cls, response: requests.Response) -> 'OrdersPage':
         """
@@ -387,6 +405,8 @@ class OrderCancellation:
         self.failure_reason = failure_reason
         self.order_id = order_id
 
+        self.kwargs = kwargs
+
 
 class OrderBatchCancellation:
     """
@@ -397,6 +417,8 @@ class OrderBatchCancellation:
 
     def __init__(self, results: List[OrderCancellation], **kwargs) -> None:
         self.results = results
+
+        self.kwargs = kwargs
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'Order':
@@ -467,6 +489,8 @@ class Fill:
         self.user_id = user_id
         self.side = side
 
+        self.kwargs = kwargs
+
 
 class FillsPage:
     """
@@ -484,6 +508,8 @@ class FillsPage:
         self.fills = list(map(lambda x: Fill(**x), fills)) if fills is not None else None
 
         self.cursor = cursor
+
+        self.kwargs = kwargs
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'FillsPage':

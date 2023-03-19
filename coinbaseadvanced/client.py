@@ -13,10 +13,10 @@ import requests
 
 from coinbaseadvanced.models.fees import TransactionsSummary
 from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage,\
-    Candle, TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
+    TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
 from coinbaseadvanced.models.accounts import AccountsPage, Account
-from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Order, OrderBatchCancellation,\
-    FillsPage, Side, StopDirection, OrderType
+from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Order,\
+    OrderBatchCancellation, FillsPage, Side, StopDirection, OrderType
 
 
 class CoinbaseAdvancedTradeAPIClient(object):
