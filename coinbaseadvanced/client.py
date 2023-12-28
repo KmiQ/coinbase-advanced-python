@@ -3,8 +3,11 @@ API Client for Coinbase Advanced Trade endpoints.
 """
 
 from typing import List
+from enum import Enum
 from datetime import datetime, timedelta
+from cryptography.hazmat.primitives import serialization
 
+import jwt
 import hmac
 import hashlib
 import time
@@ -19,6 +22,16 @@ from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Ord
     OrderBatchCancellation, FillsPage, Side, StopDirection, OrderType
 
 
+class AuthSchema(Enum):
+    """
+    Enum representing authetication schema:
+    https://docs.cloud.coinbase.com/advanced-trade-api/docs/auth#authentication-schemes
+    """
+
+    CLOUD_API_TRADING_KEYS = "CLOUD_API_TRADING_KEYS"
+    LEGACY_API_KEYS = "LEGACY_API_KEYS"
+
+
 class CoinbaseAdvancedTradeAPIClient(object):
     """
     API Client for Coinbase Advanced Trade endpoints.
@@ -28,11 +41,36 @@ class CoinbaseAdvancedTradeAPIClient(object):
                  api_key: str,
                  secret_key: str,
                  base_url: str = 'https://api.coinbase.com',
-                 timeout: int = 10) -> None:
+                 timeout: int = 10,
+                 auth_schema: AuthSchema = AuthSchema.LEGACY_API_KEYS
+                 ) -> None:
         self._base_url = base_url
+        self._host = base_url[8:]
         self._api_key = api_key
         self._secret_key = secret_key
         self.timeout = timeout
+        self._auth_schema = auth_schema
+
+    @staticmethod
+    def from_legacy_api_keys(api_key: str,
+                             secret_key: str):
+        """
+        Factory method for legacy auth schema.
+        API keys for this schema are generated via: https://www.coinbase.com/settings/api
+        """
+        return CoinbaseAdvancedTradeAPIClient(api_key=api_key, secret_key=secret_key)
+
+    @staticmethod
+    def from_cloud_api_keys(api_key_name: str,
+                            private_key: str):
+        """
+        Factory method for cloud auth schema (recommended by Coinbase).
+        API keys for this schema are generated via: https://cloud.coinbase.com/access/api
+        """
+        return CoinbaseAdvancedTradeAPIClient(api_key=api_key_name, secret_key=private_key,
+                                              auth_schema=AuthSchema.CLOUD_API_TRADING_KEYS)
+
+        # Accounts #
 
     # Accounts #
 
@@ -57,10 +95,11 @@ class CoinbaseAdvancedTradeAPIClient(object):
         method = "GET"
         query_params = '?limit='+str(limit)
 
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
+
         if cursor is not None:
             query_params = query_params + '&cursor='+cursor
-
-        headers = self._build_request_headers(method, request_path)
 
         response = requests.get(self._base_url+request_path+query_params,
                                 headers=headers,
@@ -105,7 +144,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         request_path = f"/api/v3/brokerage/accounts/{account_id}"
         method = "GET"
 
-        headers = self._build_request_headers(method, request_path)
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
         response = requests.get(self._base_url+request_path, headers=headers, timeout=self.timeout)
 
@@ -275,7 +315,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             'order_configuration': order_configuration
         }
 
-        headers = self._build_request_headers(method, request_path, json.dumps(payload))
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
         response = requests.post(self._base_url+request_path,
                                  json=payload, headers=headers,
                                  timeout=self.timeout)
@@ -300,7 +341,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             'order_ids': order_ids,
         }
 
-        headers = self._build_request_headers(method, request_path, json.dumps(payload))
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
         response = requests.post(self._base_url+request_path,
                                  json=payload,
                                  headers=headers,
@@ -398,7 +440,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         if order_placement_source is not None:
             query_params = self._next_param(query_params) + 'order_placement_source=' + order_placement_source.value
 
-        headers = self._build_request_headers(method, request_path)
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
         response = requests.get(self._base_url+request_path+query_params,
                                 headers=headers,
@@ -495,7 +538,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         if cursor is not None:
             query_params = self._next_param(query_params) + 'cursor=' + cursor
 
-        headers = self._build_request_headers(method, request_path)
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
         response = requests.get(self._base_url+request_path+query_params,
                                 headers=headers,
@@ -568,7 +612,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         if product_type is not None:
             query_params = self._next_param(query_params) + 'product_type=' + product_type.value
 
-        headers = self._build_request_headers(method, request_path)
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
         response = requests.get(self._base_url+request_path+query_params,
                                 headers=headers,
@@ -590,7 +635,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         request_path = f"/api/v3/brokerage/products/{product_id}"
         method = "GET"
 
-        headers = self._build_request_headers(method, request_path)
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
         response = requests.get(self._base_url+request_path, headers=headers, timeout=self.timeout)
 
@@ -624,7 +670,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         query_params = self._next_param(query_params) + 'end=' + str(int(end_date.timestamp()))
         query_params = self._next_param(query_params) + 'granularity=' + granularity.value
 
-        headers = self._build_request_headers(method, request_path)
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
         response = requests.get(self._base_url+request_path+query_params,
                                 headers=headers,
@@ -697,7 +744,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         query_params = self._next_param(query_params) + 'limit=' + str(limit)
 
-        headers = self._build_request_headers(method, request_path)
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
         response = requests.get(self._base_url+request_path+query_params,
                                 headers=headers,
@@ -739,7 +787,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         if product_type is not None:
             query_params = self._next_param(query_params) + 'product_type='+product_type.value
 
-        headers = self._build_request_headers(method, request_path)
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
         response = requests.get(self._base_url+request_path+query_params,
                                 headers=headers,
@@ -749,6 +798,37 @@ class CoinbaseAdvancedTradeAPIClient(object):
         return page
 
     # Helpers #
+
+    ## Cloud Auth #
+
+    def _build_request_headers_for_cloud(self, method, host, request_path):
+        uri = f"{method} {host}{request_path}"
+        jwt_token = self._build_jwt("retail_rest_api_proxy", uri)
+
+        return {
+            "Authorization": f"Bearer {jwt_token}",
+        }
+
+    def _build_jwt(self, service, uri):
+        private_key_bytes = self._secret_key.encode('utf-8')
+        private_key = serialization.load_pem_private_key(private_key_bytes, password=None)
+        jwt_payload = {
+            'sub': self._api_key,
+            'iss': "coinbase-cloud",
+            'nbf': int(time.time()),
+            'exp': int(time.time()) + 60,
+            'aud': [service],
+            'uri': uri,
+        }
+        jwt_token = jwt.encode(
+            jwt_payload,
+            private_key,
+            algorithm='ES256',
+            headers={'kid': self._api_key, 'nonce': str(int(time.time()))},
+        )
+        return jwt_token
+
+    ## Legacy Auth #
 
     def _build_request_headers(self, method, request_path, body=''):
         timestamp = str(int(time.time()))
@@ -770,6 +850,11 @@ class CoinbaseAdvancedTradeAPIClient(object):
             digestmod=hashlib.sha256).digest().hex()
 
         return signature
+
+    def _is_legacy_auth(self) -> bool:
+        return self._auth_schema == AuthSchema.LEGACY_API_KEYS
+
+    # Others
 
     def _next_param(self, query_params: str) -> str:
         return query_params + ('?' if query_params == '' else '&')
