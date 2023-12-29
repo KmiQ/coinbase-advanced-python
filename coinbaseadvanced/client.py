@@ -574,7 +574,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         request_path = f"/api/v3/brokerage/orders/historical/{order_id}"
         method = "GET"
 
-        headers = self._build_request_headers(method, request_path)
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
         response = requests.get(self._base_url+request_path, headers=headers, timeout=self.timeout)
 
@@ -797,9 +798,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
         page = TransactionsSummary.from_response(response)
         return page
 
-    # Helpers #
+    # Helpers Methods #
 
-    ## Cloud Auth #
+    ## Cloud Auth ##
 
     def _build_request_headers_for_cloud(self, method, host, request_path):
         uri = f"{method} {host}{request_path}"
@@ -828,7 +829,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         )
         return jwt_token
 
-    ## Legacy Auth #
+    ## Legacy Auth ##
 
     def _build_request_headers(self, method, request_path, body=''):
         timestamp = str(int(time.time()))
@@ -854,7 +855,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
     def _is_legacy_auth(self) -> bool:
         return self._auth_schema == AuthSchema.LEGACY_API_KEYS
 
-    # Others
+    ## Others ##
 
     def _next_param(self, query_params: str) -> str:
         return query_params + ('?' if query_params == '' else '&')
