@@ -246,7 +246,6 @@ class Order:
 
     def __init__(self, order_id: str, product_id: str, side: str, client_order_id: str,
                  order_configuration: dict,
-
                  user_id: str = None,
                  status: str = None,
                  time_in_force: str = None,
@@ -327,8 +326,8 @@ class Order:
             return cls(
                 None, None, None, None, None, None, None, None, None,
                 None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None,
-                error_response)
+                None, None, None, None, None, None, None, None, None,
+                None, None, error_response)
 
         success_response = result['success_response']
         order_configuration = result['order_configuration']
