@@ -1,0 +1,18 @@
+{
+    "success": false,
+    "failure_reason": "UNKNOWN_FAILURE_REASON",
+    "order_id": "",
+    "error_response": {
+        "error": "INSUFFICIENT_FUND",
+        "message": "Insufficient balance in source account",
+        "error_details": "",
+        "preview_failure_reason": "PREVIEW_INSUFFICIENT_FUND"
+    },
+    "order_configuration": {
+        "limit_limit_gtc": {
+            "base_size": "1000",
+            "limit_price": ".15",
+            "post_only": false
+        }
+    }
+}

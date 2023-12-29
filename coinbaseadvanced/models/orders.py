@@ -175,6 +175,23 @@ class StopLimitGTD:
         self.kwargs = kwargs
 
 
+class OrderEditRecord:
+    """
+    Stop-Limit till date order configuration.
+    """
+
+    def __init__(self,
+                 price: str,
+                 size: str,
+                 replace_accept_timestamp: str,
+                 **kwargs) -> None:
+        self.price = price
+        self.size = size
+        self.replace_accept_timestamp = replace_accept_timestamp
+
+        self.kwargs = kwargs
+
+
 class OrderConfiguration:
     """
     Order Configuration. One of four possible fields should only be settled.
@@ -242,6 +259,12 @@ class Order:
     order_placement_source: str
     outstanding_hold_amount: str
 
+    is_liquidation: bool
+    last_fill_time: str
+    edit_history: List[OrderEditRecord]
+    leverage: str
+    margin_type: str
+
     order_error: OrderError
 
     def __init__(self, order_id: str, product_id: str, side: str, client_order_id: str,
@@ -270,6 +293,12 @@ class Order:
                  cancel_message: str = None,
                  order_placement_source: str = None,
                  outstanding_hold_amount: str = None,
+
+                 is_liquidation: bool = None,
+                 last_fill_time: str = None,
+                 edit_history: List[OrderEditRecord] = None,
+                 leverage: str = None,
+                 margin_type: str = None,
 
                  order_error: dict = None, **kwargs) -> None:
         self.order_id = order_id
@@ -306,6 +335,13 @@ class Order:
         self.order_placement_source = order_placement_source
         self.outstanding_hold_amount = outstanding_hold_amount
 
+        self.is_liquidation = is_liquidation
+        self.last_fill_time = last_fill_time
+        self.edit_history = [OrderEditRecord(
+            **edit) for edit in edit_history] if edit_history is not None else None,
+        self.leverage = leverage
+        self.margin_type = margin_type
+
         self.order_error = OrderError(**order_error) if order_error is not None else None
 
         self.kwargs = kwargs
@@ -327,7 +363,7 @@ class Order:
                 None, None, None, None, None, None, None, None, None,
                 None, None, None, None, None, None, None, None, None,
                 None, None, None, None, None, None, None, None, None,
-                None, None, error_response)
+                None, None, None, None, None, None, None, error_response)
 
         success_response = result['success_response']
         order_configuration = result['order_configuration']
