@@ -15,7 +15,7 @@ import json
 import requests
 
 from coinbaseadvanced.models.fees import TransactionsSummary
-from coinbaseadvanced.models.products import ProductsPage, Product, CandlesPage,\
+from coinbaseadvanced.models.products import BidAsksPage, ProductsPage, Product, CandlesPage,\
     TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
 from coinbaseadvanced.models.accounts import AccountsPage, Account
 from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Order,\
@@ -754,6 +754,31 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         trades_page = TradesPage.from_response(response)
         return trades_page
+
+    def get_best_bid_ask(self, product_ids: List[str] = None) -> BidAsksPage:
+        """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getbestbidask
+
+        Get the best bid/ask for all products. A subset of all products can be returned instead by using the product_ids input.
+
+        Args:
+        - product_ids: Subset of all products to be returned instead.
+        """
+
+        request_path = f"/api/v3/brokerage/best_bid_ask"
+        method = "GET"
+
+        query_params = ''
+        if product_ids is not None:
+            query_params = self._next_param(query_params) + 'product_ids='+'&product_ids='.join(product_ids)
+
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
+
+        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=self.timeout)
+
+        bid_asks_page = BidAsksPage.from_response(response)
+        return bid_asks_page
 
     # Fees #
 

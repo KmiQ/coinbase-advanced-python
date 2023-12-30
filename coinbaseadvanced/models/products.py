@@ -250,6 +250,75 @@ class CandlesPage:
         return self.candles.__iter__()
 
 
+class Bid:
+    price: str
+    size: str
+
+    def __init__(self, price: str, size: str, **kwargs):
+        self.price = price
+        self.size = size
+
+        self.kwargs = kwargs
+
+
+class Ask:
+    price: str
+    size: str
+
+    def __init__(self, price: str, size: str, **kwargs):
+        self.price = price
+        self.size = size
+
+        self.kwargs = kwargs
+
+
+class BidAsk:
+    """
+    BidAsk object.
+    """
+
+    product_id: str
+    bids: List[Bid]
+    asks: List[Ask]
+    time: str
+
+    def __init__(self, product_id: str, bids: List[Bid], asks: List[Ask], time: str, **kwargs) -> None:
+        self.product_id = product_id
+        self.bids = list(map(lambda x: Bid(**x), bids)) if bids is not None else None
+        self.asks = list(map(lambda x: Ask(**x), asks)) if asks is not None else None
+        self.time = time
+
+        self.kwargs = kwargs
+
+
+class BidAsksPage:
+    """
+    Page of bid/asks for products.
+    """
+
+    pricebooks: List[BidAsk]
+
+    def __init__(self, pricebooks: List[BidAsk], **kwargs) -> None:
+        self.pricebooks = list(map(lambda x: BidAsk(**x), pricebooks)) if pricebooks is not None else None
+
+        self.kwargs = kwargs
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'CandlesPage':
+        """
+        Factory Method.
+        """
+
+        if not response.ok:
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
+
+        result = json.loads(response.text)
+        return cls(**result)
+
+    def __iter__(self):
+        return self.candles.__iter__()
+
+
 class Trade:
     """
     Trade object data.
