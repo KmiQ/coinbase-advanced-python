@@ -2,22 +2,27 @@ import json
 import random
 import string
 
+from dotenv import load_dotenv
+import os
+
 from datetime import datetime, timezone
 
 from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, Side, StopDirection, Granularity
 
 from tests.fixtures.fixtures import *
 
+load_dotenv()  # Load environment variables from a .env file
+
 # Cloud API Trading Keys (NEW/Recommended): https://cloud.coinbase.com/access/api
-API_KEY_NAME = 'organizations/3fde365b-dbe9-461b-b01b-9698386ae4a4/apiKeys/42d66d26-d3d4-42da-963b-d51025d51197'
-PRIVATE_KEY = '-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEINpssshIGRmnObn9jstzAc2soepmmPWnBePlSMtvA9q8oAoGCCqGSM49\nAwEHoUQDQgAED/ORnM2spjFGtR2WF73M1y8t/XirDU6QOdZlI7PpcoJhfs1NgZuV\nF42keQsLqyyMsCYKPNHPSGz8Z9a20Gi5IQ==\n-----END EC PRIVATE KEY-----\n'
+API_KEY_NAME = os.getenv('API_KEY_NAME')
+PRIVATE_KEY = os.getenv('PRIVATE_KEY').replace('\\n', '\n')
 
 # Legacy API Keys: https://www.coinbase.com/settings/api
-API_KEY = "pc5w1UKANI0jpZpW"
-SECRET_KEY = "jDlPKxMmnmjaeW70yNIcOTgwNWdY2XjE"
+API_KEY = os.getenv('API_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # A real Account Id (ALGO WALLET ID, BTC WALLET ID, or ETH WALLET ID, etc...)
-ACCOUNT_ID = '0a8d25a6-1e80-50d5-b4d8-7a841ca49894'
+ACCOUNT_ID = os.getenv('ACCOUNT_ID')
 
 
 def generate_random_id():
@@ -132,3 +137,7 @@ print()
 #     'start_date': datetime(2023, 1, 1, tzinfo=timezone.utc),
 #     'end_date': datetime(2023, 1, 31, tzinfo=timezone.utc)},
 #     json.loads(fixture_get_transactions_summary_success_response().text))
+
+# Common
+audit(client.get_unix_time, {},
+      json.loads(fixture_get_unix_time_success_response().text))
