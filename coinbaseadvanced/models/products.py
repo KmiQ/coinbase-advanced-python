@@ -315,6 +315,9 @@ class BidAsksPage:
         result = json.loads(response.text)
         return cls(**result)
 
+    def __iter__(self):
+        return self.pricebooks.__iter__()
+
 
 class ProductBook:
     """
