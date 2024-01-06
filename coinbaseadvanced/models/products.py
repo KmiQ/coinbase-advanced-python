@@ -204,14 +204,14 @@ class Candle:
     Candle object.
     """
 
-    start: int
+    start: str
     low: str
     high: str
     open: str
     close: str
     volume: int
 
-    def __init__(self, start: int, low: str, high: str, open: str, close: str, volume: int, **kwargs) -> None:
+    def __init__(self, start: str, low: str, high: str, open: str, close: str, volume: int, **kwargs) -> None:
         self.start = start
         self.low = low
         self.high = high
