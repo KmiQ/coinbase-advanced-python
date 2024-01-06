@@ -139,5 +139,5 @@ print()
 #     json.loads(fixture_get_transactions_summary_success_response().text))
 
 # Common
-audit(client.get_unix_time, {},
-      json.loads(fixture_get_unix_time_success_response().text))
+# audit(client.get_unix_time, {},
+#      json.loads(fixture_get_unix_time_success_response().text))

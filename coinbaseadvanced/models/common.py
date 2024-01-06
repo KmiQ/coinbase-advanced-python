@@ -2,13 +2,8 @@
 Object models for order related endpoints args and response.
 """
 
-from typing import List
-from datetime import datetime
-from enum import Enum
-
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
-import json
 import requests
 
 
@@ -43,7 +38,7 @@ class UnixTime:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):
