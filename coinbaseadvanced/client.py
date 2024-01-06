@@ -13,6 +13,7 @@ import hashlib
 import time
 import json
 import requests
+from coinbaseadvanced.models.common import UnixTime
 
 from coinbaseadvanced.models.fees import TransactionsSummary
 from coinbaseadvanced.models.products import BidAsksPage, ProductBook, ProductsPage, Product, CandlesPage,\
@@ -852,6 +853,27 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         page = TransactionsSummary.from_response(response)
         return page
+
+    # Common #
+
+    def get_unix_time(self) -> UnixTime:
+        """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getunixtime
+
+        Get the current time from the Coinbase Advanced API.
+
+        """
+
+        request_path = f"/api/v3/brokerage/time"
+        method = "GET"
+
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
+
+        response = requests.get(self._base_url+request_path, headers=headers, timeout=self.timeout)
+
+        time = UnixTime.from_response(response)
+        return time
 
     # Helpers Methods #
 

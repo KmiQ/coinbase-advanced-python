@@ -1048,3 +1048,37 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertIsNotNone(transactions_summary.fee_tier)
         self.assertIsNotNone(transactions_summary.total_fees)
         self.assertIsNotNone(transactions_summary.total_volume)
+
+    @mock.patch("coinbaseadvanced.client.requests.get")
+    def test_get_unix_time(self, mock_get):
+
+        mock_resp = fixture_get_unix_time_success_response()
+        mock_get.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        unix_time = client.get_unix_time()
+
+        # Check input
+
+        call_args = mock_get.call_args_list
+
+        for call in call_args:
+            args, kwargs = call
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/time',
+                args)
+
+            headers = kwargs['headers']
+            self.assertIn('accept', headers)
+            self.assertIn('CB-ACCESS-KEY', headers)
+            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
+            self.assertIn('CB-ACCESS-SIGN', headers)
+
+        # Check output
+
+        self.assertIsNotNone(unix_time)
+        self.assertIsNotNone(unix_time.iso)
+        self.assertIsNotNone(unix_time.epochSeconds)
+        self.assertIsNotNone(unix_time.epochMillis)

@@ -256,3 +256,11 @@ def fixture_get_transactions_summary_success_response() -> mock.Mock:
         return _fixtured_mock_response(
             ok=True,
             text=content)
+
+
+def fixture_get_unix_time_success_response() -> mock.Mock:
+    with open('tests/fixtures/get_unix_time_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return _fixtured_mock_response(
+            ok=True,
+            text=content)
