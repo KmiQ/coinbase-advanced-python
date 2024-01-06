@@ -234,6 +234,14 @@ def fixture_get_best_bid_asks_success_response() -> mock.Mock:
             text=content)
 
 
+def fixture_product_book_success_response() -> mock.Mock:
+    with open('tests/fixtures/get_product_book_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return _fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
 def fixture_get_trades_success_response() -> mock.Mock:
     with open('tests/fixtures/get_trades_success_response.json', 'r', encoding="utf-8") as file:
         content = file.read()

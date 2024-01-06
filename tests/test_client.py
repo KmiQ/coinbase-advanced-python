@@ -940,6 +940,41 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIsNotNone(bidask)
 
     @mock.patch("coinbaseadvanced.client.requests.get")
+    def test_product_book(self, mock_get):
+
+        mock_resp = fixture_product_book_success_response()
+        mock_get.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        product_book = client.get_product_book(product_id="BTC-USD", limit=5)
+
+        # Check input
+
+        call_args = mock_get.call_args_list
+
+        for call in call_args:
+            args, kwargs = call
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/product_book?product_id=BTC-USD&limit=5',
+                args)
+
+            headers = kwargs['headers']
+            self.assertIn('accept', headers)
+            self.assertIn('CB-ACCESS-KEY', headers)
+            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
+            self.assertIn('CB-ACCESS-SIGN', headers)
+
+        # Check output
+
+        self.assertIsNotNone(product_book)
+
+        pricebook = product_book.pricebook
+        self.assertEqual(len(pricebook.asks), 5)
+        self.assertEqual(len(pricebook.bids), 5)
+
+    @mock.patch("coinbaseadvanced.client.requests.get")
     def test_get_trades(self, mock_get):
 
         mock_resp = fixture_get_trades_success_response()

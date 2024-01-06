@@ -296,7 +296,7 @@ class BidAsksPage:
     Page of bid/asks for products.
     """
 
-    pricebooks: List[BidAsk]
+    pricebooks: List
 
     def __init__(self, pricebooks: List[BidAsk], **kwargs) -> None:
         self.pricebooks = list(map(lambda x: BidAsk(**x), pricebooks)) if pricebooks is not None else None
@@ -304,7 +304,7 @@ class BidAsksPage:
         self.kwargs = kwargs
 
     @classmethod
-    def from_response(cls, response: requests.Response) -> 'CandlesPage':
+    def from_response(cls, response: requests.Response) -> 'BidAsksPage':
         """
         Factory Method.
         """
@@ -315,8 +315,30 @@ class BidAsksPage:
         result = json.loads(response.text)
         return cls(**result)
 
-    def __iter__(self):
-        return self.candles.__iter__()
+
+class ProductBook:
+    """
+    Product bid/asks.
+    """
+
+    pricebook: BidAsk
+
+    def __init__(self, pricebook: dict, **kwargs) -> None:
+        self.pricebook = BidAsk(**pricebook)
+
+        self.kwargs = kwargs
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'ProductBook':
+        """
+        Factory Method.
+        """
+
+        if not response.ok:
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
+
+        result = json.loads(response.text)
+        return cls(**result)
 
 
 class Trade:

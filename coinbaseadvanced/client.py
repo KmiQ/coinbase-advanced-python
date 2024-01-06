@@ -15,7 +15,7 @@ import json
 import requests
 
 from coinbaseadvanced.models.fees import TransactionsSummary
-from coinbaseadvanced.models.products import BidAsksPage, ProductsPage, Product, CandlesPage,\
+from coinbaseadvanced.models.products import BidAsksPage, ProductBook, ProductsPage, Product, CandlesPage,\
     TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
 from coinbaseadvanced.models.accounts import AccountsPage, Account
 from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Order,\
@@ -754,6 +754,36 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         trades_page = TradesPage.from_response(response)
         return trades_page
+
+    def get_product_book(self, product_id: str, limit: int = None) -> ProductBook:
+        """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getproductbook
+
+        Get a list of bids/asks for a single product.
+        The amount of detail shown can be customized with the limit parameter.
+
+        Args:
+        - product_id: The trading pair.
+        - limit: A pagination limit.
+        """
+
+        request_path = f"/api/v3/brokerage/product_book"
+        method = "GET"
+
+        query_params = ''
+        if product_id is not None:
+            query_params = self._next_param(query_params) + 'product_id='+product_id
+
+        if limit is not None:
+            query_params = self._next_param(query_params) + 'limit='+str(limit)
+
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
+
+        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=self.timeout)
+
+        bid_asks_page = ProductBook.from_response(response)
+        return bid_asks_page
 
     def get_best_bid_ask(self, product_ids: List[str] = None) -> BidAsksPage:
         """
