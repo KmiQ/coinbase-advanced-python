@@ -1,5 +1,7 @@
 from unittest import mock
 
+import json
+
 
 def _fixtured_mock_response(
         ok: bool,
@@ -14,6 +16,7 @@ def _fixtured_mock_response(
     # set status code and content
     mock_resp.ok = ok
     mock_resp.text = text
+    mock_resp.json.return_value = json.loads(text)
 
     return mock_resp
 
