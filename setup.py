@@ -2,19 +2,15 @@
 Package Setup Configurations.
 """
 
-from setuptools import setup
 import coinbaseadvanced
+import os
 
-requirements = [
-    'requests>=2.31.0',
-    'requests-toolbelt>=0.10.1',
-    'typed-ast>=1.5.4',
-    'typing-extensions>=4.4.0',
-    'cryptography>=41.0.7',
-    'isort>=5.10.1',
-    'PyJWT>=2.8.0',
-    'python-dotenv>=0.21.1',
-]
+from setuptools import find_packages, setup
+
+root = os.path.abspath(os.path.dirname(__file__))
+
+with open(os.path.join(root, "requirements.txt"), "r") as fh:
+    requirements = fh.readlines()
 
 with open("README.md", "r", encoding="utf-8") as fh:
     readme = fh.read()
@@ -33,7 +29,7 @@ setup(
     author='Camilo Quintas',
     author_email='kmiloc89@gmail.com',
     keywords=['api', 'coinbase', 'bitcoin', 'client'],
-    install_requires=requirements,
+    install_requires=[req for req in requirements],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
