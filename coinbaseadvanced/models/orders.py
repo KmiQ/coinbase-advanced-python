@@ -8,7 +8,6 @@ from enum import Enum
 from coinbaseadvanced.models.common import BaseModel
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
-import json
 import requests
 
 
@@ -355,7 +354,7 @@ class Order(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
 
         if not result['success']:
             error_response = result['error_response']
@@ -378,7 +377,7 @@ class Order(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
 
         order = result['order']
 
@@ -419,7 +418,7 @@ class OrdersPage(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):
@@ -464,7 +463,7 @@ class OrderBatchCancellation(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
 
         return cls(**result)
 
@@ -555,7 +554,7 @@ class FillsPage(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):

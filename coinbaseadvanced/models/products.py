@@ -9,7 +9,6 @@ from enum import Enum
 from coinbaseadvanced.models.common import BaseModel
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
-import json
 import requests
 
 
@@ -162,7 +161,7 @@ class Product(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         product_dict = result
         return cls(**product_dict)
 
@@ -192,7 +191,7 @@ class ProductsPage(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):
@@ -243,7 +242,7 @@ class CandlesPage(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):
@@ -312,7 +311,7 @@ class BidAsksPage(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):
@@ -340,7 +339,7 @@ class ProductBook(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
 
@@ -408,7 +407,7 @@ class TradesPage(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):

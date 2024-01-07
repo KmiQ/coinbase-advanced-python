@@ -2,7 +2,6 @@
 Object models for fees related endpoints args and response.
 """
 
-import json
 import requests
 
 from coinbaseadvanced.models.common import BaseModel
@@ -108,5 +107,5 @@ class TransactionsSummary(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)

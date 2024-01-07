@@ -2,7 +2,6 @@
 Object models for account related endpoints args and response.
 """
 
-import json
 from uuid import UUID
 from datetime import datetime
 from typing import List
@@ -74,7 +73,7 @@ class Account(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         account_dict = result['account']
         return cls(**account_dict)
 
@@ -115,7 +114,7 @@ class AccountsPage(BaseModel):
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):
