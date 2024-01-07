@@ -5,10 +5,9 @@ Object models for order related endpoints args and response.
 from typing import List
 from datetime import datetime
 from enum import Enum
-
+from coinbaseadvanced.models.common import BaseModel
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
-import json
 import requests
 
 
@@ -51,7 +50,7 @@ class OrderPlacementSource(Enum):
     RETAIL_ADVANCDED = "RETAIL_ADVANCED"
 
 
-class OrderError:
+class OrderError(BaseModel):
     """
     Class encapsulating order error fields.
     """
@@ -73,7 +72,7 @@ class OrderError:
         self.kwargs = kwargs
 
 
-class LimitGTC:
+class LimitGTC(BaseModel):
     """
     Limit till cancelled order configuration.
     """
@@ -90,7 +89,7 @@ class LimitGTC:
         self.kwargs = kwargs
 
 
-class LimitGTD:
+class LimitGTD(BaseModel):
     """
     Limit till date order configuration.
     """
@@ -110,7 +109,7 @@ class LimitGTD:
         self.kwargs = kwargs
 
 
-class MarketIOC:
+class MarketIOC(BaseModel):
     """
     Market order configuration.
     """
@@ -125,7 +124,7 @@ class MarketIOC:
         self.kwargs = kwargs
 
 
-class StopLimitGTC:
+class StopLimitGTC(BaseModel):
     """
     Stop-Limit till cancelled order configuration.
     """
@@ -148,7 +147,7 @@ class StopLimitGTC:
         self.kwargs = kwargs
 
 
-class StopLimitGTD:
+class StopLimitGTD(BaseModel):
     """
     Stop-Limit till date order configuration.
     """
@@ -175,7 +174,24 @@ class StopLimitGTD:
         self.kwargs = kwargs
 
 
-class OrderConfiguration:
+class OrderEditRecord(BaseModel):
+    """
+    Stop-Limit till date order configuration.
+    """
+
+    def __init__(self,
+                 price: str,
+                 size: str,
+                 replace_accept_timestamp: str,
+                 **kwargs) -> None:
+        self.price = price
+        self.size = size
+        self.replace_accept_timestamp = replace_accept_timestamp
+
+        self.kwargs = kwargs
+
+
+class OrderConfiguration(BaseModel):
     """
     Order Configuration. One of four possible fields should only be settled.
     """
@@ -203,7 +219,7 @@ class OrderConfiguration:
         self.kwargs = kwargs
 
 
-class Order:
+class Order(BaseModel):
     """
     Class reprensenting an order. This support the `create_order*` endpoints
     and the `get_order` endpoint.
@@ -242,11 +258,16 @@ class Order:
     order_placement_source: str
     outstanding_hold_amount: str
 
+    is_liquidation: bool
+    last_fill_time: str
+    edit_history: List[OrderEditRecord]
+    leverage: str
+    margin_type: str
+
     order_error: OrderError
 
     def __init__(self, order_id: str, product_id: str, side: str, client_order_id: str,
                  order_configuration: dict,
-
                  user_id: str = None,
                  status: str = None,
                  time_in_force: str = None,
@@ -271,6 +292,12 @@ class Order:
                  cancel_message: str = None,
                  order_placement_source: str = None,
                  outstanding_hold_amount: str = None,
+
+                 is_liquidation: bool = None,
+                 last_fill_time: str = None,
+                 edit_history: List[OrderEditRecord] = None,
+                 leverage: str = None,
+                 margin_type: str = None,
 
                  order_error: dict = None, **kwargs) -> None:
         self.order_id = order_id
@@ -307,6 +334,13 @@ class Order:
         self.order_placement_source = order_placement_source
         self.outstanding_hold_amount = outstanding_hold_amount
 
+        self.is_liquidation = is_liquidation
+        self.last_fill_time = last_fill_time
+        self.edit_history = [OrderEditRecord(
+            **edit) for edit in edit_history] if edit_history is not None else None,
+        self.leverage = leverage
+        self.margin_type = margin_type
+
         self.order_error = OrderError(**order_error) if order_error is not None else None
 
         self.kwargs = kwargs
@@ -320,15 +354,15 @@ class Order:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
 
         if not result['success']:
             error_response = result['error_response']
             return cls(
                 None, None, None, None, None, None, None, None, None,
                 None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None, None, None,
-                error_response)
+                None, None, None, None, None, None, None, None, None,
+                None, None, None, None, None, None, None, error_response)
 
         success_response = result['success_response']
         order_configuration = result['order_configuration']
@@ -343,14 +377,14 @@ class Order:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
 
         order = result['order']
 
         return cls(**order)
 
 
-class OrdersPage:
+class OrdersPage(BaseModel):
     """
     Orders page.
     """
@@ -384,14 +418,14 @@ class OrdersPage:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):
         return self.orders.__iter__()
 
 
-class OrderCancellation:
+class OrderCancellation(BaseModel):
     """
     Order cancellation.
     """
@@ -408,7 +442,7 @@ class OrderCancellation:
         self.kwargs = kwargs
 
 
-class OrderBatchCancellation:
+class OrderBatchCancellation(BaseModel):
     """
     Batch/Page of order cancellations.
     """
@@ -429,12 +463,12 @@ class OrderBatchCancellation:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
 
         return cls(**result)
 
 
-class Fill:
+class Fill(BaseModel):
     """
     Object representing an order filled.
     """
@@ -492,7 +526,7 @@ class Fill:
         self.kwargs = kwargs
 
 
-class FillsPage:
+class FillsPage(BaseModel):
     """
     Page of orders filled.
     """
@@ -520,7 +554,7 @@ class FillsPage:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):

@@ -2,16 +2,16 @@
 Object models for account related endpoints args and response.
 """
 
-import json
 from uuid import UUID
 from datetime import datetime
 from typing import List
 import requests
 
+from coinbaseadvanced.models.common import BaseModel
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
 
-class AvailableBalance:
+class AvailableBalance(BaseModel):
     """
     Available Balance object.
     """
@@ -26,7 +26,7 @@ class AvailableBalance:
         self.kwargs = kwargs
 
 
-class Account:
+class Account(BaseModel):
     """
     Object representing an account.
     """
@@ -73,12 +73,12 @@ class Account:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         account_dict = result['account']
         return cls(**account_dict)
 
 
-class AccountsPage:
+class AccountsPage(BaseModel):
     """
     Page of accounts.
     """
@@ -114,7 +114,7 @@ class AccountsPage:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):

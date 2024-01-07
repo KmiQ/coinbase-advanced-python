@@ -1,20 +1,20 @@
 {
     "order": {
-        "order_id": "5fffa9e8-73db-4a2c-8b3f-08509203ac04",
+        "order_id": "nkj23kj234234",
         "product_id": "ALGO-USD",
-        "user_id": "cd5d3286-b5ad-5f48-b356-1fd3e4e73f72",
+        "user_id": "mknl23nlk234lk234",
         "order_configuration": {
             "limit_limit_gtc": {
                 "base_size": "5",
-                "limit_price": "0.1",
+                "limit_price": "0.15",
                 "post_only": false
             }
         },
         "side": "BUY",
-        "client_order_id": "jbkjbdskfbg73ibukl",
+        "client_order_id": "WoKEnVudA77LvxR4Uknt",
         "status": "CANCELLED",
         "time_in_force": "GOOD_UNTIL_CANCELLED",
-        "created_time": "2023-01-21T04:21:10.511448Z",
+        "created_time": "2023-12-29T02:42:39.309158Z",
         "completion_percentage": "0",
         "filled_size": "0",
         "average_filled_price": "0",
@@ -32,6 +32,13 @@
         "settled": false,
         "product_type": "SPOT",
         "reject_message": "",
-        "cancel_message": "User requested cancel"
+        "cancel_message": "User requested cancel",
+        "order_placement_source": "RETAIL_ADVANCED",
+        "outstanding_hold_amount": "0",
+        "is_liquidation": false,
+        "last_fill_time": null,
+        "edit_history": [],
+        "leverage": "",
+        "margin_type": "UNKNOWN_MARGIN_TYPE"
     }
 }

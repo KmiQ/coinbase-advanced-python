@@ -6,10 +6,9 @@ from uuid import UUID
 from datetime import datetime
 from typing import List
 from enum import Enum
-
+from coinbaseadvanced.models.common import BaseModel
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
-import json
 import requests
 
 
@@ -49,7 +48,7 @@ class Granularity(Enum):
     ONE_DAY = "ONE_DAY"
 
 
-class Product:
+class Product(BaseModel):
     """
     Object representing a product.
     """
@@ -162,12 +161,12 @@ class Product:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         product_dict = result
         return cls(**product_dict)
 
 
-class ProductsPage:
+class ProductsPage(BaseModel):
     """
     Products Page.
     """
@@ -192,26 +191,26 @@ class ProductsPage:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):
         return self.products.__iter__()
 
 
-class Candle:
+class Candle(BaseModel):
     """
     Candle object.
     """
 
-    start: int
+    start: str
     low: str
     high: str
     open: str
     close: str
     volume: int
 
-    def __init__(self, start: int, low: str, high: str, open: str, close: str, volume: int, **kwargs) -> None:
+    def __init__(self, start: str, low: str, high: str, open: str, close: str, volume: int, **kwargs) -> None:
         self.start = start
         self.low = low
         self.high = high
@@ -222,7 +221,7 @@ class Candle:
         self.kwargs = kwargs
 
 
-class CandlesPage:
+class CandlesPage(BaseModel):
     """
     Page of product candles.
     """
@@ -243,14 +242,108 @@ class CandlesPage:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):
         return self.candles.__iter__()
 
 
-class Trade:
+class Bid(BaseModel):
+    price: str
+    size: str
+
+    def __init__(self, price: str, size: str, **kwargs):
+        self.price = price
+        self.size = size
+
+        self.kwargs = kwargs
+
+
+class Ask(BaseModel):
+    price: str
+    size: str
+
+    def __init__(self, price: str, size: str, **kwargs):
+        self.price = price
+        self.size = size
+
+        self.kwargs = kwargs
+
+
+class BidAsk(BaseModel):
+    """
+    BidAsk object.
+    """
+
+    product_id: str
+    bids: List[Bid]
+    asks: List[Ask]
+    time: str
+
+    def __init__(self, product_id: str, bids: List[Bid], asks: List[Ask], time: str, **kwargs) -> None:
+        self.product_id = product_id
+        self.bids = list(map(lambda x: Bid(**x), bids)) if bids is not None else None
+        self.asks = list(map(lambda x: Ask(**x), asks)) if asks is not None else None
+        self.time = time
+
+        self.kwargs = kwargs
+
+
+class BidAsksPage(BaseModel):
+    """
+    Page of bid/asks for products.
+    """
+
+    pricebooks: List
+
+    def __init__(self, pricebooks: List[BidAsk], **kwargs) -> None:
+        self.pricebooks = list(map(lambda x: BidAsk(**x), pricebooks)) if pricebooks is not None else None
+
+        self.kwargs = kwargs
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'BidAsksPage':
+        """
+        Factory Method.
+        """
+
+        if not response.ok:
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
+
+        result = response.json()
+        return cls(**result)
+
+    def __iter__(self):
+        return self.pricebooks.__iter__()
+
+
+class ProductBook(BaseModel):
+    """
+    Product bid/asks.
+    """
+
+    pricebook: BidAsk
+
+    def __init__(self, pricebook: dict, **kwargs) -> None:
+        self.pricebook = BidAsk(**pricebook)
+
+        self.kwargs = kwargs
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'ProductBook':
+        """
+        Factory Method.
+        """
+
+        if not response.ok:
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
+
+        result = response.json()
+        return cls(**result)
+
+
+class Trade(BaseModel):
     """
     Trade object data.
     """
@@ -285,7 +378,7 @@ class Trade:
         self.kwargs = kwargs
 
 
-class TradesPage:
+class TradesPage(BaseModel):
     """
     Page of trades.
     """
@@ -314,7 +407,7 @@ class TradesPage:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
 
     def __iter__(self):

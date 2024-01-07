@@ -13,5 +13,7 @@
     "advanced_trade_only_volume": 16.711822509765625,
     "advanced_trade_only_fees": 0.09837093204259872,
     "coinbase_pro_volume": 0,
-    "coinbase_pro_fees": 0
+    "coinbase_pro_fees": 0,
+    "total_balance": "",
+    "has_promo_fee": false
 }
