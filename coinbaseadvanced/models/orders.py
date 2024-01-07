@@ -5,7 +5,7 @@ Object models for order related endpoints args and response.
 from typing import List
 from datetime import datetime
 from enum import Enum
-
+from coinbaseadvanced.models.common import BaseModel
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
 import json
@@ -51,7 +51,7 @@ class OrderPlacementSource(Enum):
     RETAIL_ADVANCDED = "RETAIL_ADVANCED"
 
 
-class OrderError:
+class OrderError(BaseModel):
     """
     Class encapsulating order error fields.
     """
@@ -73,7 +73,7 @@ class OrderError:
         self.kwargs = kwargs
 
 
-class LimitGTC:
+class LimitGTC(BaseModel):
     """
     Limit till cancelled order configuration.
     """
@@ -90,7 +90,7 @@ class LimitGTC:
         self.kwargs = kwargs
 
 
-class LimitGTD:
+class LimitGTD(BaseModel):
     """
     Limit till date order configuration.
     """
@@ -110,7 +110,7 @@ class LimitGTD:
         self.kwargs = kwargs
 
 
-class MarketIOC:
+class MarketIOC(BaseModel):
     """
     Market order configuration.
     """
@@ -125,7 +125,7 @@ class MarketIOC:
         self.kwargs = kwargs
 
 
-class StopLimitGTC:
+class StopLimitGTC(BaseModel):
     """
     Stop-Limit till cancelled order configuration.
     """
@@ -148,7 +148,7 @@ class StopLimitGTC:
         self.kwargs = kwargs
 
 
-class StopLimitGTD:
+class StopLimitGTD(BaseModel):
     """
     Stop-Limit till date order configuration.
     """
@@ -175,7 +175,7 @@ class StopLimitGTD:
         self.kwargs = kwargs
 
 
-class OrderEditRecord:
+class OrderEditRecord(BaseModel):
     """
     Stop-Limit till date order configuration.
     """
@@ -192,7 +192,7 @@ class OrderEditRecord:
         self.kwargs = kwargs
 
 
-class OrderConfiguration:
+class OrderConfiguration(BaseModel):
     """
     Order Configuration. One of four possible fields should only be settled.
     """
@@ -220,7 +220,7 @@ class OrderConfiguration:
         self.kwargs = kwargs
 
 
-class Order:
+class Order(BaseModel):
     """
     Class reprensenting an order. This support the `create_order*` endpoints
     and the `get_order` endpoint.
@@ -385,7 +385,7 @@ class Order:
         return cls(**order)
 
 
-class OrdersPage:
+class OrdersPage(BaseModel):
     """
     Orders page.
     """
@@ -426,7 +426,7 @@ class OrdersPage:
         return self.orders.__iter__()
 
 
-class OrderCancellation:
+class OrderCancellation(BaseModel):
     """
     Order cancellation.
     """
@@ -443,7 +443,7 @@ class OrderCancellation:
         self.kwargs = kwargs
 
 
-class OrderBatchCancellation:
+class OrderBatchCancellation(BaseModel):
     """
     Batch/Page of order cancellations.
     """
@@ -469,7 +469,7 @@ class OrderBatchCancellation:
         return cls(**result)
 
 
-class Fill:
+class Fill(BaseModel):
     """
     Object representing an order filled.
     """
@@ -527,7 +527,7 @@ class Fill:
         self.kwargs = kwargs
 
 
-class FillsPage:
+class FillsPage(BaseModel):
     """
     Page of orders filled.
     """

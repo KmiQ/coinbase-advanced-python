@@ -7,7 +7,18 @@ from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 import requests
 
 
-class UnixTime:
+class BaseModel:
+
+    def __str__(self):
+        attributes = ", ".join(f"{key}={value}" for key, value in self.__dict__.items())
+        return f"{self.__class__.__name__}({attributes})"
+
+    def __repr__(self):
+        attributes = ", ".join(f"{key}={value!r}" for key, value in self.__dict__.items())
+        return f"{self.__class__.__name__}({attributes})"
+
+
+class UnixTime(BaseModel):
     """
     Unix time in different formats.
     """
@@ -40,6 +51,3 @@ class UnixTime:
 
         result = response.json()
         return cls(**result)
-
-    def __iter__(self):
-        return self.fills.__iter__()

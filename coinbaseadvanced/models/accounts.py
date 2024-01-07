@@ -8,10 +8,11 @@ from datetime import datetime
 from typing import List
 import requests
 
+from coinbaseadvanced.models.common import BaseModel
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
 
-class AvailableBalance:
+class AvailableBalance(BaseModel):
     """
     Available Balance object.
     """
@@ -26,7 +27,7 @@ class AvailableBalance:
         self.kwargs = kwargs
 
 
-class Account:
+class Account(BaseModel):
     """
     Object representing an account.
     """
@@ -78,7 +79,7 @@ class Account:
         return cls(**account_dict)
 
 
-class AccountsPage:
+class AccountsPage(BaseModel):
     """
     Page of accounts.
     """

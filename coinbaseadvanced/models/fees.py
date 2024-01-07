@@ -5,10 +5,11 @@ Object models for fees related endpoints args and response.
 import json
 import requests
 
+from coinbaseadvanced.models.common import BaseModel
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
 
-class FeeTier:
+class FeeTier(BaseModel):
     """
     Fee Tier object.
     """
@@ -34,7 +35,7 @@ class FeeTier:
         self.kwargs = kwargs
 
 
-class GoodsAndServicesTax:
+class GoodsAndServicesTax(BaseModel):
     """
     Object representing Goods and Services Tax data.
     """
@@ -49,7 +50,7 @@ class GoodsAndServicesTax:
         self.kwargs = kwargs
 
 
-class MarginRate:
+class MarginRate(BaseModel):
     """
     Margin Rate.
     """
@@ -62,7 +63,7 @@ class MarginRate:
         self.kwargs = kwargs
 
 
-class TransactionsSummary:
+class TransactionsSummary(BaseModel):
     """
     Transactions Summary.
     """

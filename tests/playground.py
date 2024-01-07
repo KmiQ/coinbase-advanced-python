@@ -48,7 +48,7 @@ def audit(func, args, fixture_obj):
 
 
 # Creating the client per authentication methods.
-#client = CoinbaseAdvancedTradeAPIClient.from_legacy_api_keys(API_KEY, SECRET_KEY)
+# client = CoinbaseAdvancedTradeAPIClient.from_legacy_api_keys(API_KEY, SECRET_KEY)
 client = CoinbaseAdvancedTradeAPIClient.from_cloud_api_keys(API_KEY_NAME, PRIVATE_KEY)
 print()
 
@@ -57,7 +57,7 @@ print()
 # audit(client.list_accounts, None, json.loads(fixture_list_accounts_success_response().text))
 # audit(client.list_accounts_all, None, json.loads(fixture_list_accounts_all_call_1_success_response().text))
 # audit(client.get_account, {'account_id': ACCOUNT_ID},
-#       json.loads(fixture_get_account_success_response().text)['account'])
+#      json.loads(fixture_get_account_success_response().text)['account'])
 
 # Orders
 

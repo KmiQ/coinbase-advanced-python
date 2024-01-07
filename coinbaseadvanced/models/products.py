@@ -6,7 +6,7 @@ from uuid import UUID
 from datetime import datetime
 from typing import List
 from enum import Enum
-
+from coinbaseadvanced.models.common import BaseModel
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
 import json
@@ -49,7 +49,7 @@ class Granularity(Enum):
     ONE_DAY = "ONE_DAY"
 
 
-class Product:
+class Product(BaseModel):
     """
     Object representing a product.
     """
@@ -167,7 +167,7 @@ class Product:
         return cls(**product_dict)
 
 
-class ProductsPage:
+class ProductsPage(BaseModel):
     """
     Products Page.
     """
@@ -199,7 +199,7 @@ class ProductsPage:
         return self.products.__iter__()
 
 
-class Candle:
+class Candle(BaseModel):
     """
     Candle object.
     """
@@ -222,7 +222,7 @@ class Candle:
         self.kwargs = kwargs
 
 
-class CandlesPage:
+class CandlesPage(BaseModel):
     """
     Page of product candles.
     """
@@ -250,7 +250,7 @@ class CandlesPage:
         return self.candles.__iter__()
 
 
-class Bid:
+class Bid(BaseModel):
     price: str
     size: str
 
@@ -261,7 +261,7 @@ class Bid:
         self.kwargs = kwargs
 
 
-class Ask:
+class Ask(BaseModel):
     price: str
     size: str
 
@@ -272,7 +272,7 @@ class Ask:
         self.kwargs = kwargs
 
 
-class BidAsk:
+class BidAsk(BaseModel):
     """
     BidAsk object.
     """
@@ -291,7 +291,7 @@ class BidAsk:
         self.kwargs = kwargs
 
 
-class BidAsksPage:
+class BidAsksPage(BaseModel):
     """
     Page of bid/asks for products.
     """
@@ -319,7 +319,7 @@ class BidAsksPage:
         return self.pricebooks.__iter__()
 
 
-class ProductBook:
+class ProductBook(BaseModel):
     """
     Product bid/asks.
     """
@@ -344,7 +344,7 @@ class ProductBook:
         return cls(**result)
 
 
-class Trade:
+class Trade(BaseModel):
     """
     Trade object data.
     """
@@ -379,7 +379,7 @@ class Trade:
         self.kwargs = kwargs
 
 
-class TradesPage:
+class TradesPage(BaseModel):
     """
     Page of trades.
     """
