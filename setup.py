@@ -35,8 +35,9 @@ setup(
     keywords=['api', 'coinbase', 'bitcoin', 'client'],
     install_requires=requirements,
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
+        "Intended Audience :: Financial and Insurance Industry",
         "Natural Language :: English",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.7",
