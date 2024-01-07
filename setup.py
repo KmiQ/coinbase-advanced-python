@@ -6,10 +6,14 @@ from setuptools import setup
 import coinbaseadvanced
 
 requirements = [
-    'requests>=2.28.1',
+    'requests>=2.31.0',
     'requests-toolbelt>=0.10.1',
     'typed-ast>=1.5.4',
     'typing-extensions>=4.4.0',
+    'cryptography>=41.0.7',
+    'isort>=5.10.1',
+    'PyJWT>=2.8.0',
+    'python-dotenv>=0.21.1',
 ]
 
 with open("README.md", "r", encoding="utf-8") as fh:
