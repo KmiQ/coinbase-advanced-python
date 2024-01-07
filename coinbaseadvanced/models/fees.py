@@ -2,13 +2,13 @@
 Object models for fees related endpoints args and response.
 """
 
-import json
 import requests
 
+from coinbaseadvanced.models.common import BaseModel
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
 
-class FeeTier:
+class FeeTier(BaseModel):
     """
     Fee Tier object.
     """
@@ -34,7 +34,7 @@ class FeeTier:
         self.kwargs = kwargs
 
 
-class GoodsAndServicesTax:
+class GoodsAndServicesTax(BaseModel):
     """
     Object representing Goods and Services Tax data.
     """
@@ -49,7 +49,7 @@ class GoodsAndServicesTax:
         self.kwargs = kwargs
 
 
-class MarginRate:
+class MarginRate(BaseModel):
     """
     Margin Rate.
     """
@@ -62,7 +62,7 @@ class MarginRate:
         self.kwargs = kwargs
 
 
-class TransactionsSummary:
+class TransactionsSummary(BaseModel):
     """
     Transactions Summary.
     """
@@ -76,10 +76,12 @@ class TransactionsSummary:
     advanced_trade_only_fees: int
     coinbase_pro_volume: int
     coinbase_pro_fees: int
+    total_balance: str
+    has_promo_fee: bool
 
     def __init__(self, total_volume: int, total_fees: int, fee_tier: dict, margin_rate: dict,
                  goods_and_services_tax: dict, advanced_trade_only_volume: int, advanced_trade_only_fees: int,
-                 coinbase_pro_volume: int, coinbase_pro_fees: int, **kwargs) -> None:
+                 coinbase_pro_volume: int, coinbase_pro_fees: int, total_balance: str, has_promo_fee: bool, **kwargs) -> None:
         self.total_volume = total_volume
         self.total_fees = total_fees
         self.fee_tier = FeeTier(**fee_tier) if fee_tier is not None else None
@@ -90,6 +92,9 @@ class TransactionsSummary:
         self.advanced_trade_only_fees = advanced_trade_only_fees
         self.coinbase_pro_volume = coinbase_pro_volume
         self.coinbase_pro_fees = coinbase_pro_fees
+
+        self.total_balance = total_balance
+        self.has_promo_fee = has_promo_fee
 
         self.kwargs = kwargs
 
@@ -102,5 +107,5 @@ class TransactionsSummary:
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 
-        result = json.loads(response.text)
+        result = response.json()
         return cls(**result)
