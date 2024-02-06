@@ -49,7 +49,8 @@ def audit(func, args, fixture_obj):
 
 # Creating the client per authentication methods.
 # client = CoinbaseAdvancedTradeAPIClient.from_legacy_api_keys(API_KEY, SECRET_KEY)
-client = CoinbaseAdvancedTradeAPIClient.from_cloud_api_keys(API_KEY_NAME, PRIVATE_KEY)
+client = CoinbaseAdvancedTradeAPIClient.from_cloud_api_keys(
+    API_KEY_NAME, PRIVATE_KEY)
 print()
 
 # Accounts
@@ -137,6 +138,12 @@ print()
 #     'start_date': datetime(2023, 1, 1, tzinfo=timezone.utc),
 #     'end_date': datetime(2023, 1, 31, tzinfo=timezone.utc)},
 #     json.loads(fixture_get_transactions_summary_success_response().text))
+
+# Portfolios
+
+# audit(client.list_portfolios, {},
+#      json.loads(fixture_list_portfolios_success_response().text))
+
 
 # Common
 # audit(client.get_unix_time, {},

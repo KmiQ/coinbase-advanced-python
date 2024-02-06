@@ -16,10 +16,11 @@ import requests
 from coinbaseadvanced.models.common import UnixTime
 
 from coinbaseadvanced.models.fees import TransactionsSummary
-from coinbaseadvanced.models.products import BidAsksPage, ProductBook, ProductsPage, Product, CandlesPage,\
+from coinbaseadvanced.models.portfolios import PortfolioType, PortfoliosPage
+from coinbaseadvanced.models.products import BidAsksPage, ProductBook, ProductsPage, Product, CandlesPage, \
     TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
 from coinbaseadvanced.models.accounts import AccountsPage, Account
-from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Order,\
+from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Order, \
     OrderBatchCancellation, FillsPage, Side, StopDirection, OrderType
 
 
@@ -148,7 +149,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
-        response = requests.get(self._base_url+request_path, headers=headers, timeout=self.timeout)
+        response = requests.get(
+            self._base_url+request_path, headers=headers, timeout=self.timeout)
 
         account = Account.from_response(response)
         return account
@@ -236,7 +238,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             limit_order_configuration['post_only'] = post_only
 
         if cancel_time is not None:
-            limit_order_configuration['end_time'] = cancel_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+            limit_order_configuration['end_time'] = cancel_time.strftime(
+                "%Y-%m-%dT%H:%M:%SZ")
             order_configuration['limit_limit_gtd'] = limit_order_configuration
         else:
             order_configuration['limit_limit_gtc'] = limit_order_configuration
@@ -284,7 +287,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         }
 
         if cancel_time is not None:
-            stop_limit_order_configuration['end_time'] = cancel_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+            stop_limit_order_configuration['end_time'] = cancel_time.strftime(
+                "%Y-%m-%dT%H:%M:%SZ")
             order_configuration['stop_limit_stop_limit_gtd'] = stop_limit_order_configuration
         else:
             order_configuration['stop_limit_stop_limit_gtc'] = stop_limit_order_configuration
@@ -406,10 +410,12 @@ class CoinbaseAdvancedTradeAPIClient(object):
         query_params = ''
 
         if product_id is not None:
-            query_params = self._next_param(query_params) + 'product_id='+product_id
+            query_params = self._next_param(
+                query_params) + 'product_id='+product_id
 
         if order_status is not None:
-            query_params = self._next_param(query_params) + 'order_status='+','.join(order_status)
+            query_params = self._next_param(
+                query_params) + 'order_status='+','.join(order_status)
 
         if limit is not None:
             query_params = self._next_param(query_params) + 'limit='+str(limit)
@@ -427,19 +433,23 @@ class CoinbaseAdvancedTradeAPIClient(object):
                 + 'user_native_currency=' + user_native_currency
 
         if order_type is not None:
-            query_params = self._next_param(query_params) + 'order_type=' + order_type.value
+            query_params = self._next_param(
+                query_params) + 'order_type=' + order_type.value
 
         if order_side is not None:
-            query_params = self._next_param(query_params) + 'order_side=' + order_side.value
+            query_params = self._next_param(
+                query_params) + 'order_side=' + order_side.value
 
         if cursor is not None:
             query_params = self._next_param(query_params) + 'cursor=' + cursor
 
         if product_type is not None:
-            query_params = self._next_param(query_params) + 'product_type=' + product_type.value
+            query_params = self._next_param(
+                query_params) + 'product_type=' + product_type.value
 
         if order_placement_source is not None:
-            query_params = self._next_param(query_params) + 'order_placement_source=' + order_placement_source.value
+            query_params = self._next_param(
+                query_params) + 'order_placement_source=' + order_placement_source.value
 
         headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
@@ -520,10 +530,12 @@ class CoinbaseAdvancedTradeAPIClient(object):
         query_params = ''
 
         if order_id is not None:
-            query_params = self._next_param(query_params) + 'order_id='+order_id
+            query_params = self._next_param(
+                query_params) + 'order_id='+order_id
 
         if product_id is not None:
-            query_params = self._next_param(query_params) + 'product_id='+product_id
+            query_params = self._next_param(
+                query_params) + 'product_id='+product_id
 
         if limit is not None:
             query_params = self._next_param(query_params) + 'limit='+str(limit)
@@ -578,7 +590,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
-        response = requests.get(self._base_url+request_path, headers=headers, timeout=self.timeout)
+        response = requests.get(
+            self._base_url+request_path, headers=headers, timeout=self.timeout)
 
         order = Order.from_get_order_response(response)
         return order
@@ -609,10 +622,12 @@ class CoinbaseAdvancedTradeAPIClient(object):
             query_params = self._next_param(query_params) + 'limit='+str(limit)
 
         if offset is not None:
-            query_params = self._next_param(query_params) + 'offset='+str(offset)
+            query_params = self._next_param(
+                query_params) + 'offset='+str(offset)
 
         if product_type is not None:
-            query_params = self._next_param(query_params) + 'product_type=' + product_type.value
+            query_params = self._next_param(
+                query_params) + 'product_type=' + product_type.value
 
         headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
@@ -640,7 +655,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
-        response = requests.get(self._base_url+request_path, headers=headers, timeout=self.timeout)
+        response = requests.get(
+            self._base_url+request_path, headers=headers, timeout=self.timeout)
 
         product = Product.from_response(response)
         return product
@@ -668,9 +684,12 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         query_params = ''
 
-        query_params = self._next_param(query_params) + 'start=' + str(int(start_date.timestamp()))
-        query_params = self._next_param(query_params) + 'end=' + str(int(end_date.timestamp()))
-        query_params = self._next_param(query_params) + 'granularity=' + granularity.value
+        query_params = self._next_param(
+            query_params) + 'start=' + str(int(start_date.timestamp()))
+        query_params = self._next_param(
+            query_params) + 'end=' + str(int(end_date.timestamp()))
+        query_params = self._next_param(
+            query_params) + 'granularity=' + granularity.value
 
         headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
@@ -693,7 +712,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         """
 
         # step_size: pre-calculate granularity entries in minutes.
-        step_size_in_mins = timedelta(minutes=GRANULARITY_MAP_IN_MINUTES[granularity.value])
+        step_size_in_mins = timedelta(
+            minutes=GRANULARITY_MAP_IN_MINUTES[granularity.value])
 
         # Max amount of candles that can be returned.
         # Coinbase API enforcement/error if you try to retrieve >= 300 below:
@@ -718,7 +738,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             begin = max(begin, start_date)
 
             # get the next batch and extend the list
-            batch_candles = self.get_product_candles(product_id, begin, end, granularity).candles
+            batch_candles = self.get_product_candles(
+                product_id, begin, end, granularity).candles
             product_candles.candles.extend(batch_candles)
 
             # offset end by one granularity to avoid duplicates
@@ -773,7 +794,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         query_params = ''
         if product_id is not None:
-            query_params = self._next_param(query_params) + 'product_id='+product_id
+            query_params = self._next_param(
+                query_params) + 'product_id='+product_id
 
         if limit is not None:
             query_params = self._next_param(query_params) + 'limit='+str(limit)
@@ -781,7 +803,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=self.timeout)
+        response = requests.get(
+            self._base_url+request_path+query_params, headers=headers, timeout=self.timeout)
 
         bid_asks_page = ProductBook.from_response(response)
         return bid_asks_page
@@ -801,12 +824,14 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         query_params = ''
         if product_ids is not None:
-            query_params = self._next_param(query_params) + 'product_ids='+'&product_ids='.join(product_ids)
+            query_params = self._next_param(
+                query_params) + 'product_ids='+'&product_ids='.join(product_ids)
 
         headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
-        response = requests.get(self._base_url+request_path+query_params, headers=headers, timeout=self.timeout)
+        response = requests.get(
+            self._base_url+request_path+query_params, headers=headers, timeout=self.timeout)
 
         bid_asks_page = BidAsksPage.from_response(response)
         return bid_asks_page
@@ -842,7 +867,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
                 + 'user_native_currency='+user_native_currency
 
         if product_type is not None:
-            query_params = self._next_param(query_params) + 'product_type='+product_type.value
+            query_params = self._next_param(
+                query_params) + 'product_type='+product_type.value
 
         headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
@@ -852,6 +878,36 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                 timeout=self.timeout)
 
         page = TransactionsSummary.from_response(response)
+        return page
+
+    # Portfolios
+
+    def list_portfolios(self, portfolio_type: PortfolioType = None) -> PortfoliosPage:
+        """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getportfolios
+
+        Get a list of all portfolios of a user.
+
+        Args:
+        - portfolio_type: Type of portfolios to return.
+
+        """
+
+        request_path = '/api/v3/brokerage/portfolios'
+        method = "GET"
+        query_params = ''
+
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
+
+        if portfolio_type is not None:
+            query_params = '?portfolio_type='+portfolio_type.value
+
+        response = requests.get(self._base_url+request_path+query_params,
+                                headers=headers,
+                                timeout=self.timeout)
+
+        page = PortfoliosPage.from_response(response)
         return page
 
     # Common #
@@ -870,7 +926,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
         headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
 
-        response = requests.get(self._base_url+request_path, headers=headers, timeout=self.timeout)
+        response = requests.get(
+            self._base_url+request_path, headers=headers, timeout=self.timeout)
 
         time = UnixTime.from_response(response)
         return time
@@ -889,7 +946,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def _build_jwt(self, service, uri):
         private_key_bytes = self._secret_key.encode('utf-8')
-        private_key = serialization.load_pem_private_key(private_key_bytes, password=None)
+        private_key = serialization.load_pem_private_key(
+            private_key_bytes, password=None)
         jwt_payload = {
             'sub': self._api_key,
             'iss': "coinbase-cloud",

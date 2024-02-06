@@ -39,7 +39,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
 
         for call in call_args:
             args, kwargs = call
-            self.assertIn('https://api.coinbase.com/api/v3/brokerage/accounts/b04445c9853222', args)
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/accounts/b04445c9853222', args)
 
             headers = kwargs['headers']
             self.assertIn('accept', headers)
@@ -101,7 +102,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
 
         for call in call_args:
             args, kwargs = call
-            self.assertIn('https://api.coinbase.com/api/v3/brokerage/accounts?limit=49', args)
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/accounts?limit=49', args)
 
             headers = kwargs['headers']
             self.assertIn('accept', headers)
@@ -202,11 +204,13 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
 
         call_args = mock_post.call_args_list
 
-        order_config = {'limit_limit_gtc': {'limit_price': '0.19', 'base_size': '5'}}
+        order_config = {'limit_limit_gtc': {
+            'limit_price': '0.19', 'base_size': '5'}}
 
         for call in call_args:
             args, kwargs = call
-            self.assertIn('https://api.coinbase.com/api/v3/brokerage/orders', args)
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/orders', args)
 
             headers = kwargs['headers']
             self.assertIn('accept', headers)
@@ -225,7 +229,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertIsNotNone(order_created)
 
         self.assertEqual(order_created.client_order_id, "lknalksdj89asdkl")
-        self.assertEqual(order_created.order_id, "07f1e718-8ea8-4ece-a2e1-3f00aad7f040")
+        self.assertEqual(order_created.order_id,
+                         "07f1e718-8ea8-4ece-a2e1-3f00aad7f040")
         self.assertEqual(order_created.product_id, "ALGO-USD")
 
         order_config_output = order_created.order_configuration
@@ -266,7 +271,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
 
         for call in call_args:
             args, kwargs = call
-            self.assertIn('https://api.coinbase.com/api/v3/brokerage/orders', args)
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/orders', args)
 
             headers = kwargs['headers']
             self.assertIn('accept', headers)
@@ -285,7 +291,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertIsNotNone(order_created)
 
         self.assertEqual(order_created.client_order_id, "mklansdu8wehr")
-        self.assertEqual(order_created.order_id, "1a88f3f2-1a02-4812-a227-a3d2c00e45ce")
+        self.assertEqual(order_created.order_id,
+                         "1a88f3f2-1a02-4812-a227-a3d2c00e45ce")
         self.assertEqual(order_created.product_id, "ALGO-USD")
         self.assertEqual(order_created.side, 'BUY')
 
@@ -315,7 +322,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
 
         for call in call_args:
             args, kwargs = call
-            self.assertIn('https://api.coinbase.com/api/v3/brokerage/orders', args)
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/orders', args)
 
             headers = kwargs['headers']
             self.assertIn('accept', headers)
@@ -334,7 +342,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertIsNotNone(order_created)
 
         self.assertEqual(order_created.client_order_id, "asdasd")
-        self.assertEqual(order_created.order_id, "1f71a67f-6964-4a58-9438-411a5a6f22fc")
+        self.assertEqual(order_created.order_id,
+                         "1f71a67f-6964-4a58-9438-411a5a6f22fc")
         self.assertEqual(order_created.product_id, "ALGO-USD")
         self.assertEqual(order_created.side, 'BUY')
 
@@ -354,7 +363,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='lknalksdj89asdkl', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        order_created = client.create_sell_market_order("njkasdh7", "ALGO-USD", 5)
+        order_created = client.create_sell_market_order(
+            "njkasdh7", "ALGO-USD", 5)
 
         # Check input
 
@@ -364,7 +374,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
 
         for call in call_args:
             args, kwargs = call
-            self.assertIn('https://api.coinbase.com/api/v3/brokerage/orders', args)
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/orders', args)
 
             headers = kwargs['headers']
             self.assertIn('accept', headers)
@@ -383,7 +394,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertIsNotNone(order_created)
 
         self.assertEqual(order_created.client_order_id, "njkasdh7")
-        self.assertEqual(order_created.order_id, "95a50b31-7128-49ac-bba9-0e7200051a92")
+        self.assertEqual(order_created.order_id,
+                         "95a50b31-7128-49ac-bba9-0e7200051a92")
         self.assertEqual(order_created.product_id, "ALGO-USD")
         self.assertEqual(order_created.side, 'SELL')
 
@@ -457,7 +469,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='lknalksdj89asdkl', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        cancellation_receipt = client.cancel_orders(["order_id_1", "order_id_2"])
+        cancellation_receipt = client.cancel_orders(
+            ["order_id_1", "order_id_2"])
 
         # Check input
 
@@ -465,7 +478,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
 
         for call in call_args:
             args, kwargs = call
-            self.assertIn('https://api.coinbase.com/api/v3/brokerage/orders/batch_cancel/', args)
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/orders/batch_cancel/', args)
 
             headers = kwargs['headers']
             self.assertIn('accept', headers)
@@ -911,7 +925,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        bid_asks_page = client.get_best_bid_ask(product_ids=["BTC-USD", "ETH-USD"])
+        bid_asks_page = client.get_best_bid_ask(
+            product_ids=["BTC-USD", "ETH-USD"])
 
         # Check input
 
@@ -1023,7 +1038,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
         transactions_summary = client.get_transactions_summary(datetime(2023, 1, 1),
-                                                               datetime(2023, 1, 31)
+                                                               datetime(
+                                                                   2023, 1, 31)
                                                                )
 
         # Check input
@@ -1082,3 +1098,44 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertIsNotNone(unix_time.iso)
         self.assertIsNotNone(unix_time.epochSeconds)
         self.assertIsNotNone(unix_time.epochMillis)
+
+    @mock.patch("coinbaseadvanced.client.requests.get")
+    def test_list_portfolios_success(self, mock_get):
+
+        mock_resp = fixture_list_portfolios_success_response()
+        mock_get.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        portfolios_page = client.list_portfolios()
+
+        # Check input
+
+        call_args = mock_get.call_args_list
+
+        for call in call_args:
+            args, kwargs = call
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/portfolios',
+                args)
+
+            headers = kwargs['headers']
+            self.assertIn('accept', headers)
+            self.assertIn('CB-ACCESS-KEY', headers)
+            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
+            self.assertIn('CB-ACCESS-SIGN', headers)
+
+        # Check output
+
+        self.assertIsNotNone(portfolios_page)
+
+        portfolios = portfolios_page.portfolios
+        self.assertEqual(len(portfolios), 1)
+
+        for p in portfolios:
+            self.assertIsNotNone(p)
+            self.assertIsNotNone(p.uuid)
+            self.assertIsNotNone(p.name)
+            self.assertIsNotNone(p.type)
+            self.assertEqual(p.deleted, False)
