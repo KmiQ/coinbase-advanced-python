@@ -13,7 +13,7 @@ import hashlib
 import time
 import json
 import requests
-from coinbaseadvanced.models.common import UnixTime
+from coinbaseadvanced.models.common import EmptyResponse, UnixTime
 
 from coinbaseadvanced.models.fees import TransactionsSummary
 from coinbaseadvanced.models.portfolios import Portfolio, PortfolioType, PortfoliosPage
@@ -957,6 +957,27 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         portfolio = Portfolio.from_response(response)
         return portfolio
+
+    def delete_portfolio(self, portfolio_uuid: str) -> EmptyResponse:
+        """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_deleteportfolio
+
+        Delete a portfolio by portfolio ID.
+
+        """
+
+        request_path = "/api/v3/brokerage/portfolios/"+portfolio_uuid
+        method = "DELETE"
+
+        payload = {}
+
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
+        response = requests.delete(self._base_url+request_path,
+                                   json=payload, headers=headers,
+                                   timeout=self.timeout)
+
+        return EmptyResponse.from_response(response)
 
     # Common #
 

@@ -152,6 +152,10 @@ print()
 # audit(client.edit_portfolio, {'portfolio_uuid': '354808f3-06df-42d7-87ec-488f34ff6f14', 'name': 'test-edit-portfolio-name'},
 #      json.loads(fixture_create_portfolio_success_response().text)['portfolio'])
 
+# EXPECTED: "Response => Fixtures: NEED UPDATE, key 'success' present in live response but not found in fixture."
+# audit(client.delete_portfolio, {'portfolio_uuid': 'a78767c7-6d83-4c0c-a736-7f70ef866324'},
+#      json.loads(fixture_delete_portfolio_success_response().text))
+
 # Common
 # audit(client.get_unix_time, {},
 #      json.loads(fixture_get_unix_time_success_response().text))

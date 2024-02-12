@@ -291,3 +291,11 @@ def fixture_edit_portfolio_success_response() -> mock.Mock:
         return _fixtured_mock_response(
             ok=True,
             text=content)
+
+
+def fixture_delete_portfolio_success_response() -> mock.Mock:
+    with open('tests/fixtures/delete_portfolio_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return _fixtured_mock_response(
+            ok=True,
+            text=content)

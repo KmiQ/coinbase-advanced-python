@@ -1217,3 +1217,35 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
                          "354808f3-06df-42d7-87ec-488f34ff6f14")
         self.assertEqual(portfolio_edited.type, PortfolioType.CONSUMER)
         self.assertEqual(portfolio_edited.deleted, False)
+
+    @mock.patch("coinbaseadvanced.client.requests.delete")
+    def test_delete_portfolio_success(self, mock_delete):
+
+        mock_resp = fixture_delete_portfolio_success_response()
+        mock_delete.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='lknalksdj89asdkl', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        empty_response = client.delete_portfolio(
+            "354808f3-06df-42d7-87ec-488f34ff6f14")
+
+        # Check input
+
+        call_args = mock_delete.call_args_list
+
+        for call in call_args:
+            args, kwargs = call
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/portfolios/354808f3-06df-42d7-87ec-488f34ff6f14', args)
+
+            headers = kwargs['headers']
+            self.assertIn('accept', headers)
+            self.assertIn('CB-ACCESS-KEY', headers)
+            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
+            self.assertIn('CB-ACCESS-SIGN', headers)
+
+        # Check output
+
+        self.assertIsNotNone(empty_response)
+        self.assertEqual(empty_response.success, True)
