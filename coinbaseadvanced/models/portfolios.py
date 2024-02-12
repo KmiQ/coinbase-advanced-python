@@ -21,6 +21,7 @@ class PortfolioType(Enum):
     CONSUMER = "CONSUMER"
     INTX = "INTX"
 
+
 class Portfolio(BaseModel):
     """
     Object representing a portfolio.
@@ -32,13 +33,26 @@ class Portfolio(BaseModel):
     deleted: bool
 
     def __init__(
-        self, uuid: UUID, name: str, type: str, deleted: bool, **kwargs) -> None:
+            self, uuid: UUID, name: str, type: str, deleted: bool, **kwargs) -> None:
         self.uuid = uuid
         self.name = name
         self.type = PortfolioType[type]
         self.deleted = deleted
 
         self.kwargs = kwargs
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'Portfolio':
+        """
+        Factory Method.
+        """
+
+        if not response.ok:
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
+
+        result = response.json()
+        return cls(**result['portfolio'])
+
 
 class PortfoliosPage(BaseModel):
     """

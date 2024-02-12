@@ -16,7 +16,7 @@ import requests
 from coinbaseadvanced.models.common import UnixTime
 
 from coinbaseadvanced.models.fees import TransactionsSummary
-from coinbaseadvanced.models.portfolios import PortfolioType, PortfoliosPage
+from coinbaseadvanced.models.portfolios import Portfolio, PortfolioType, PortfoliosPage
 from coinbaseadvanced.models.products import BidAsksPage, ProductBook, ProductsPage, Product, CandlesPage, \
     TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
 from coinbaseadvanced.models.accounts import AccountsPage, Account
@@ -909,6 +909,30 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         page = PortfoliosPage.from_response(response)
         return page
+
+    def create_portfolio(self, name: str) -> Portfolio:
+        """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_createportfolio
+
+        Create a portfolio.
+
+        """
+
+        request_path = "/api/v3/brokerage/portfolios"
+        method = "POST"
+
+        payload = {
+            'name': name,
+        }
+
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
+        response = requests.post(self._base_url+request_path,
+                                 json=payload, headers=headers,
+                                 timeout=self.timeout)
+
+        portfolio = Portfolio.from_response(response)
+        return portfolio
 
     # Common #
 

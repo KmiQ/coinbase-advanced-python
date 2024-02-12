@@ -16,6 +16,8 @@ load_dotenv()  # Load environment variables from a .env file
 # Cloud API Trading Keys (NEW/Recommended): https://cloud.coinbase.com/access/api
 API_KEY_NAME = os.getenv('API_KEY_NAME')
 PRIVATE_KEY = os.getenv('PRIVATE_KEY').replace('\\n', '\n')
+# API_KEY_NAME = os.getenv('API_KEY_NAME_FULL')
+# PRIVATE_KEY = os.getenv('PRIVATE_KEY_FULL').replace('\\n', '\n')
 
 # Legacy API Keys: https://www.coinbase.com/settings/api
 API_KEY = os.getenv('API_KEY')
@@ -144,6 +146,8 @@ print()
 # audit(client.list_portfolios, {},
 #      json.loads(fixture_list_portfolios_success_response().text))
 
+# audit(client.create_portfolio, {'name': 'test-portfolio-name-2'},
+#      json.loads(fixture_create_portfolio_success_response().text)['portfolio'])
 
 # Common
 # audit(client.get_unix_time, {},

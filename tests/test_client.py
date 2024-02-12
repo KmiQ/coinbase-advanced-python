@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 
 from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, Side, StopDirection, Granularity
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
+from coinbaseadvanced.models.portfolios import PortfolioType
 from tests.fixtures.fixtures import *
 
 
@@ -1139,3 +1140,41 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIsNotNone(p.name)
             self.assertIsNotNone(p.type)
             self.assertEqual(p.deleted, False)
+
+    @mock.patch("coinbaseadvanced.client.requests.post")
+    def test_create_portfolio_success(self, mock_post):
+
+        mock_resp = fixture_create_portfolio_success_response()
+        mock_post.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='lknalksdj89asdkl', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        portfolio_created = client.create_portfolio("portf-test3")
+
+        # Check input
+
+        call_args = mock_post.call_args_list
+
+        for call in call_args:
+            args, kwargs = call
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/portfolios', args)
+
+            headers = kwargs['headers']
+            self.assertIn('accept', headers)
+            self.assertIn('CB-ACCESS-KEY', headers)
+            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
+            self.assertIn('CB-ACCESS-SIGN', headers)
+
+            json = kwargs['json']
+            self.assertEqual(json['name'], "portf-test3")
+        # Check output
+
+        self.assertIsNotNone(portfolio_created)
+
+        self.assertEqual(portfolio_created.name, "portf-test3")
+        self.assertEqual(portfolio_created.uuid,
+                         "354808f3-06df-42d7-87ec-488f34ff6f14")
+        self.assertEqual(portfolio_created.type, PortfolioType.CONSUMER)
+        self.assertEqual(portfolio_created.deleted, False)
