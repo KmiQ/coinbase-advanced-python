@@ -934,6 +934,30 @@ class CoinbaseAdvancedTradeAPIClient(object):
         portfolio = Portfolio.from_response(response)
         return portfolio
 
+    def edit_portfolio(self, portfolio_uuid: str, name: str) -> Portfolio:
+        """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_editportfolio
+
+        Edit a portfolio.
+
+        """
+
+        request_path = "/api/v3/brokerage/portfolios/"+portfolio_uuid
+        method = "PUT"
+
+        payload = {
+            'name': name,
+        }
+
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
+        response = requests.put(self._base_url+request_path,
+                                json=payload, headers=headers,
+                                timeout=self.timeout)
+
+        portfolio = Portfolio.from_response(response)
+        return portfolio
+
     # Common #
 
     def get_unix_time(self) -> UnixTime:

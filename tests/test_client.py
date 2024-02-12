@@ -1178,3 +1178,42 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
                          "354808f3-06df-42d7-87ec-488f34ff6f14")
         self.assertEqual(portfolio_created.type, PortfolioType.CONSUMER)
         self.assertEqual(portfolio_created.deleted, False)
+
+    @mock.patch("coinbaseadvanced.client.requests.put")
+    def test_edit_portfolio_success(self, mock_put):
+
+        mock_resp = fixture_edit_portfolio_success_response()
+        mock_put.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='lknalksdj89asdkl', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        portfolio_edited = client.edit_portfolio(
+            "354808f3-06df-42d7-87ec-488f34ff6f14", "edited-portfolio-name")
+
+        # Check input
+
+        call_args = mock_put.call_args_list
+
+        for call in call_args:
+            args, kwargs = call
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/portfolios/354808f3-06df-42d7-87ec-488f34ff6f14', args)
+
+            headers = kwargs['headers']
+            self.assertIn('accept', headers)
+            self.assertIn('CB-ACCESS-KEY', headers)
+            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
+            self.assertIn('CB-ACCESS-SIGN', headers)
+
+            json = kwargs['json']
+            self.assertEqual(json['name'], "edited-portfolio-name")
+        # Check output
+
+        self.assertIsNotNone(portfolio_edited)
+
+        self.assertEqual(portfolio_edited.name, "edited-portfolio-name")
+        self.assertEqual(portfolio_edited.uuid,
+                         "354808f3-06df-42d7-87ec-488f34ff6f14")
+        self.assertEqual(portfolio_edited.type, PortfolioType.CONSUMER)
+        self.assertEqual(portfolio_edited.deleted, False)

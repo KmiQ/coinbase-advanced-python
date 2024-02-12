@@ -14,10 +14,10 @@ from tests.fixtures.fixtures import *
 load_dotenv()  # Load environment variables from a .env file
 
 # Cloud API Trading Keys (NEW/Recommended): https://cloud.coinbase.com/access/api
-API_KEY_NAME = os.getenv('API_KEY_NAME')
-PRIVATE_KEY = os.getenv('PRIVATE_KEY').replace('\\n', '\n')
-# API_KEY_NAME = os.getenv('API_KEY_NAME_FULL')
-# PRIVATE_KEY = os.getenv('PRIVATE_KEY_FULL').replace('\\n', '\n')
+# API_KEY_NAME = os.getenv('API_KEY_NAME')
+# PRIVATE_KEY = os.getenv('PRIVATE_KEY').replace('\\n', '\n')
+API_KEY_NAME = os.getenv('API_KEY_NAME_FULL')
+PRIVATE_KEY = os.getenv('PRIVATE_KEY_FULL').replace('\\n', '\n')
 
 # Legacy API Keys: https://www.coinbase.com/settings/api
 API_KEY = os.getenv('API_KEY')
@@ -149,8 +149,9 @@ print()
 # audit(client.create_portfolio, {'name': 'test-portfolio-name-2'},
 #      json.loads(fixture_create_portfolio_success_response().text)['portfolio'])
 
+# audit(client.edit_portfolio, {'portfolio_uuid': '354808f3-06df-42d7-87ec-488f34ff6f14', 'name': 'test-edit-portfolio-name'},
+#      json.loads(fixture_create_portfolio_success_response().text)['portfolio'])
+
 # Common
 # audit(client.get_unix_time, {},
 #      json.loads(fixture_get_unix_time_success_response().text))
-
-# TODO: Migrate to Python >=3.8
