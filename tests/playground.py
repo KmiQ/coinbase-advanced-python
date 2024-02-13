@@ -14,10 +14,10 @@ from tests.fixtures.fixtures import *
 load_dotenv()  # Load environment variables from a .env file
 
 # Cloud API Trading Keys (NEW/Recommended): https://cloud.coinbase.com/access/api
-# API_KEY_NAME = os.getenv('API_KEY_NAME')
-# PRIVATE_KEY = os.getenv('PRIVATE_KEY').replace('\\n', '\n')
-API_KEY_NAME = os.getenv('API_KEY_NAME_FULL')
-PRIVATE_KEY = os.getenv('PRIVATE_KEY_FULL').replace('\\n', '\n')
+API_KEY_NAME = os.getenv('API_KEY_NAME')
+PRIVATE_KEY = os.getenv('PRIVATE_KEY').replace('\\n', '\n')
+# API_KEY_NAME = os.getenv('API_KEY_NAME_FULL')
+# PRIVATE_KEY = os.getenv('PRIVATE_KEY_FULL').replace('\\n', '\n')
 
 # Legacy API Keys: https://www.coinbase.com/settings/api
 API_KEY = os.getenv('API_KEY')
@@ -155,6 +155,10 @@ print()
 # EXPECTED: "Response => Fixtures: NEED UPDATE, key 'success' present in live response but not found in fixture."
 # audit(client.delete_portfolio, {'portfolio_uuid': 'a78767c7-6d83-4c0c-a736-7f70ef866324'},
 #      json.loads(fixture_delete_portfolio_success_response().text))
+
+# audit(client.get_portfolio_breakdown, {'portfolio_uuid': 'e7ae4c9c-fd97-46c9-a6e4-5048893b5dc3'},
+#      json.loads(fixture_get_portfolio_breakdown_success_response().text)['breakdown'])
+
 
 # Common
 # audit(client.get_unix_time, {},

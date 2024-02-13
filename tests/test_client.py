@@ -1249,3 +1249,41 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
 
         self.assertIsNotNone(empty_response)
         self.assertEqual(empty_response.success, True)
+
+    @mock.patch("coinbaseadvanced.client.requests.get")
+    def test_get_portfolio_breakdown_success(self, mock_get):
+
+        mock_resp = fixture_get_portfolio_breakdown_success_response()
+        mock_get.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        portfolio_breakdown = client.get_portfolio_breakdown(
+            "asad-sdfsf-sfsdf-sfd")
+
+        # Check input
+
+        call_args = mock_get.call_args_list
+
+        for call in call_args:
+            args, kwargs = call
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/portfolios/asad-sdfsf-sfsdf-sfd',
+                args)
+
+            headers = kwargs['headers']
+            self.assertIn('accept', headers)
+            self.assertIn('CB-ACCESS-KEY', headers)
+            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
+            self.assertIn('CB-ACCESS-SIGN', headers)
+
+        # Check output
+
+        self.assertIsNotNone(portfolio_breakdown)
+
+        self.assertEqual(portfolio_breakdown.portfolio.uuid,
+                         "asad-sdfsf-sfsdf-sfd")
+        self.assertEqual(
+            portfolio_breakdown.portfolio_balances.total_balance.value, "69952.54")
+        self.assertEqual(len(portfolio_breakdown.spot_positions), 178)

@@ -76,3 +76,18 @@ class UnixTime(BaseModel):
 
         result = response.json()
         return cls(**result)
+
+
+class ValueCurrency(BaseModel):
+    """
+    Available Balance object.
+    """
+
+    value: str
+    currency: str
+
+    def __init__(self, value: str, currency: str, **kwargs) -> None:
+        self.value = value
+        self.currency = currency
+
+        self.kwargs = kwargs

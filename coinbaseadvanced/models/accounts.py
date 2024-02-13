@@ -7,23 +7,8 @@ from datetime import datetime
 from typing import List
 import requests
 
-from coinbaseadvanced.models.common import BaseModel
+from coinbaseadvanced.models.common import BaseModel, ValueCurrency
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
-
-
-class AvailableBalance(BaseModel):
-    """
-    Available Balance object.
-    """
-
-    value: str
-    currency: str
-
-    def __init__(self, value: str, currency: str, **kwargs) -> None:
-        self.value = value
-        self.currency = currency
-
-        self.kwargs = kwargs
 
 
 class Account(BaseModel):
@@ -34,7 +19,7 @@ class Account(BaseModel):
     uuid: UUID
     name: str
     currency: str
-    available_balance: AvailableBalance
+    available_balance: ValueCurrency
     default: bool
     active: bool
     created_at: datetime
@@ -42,7 +27,7 @@ class Account(BaseModel):
     deleted_at: datetime
     type: str
     ready: bool
-    hold: AvailableBalance
+    hold: ValueCurrency
 
     def __init__(
         self, uuid: UUID, name: str, currency: str, available_balance: dict, default: bool,
@@ -51,7 +36,7 @@ class Account(BaseModel):
         self.uuid = uuid
         self.name = name
         self.currency = currency
-        self.available_balance = AvailableBalance(**available_balance) \
+        self.available_balance = ValueCurrency(**available_balance) \
             if available_balance is not None else None
         self.default = default
         self.active = active
@@ -60,7 +45,7 @@ class Account(BaseModel):
         self.deleted_at = deleted_at
         self.type = type
         self.ready = ready
-        self.hold = AvailableBalance(**hold) if hold is not None else None
+        self.hold = ValueCurrency(**hold) if hold is not None else None
 
         self.kwargs = kwargs
 

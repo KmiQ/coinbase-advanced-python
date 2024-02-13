@@ -16,7 +16,7 @@ import requests
 from coinbaseadvanced.models.common import EmptyResponse, UnixTime
 
 from coinbaseadvanced.models.fees import TransactionsSummary
-from coinbaseadvanced.models.portfolios import Portfolio, PortfolioType, PortfoliosPage
+from coinbaseadvanced.models.portfolios import Portfolio, PortfolioBreakdown, PortfolioType, PortfoliosPage
 from coinbaseadvanced.models.products import BidAsksPage, ProductBook, ProductsPage, Product, CandlesPage, \
     TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
 from coinbaseadvanced.models.accounts import AccountsPage, Account
@@ -978,6 +978,30 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                    timeout=self.timeout)
 
         return EmptyResponse.from_response(response)
+
+    def get_portfolio_breakdown(self, portfolio_uuid: str) -> PortfolioBreakdown:
+        """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getportfoliobreakdown
+
+        Get the breakdown of a portfolio by portfolio ID.
+
+        Args:
+        - portfolio_uuid: portfolio ID.
+
+        """
+
+        request_path = f'/api/v3/brokerage/portfolios/{portfolio_uuid}'
+        method = "GET"
+
+        headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
+
+        response = requests.get(self._base_url+request_path,
+                                headers=headers,
+                                timeout=self.timeout)
+
+        breakdown = PortfolioBreakdown.from_response(response)
+        return breakdown
 
     # Common #
 
