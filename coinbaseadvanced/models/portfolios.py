@@ -280,3 +280,26 @@ class PortfoliosPage(BaseModel):
 
     def __iter__(self):
         return self.portfolios.__iter__()
+
+
+class PortfolioFundsTransfer(BaseModel):
+    source_portfolio_uuid: str
+    target_portfolio_uuid: str
+
+    def __init__(self, source_portfolio_uuid: str, target_portfolio_uuid: str,   **kwargs):
+        self.source_portfolio_uuid = source_portfolio_uuid
+        self.target_portfolio_uuid = target_portfolio_uuid
+
+        self.kwargs = kwargs
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'PortfolioFundsTransfer':
+        """
+        Factory Method.
+        """
+
+        if not response.ok:
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
+
+        result = response.json()
+        return cls(**result)

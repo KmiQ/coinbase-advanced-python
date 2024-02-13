@@ -7,6 +7,7 @@ from unittest import mock
 from datetime import datetime, timezone
 
 from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, Side, StopDirection, Granularity
+from coinbaseadvanced.models.common import ValueCurrency
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 from coinbaseadvanced.models.portfolios import PortfolioType
 from tests.fixtures.fixtures import *
@@ -1287,3 +1288,44 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertEqual(
             portfolio_breakdown.portfolio_balances.total_balance.value, "69952.54")
         self.assertEqual(len(portfolio_breakdown.spot_positions), 178)
+
+    @mock.patch("coinbaseadvanced.client.requests.post")
+    def test_move_funds_success(self, mock_post):
+
+        mock_resp = fixture_move_funds_success_response()
+        mock_post.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='lknalksdj89asdkl', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        transfer = client.move_portfolio_funds(funds_value="0.1", funds_currency="USD",
+                                               source_portfolio_uuid="klsjdlksd-nsjkdnfk-234234", target_portfolio_uuid="strklsdmkfls-34dfg-ing")
+
+        # Check input
+
+        call_args = mock_post.call_args_list
+
+        for call in call_args:
+            args, kwargs = call
+            self.assertIn(
+                'https://api.coinbase.com/api/v3/brokerage/portfolios/move_funds', args)
+
+            headers = kwargs['headers']
+            self.assertIn('accept', headers)
+            self.assertIn('CB-ACCESS-KEY', headers)
+            self.assertIn('CB-ACCESS-TIMESTAMP', headers)
+            self.assertIn('CB-ACCESS-SIGN', headers)
+
+            json = kwargs['json']
+            self.assertEqual(json['source_portfolio_uuid'],
+                             "klsjdlksd-nsjkdnfk-234234")
+            self.assertEqual(json['target_portfolio_uuid'],
+                             "strklsdmkfls-34dfg-ing")
+        # Check output
+
+        self.assertIsNotNone(transfer)
+
+        self.assertEqual(transfer.source_portfolio_uuid,
+                         "klsjdlksd-nsjkdnfk-234234")
+        self.assertEqual(transfer.target_portfolio_uuid,
+                         "strklsdmkfls-34dfg-ing")

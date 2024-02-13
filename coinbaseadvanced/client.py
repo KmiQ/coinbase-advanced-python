@@ -13,10 +13,10 @@ import hashlib
 import time
 import json
 import requests
-from coinbaseadvanced.models.common import EmptyResponse, UnixTime
+from coinbaseadvanced.models.common import EmptyResponse, UnixTime, ValueCurrency
 
 from coinbaseadvanced.models.fees import TransactionsSummary
-from coinbaseadvanced.models.portfolios import Portfolio, PortfolioBreakdown, PortfolioType, PortfoliosPage
+from coinbaseadvanced.models.portfolios import Portfolio, PortfolioBreakdown, PortfolioFundsTransfer, PortfolioType, PortfoliosPage
 from coinbaseadvanced.models.products import BidAsksPage, ProductBook, ProductsPage, Product, CandlesPage, \
     TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
 from coinbaseadvanced.models.accounts import AccountsPage, Account
@@ -1002,6 +1002,35 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         breakdown = PortfolioBreakdown.from_response(response)
         return breakdown
+
+    def move_portfolio_funds(self, funds_value: str, funds_currency: str, source_portfolio_uuid: str, target_portfolio_uuid: str) -> PortfolioFundsTransfer:
+        """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_moveportfoliofunds
+
+        Move portfolio funds.
+
+        """
+
+        request_path = "/api/v3/brokerage/portfolios/move_funds"
+        method = "POST"
+
+        payload = {
+            "funds": {
+                "value": funds_value,
+                "currency": funds_currency
+            },
+            "source_portfolio_uuid": source_portfolio_uuid,
+            "target_portfolio_uuid": target_portfolio_uuid
+        }
+
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) if self._is_legacy_auth(
+        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
+        response = requests.post(self._base_url+request_path,
+                                 json=payload, headers=headers,
+                                 timeout=self.timeout)
+
+        transfer = PortfolioFundsTransfer.from_response(response)
+        return transfer
 
     # Common #
 

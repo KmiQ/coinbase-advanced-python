@@ -8,16 +8,17 @@ import os
 from datetime import datetime, timezone
 
 from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, Side, StopDirection, Granularity
+from coinbaseadvanced.models.common import ValueCurrency
 
 from tests.fixtures.fixtures import *
 
 load_dotenv()  # Load environment variables from a .env file
 
 # Cloud API Trading Keys (NEW/Recommended): https://cloud.coinbase.com/access/api
-API_KEY_NAME = os.getenv('API_KEY_NAME')
-PRIVATE_KEY = os.getenv('PRIVATE_KEY').replace('\\n', '\n')
-# API_KEY_NAME = os.getenv('API_KEY_NAME_FULL')
-# PRIVATE_KEY = os.getenv('PRIVATE_KEY_FULL').replace('\\n', '\n')
+# API_KEY_NAME = os.getenv('API_KEY_NAME')
+# PRIVATE_KEY = os.getenv('PRIVATE_KEY').replace('\\n', '\n')
+API_KEY_NAME = os.getenv('API_KEY_NAME_FULL')
+PRIVATE_KEY = os.getenv('PRIVATE_KEY_FULL').replace('\\n', '\n')
 
 # Legacy API Keys: https://www.coinbase.com/settings/api
 API_KEY = os.getenv('API_KEY')
@@ -159,6 +160,8 @@ print()
 # audit(client.get_portfolio_breakdown, {'portfolio_uuid': 'e7ae4c9c-fd97-46c9-a6e4-5048893b5dc3'},
 #      json.loads(fixture_get_portfolio_breakdown_success_response().text)['breakdown'])
 
+# audit(client.move_portfolio_funds, {'funds_value': '0.1', 'funds_currency': 'USD', 'source_portfolio_uuid': 'bba559eb-5b24-45f5-9898-472a81c46a56', 'target_portfolio_uuid': 'e7ae4c9c-fd97-46c9-a6e4-5048893b5dc3'},
+#      json.loads(fixture_move_funds_success_response().text))
 
 # Common
 # audit(client.get_unix_time, {},

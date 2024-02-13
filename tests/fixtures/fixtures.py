@@ -307,3 +307,11 @@ def fixture_get_portfolio_breakdown_success_response() -> mock.Mock:
         return _fixtured_mock_response(
             ok=True,
             text=content)
+
+
+def fixture_move_funds_success_response() -> mock.Mock:
+    with open('tests/fixtures/move_funds_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return _fixtured_mock_response(
+            ok=True,
+            text=content)
