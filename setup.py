@@ -2,14 +2,14 @@
 Package Setup Configurations.
 """
 
-import coinbaseadvanced
 import os
-
 from setuptools import find_packages, setup
+
+import coinbaseadvanced
 
 root = os.path.abspath(os.path.dirname(__file__))
 
-with open(os.path.join(root, "requirements.txt"), "r") as fh:
+with open(os.path.join(root, "requirements.txt"), "r", encoding="utf-8") as fh:
     requirements = fh.readlines()
 
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -28,7 +28,7 @@ setup(
     download_url=f"https://github.com/KmiQ/coinbase-advanced-python/archive/refs/tags/{coinbaseadvanced.__version__}.tar.gz",
     author='Camilo Quintas',
     author_email='kmiloc89@gmail.com',
-    keywords=['api', 'coinbase', 'bitcoin', 'client'],
+    keywords=['api', 'coinbase', 'bitcoin', 'client', 'crypto'],
     install_requires=[req for req in requirements],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -36,7 +36,7 @@ setup(
         "Intended Audience :: Financial and Insurance Industry",
         "Natural Language :: English",
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries :: Python Modules"
     ],
