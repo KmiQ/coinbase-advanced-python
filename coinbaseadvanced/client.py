@@ -2,23 +2,24 @@
 API Client for Coinbase Advanced Trade endpoints.
 """
 
-from typing import List
-from enum import Enum
-from datetime import datetime, timedelta
-from cryptography.hazmat.primitives import serialization
-
-import jwt
 import hmac
 import hashlib
 import time
 import json
-import requests
-from coinbaseadvanced.models.common import EmptyResponse, UnixTime, ValueCurrency
 
+from typing import Dict, List, Optional, Union
+from enum import Enum
+from datetime import datetime, timedelta
+from cryptography.hazmat.primitives import serialization
+import requests
+import jwt
+
+from coinbaseadvanced.models.common import EmptyResponse, UnixTime
 from coinbaseadvanced.models.fees import TransactionsSummary
-from coinbaseadvanced.models.portfolios import Portfolio, PortfolioBreakdown, PortfolioFundsTransfer, PortfolioType, PortfoliosPage
-from coinbaseadvanced.models.products import BidAsksPage, ProductBook, ProductsPage, Product, CandlesPage, \
-    TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
+from coinbaseadvanced.models.portfolios import Portfolio, PortfolioBreakdown, \
+    PortfolioFundsTransfer, PortfolioType, PortfoliosPage
+from coinbaseadvanced.models.products import BidAsksPage, ProductBook, ProductsPage, Product, \
+    CandlesPage, TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
 from coinbaseadvanced.models.accounts import AccountsPage, Account
 from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Order, \
     OrderBatchCancellation, FillsPage, Side, StopDirection, OrderType
@@ -76,7 +77,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     # Accounts #
 
-    def list_accounts(self, limit: int = 49, cursor: str = None) -> AccountsPage:
+    def list_accounts(self, limit: int = 49, cursor: Optional[str] = None) -> AccountsPage:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getaccounts
 
@@ -110,7 +111,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         page = AccountsPage.from_response(response)
         return page
 
-    def list_accounts_all(self, limit: int = 250, cursor: str = None) -> AccountsPage:
+    def list_accounts_all(self, limit: int = 250, cursor: Optional[str] = None) -> AccountsPage:
         """
         Get all authenticated accounts for the current user
 
@@ -210,8 +211,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             side: Side,
             limit_price: float,
             base_size: float,
-            cancel_time: datetime = None,
-            post_only: bool = None) -> Order:
+            cancel_time: Optional[datetime] = None,
+            post_only: Optional[bool] = None) -> Order:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
 
@@ -229,7 +230,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         order_configuration = {}
 
-        limit_order_configuration = {
+        limit_order_configuration: Dict[str, Union[str, bool]] = {
             "limit_price": str(limit_price),
             "base_size": str(base_size),
         }
@@ -255,7 +256,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
             stop_direction: StopDirection,
             limit_price: float,
             base_size: float,
-            cancel_time: datetime = None) -> Order:
+            cancel_time: Optional[datetime] = None) -> Order:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
 
@@ -320,8 +321,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
             'order_configuration': order_configuration
         }
 
-        headers = self._build_request_headers(method, request_path, json.dumps(payload)) if self._is_legacy_auth(
-        ) else self._build_request_headers_for_cloud(method, self._host, request_path)
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) \
+            if self._is_legacy_auth() \
+            else self._build_request_headers_for_cloud(method, self._host, request_path)
         response = requests.post(self._base_url+request_path,
                                  json=payload, headers=headers,
                                  timeout=self.timeout)
@@ -346,7 +348,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             'order_ids': order_ids,
         }
 
-        headers = self._build_request_headers(method, request_path, json.dumps(payload)) if self._is_legacy_auth(
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) \
+            if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
         response = requests.post(self._base_url+request_path,
                                  json=payload,
@@ -358,17 +361,17 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def list_orders(
             self,
-            product_id: str = None,
-            order_status: List[str] = None,
+            product_id: Optional[str] = None,
+            order_status: Optional[List[str]] = None,
             limit: int = 999,
-            start_date: datetime = None,
-            end_date: datetime = None,
-            user_native_currency: str = None,
-            order_type: OrderType = None,
-            order_side: Side = None,
-            cursor: str = None,
-            product_type: ProductType = None,
-            order_placement_source: OrderPlacementSource = None,
+            start_date: Optional[datetime] = None,
+            end_date: Optional[datetime] = None,
+            user_native_currency: Optional[str] = None,
+            order_type: Optional[OrderType] = None,
+            order_side: Optional[Side] = None,
+            cursor: Optional[str] = None,
+            product_type: Optional[ProductType] = None,
+            order_placement_source: Optional[OrderPlacementSource] = None,
     ) -> OrdersPage:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_gethistoricalorders
@@ -463,17 +466,34 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def list_orders_all(
             self,
-            product_id: str = None,
-            order_status: List[str] = None,
+            product_id: Optional[str] = None,
+            order_status: Optional[List[str]] = None,
             limit: int = 999,
-            start_date: datetime = None,
-            end_date: datetime = None,
-            user_native_currency: str = None,
-            order_type: OrderType = None,
-            order_side: Side = None,
-            cursor: str = None,
-            product_type: ProductType = None) -> OrdersPage:
+            start_date: Optional[datetime] = None,
+            end_date: Optional[datetime] = None,
+            user_native_currency: Optional[str] = None,
+            order_type: Optional[OrderType] = None,
+            order_side: Optional[Side] = None,
+            cursor: Optional[str] = None,
+            product_type: Optional[ProductType] = None) -> OrdersPage:
+        """
+        Retrieves all orders based on the specified filters.
 
+        Args:
+            product_id (Optional[str]): The product ID to filter the orders by.
+            order_status (Optional[List[str]]): The order status(es) to filter the orders by.
+            limit (int): The maximum number of orders to retrieve per page.
+            start_date (Optional[datetime]): The start date to filter the orders by.
+            end_date (Optional[datetime]): The end date to filter the orders by.
+            user_native_currency (Optional[str]): The user's native currency to filter orders by.
+            order_type (Optional[OrderType]): The order type to filter the orders by.
+            order_side (Optional[Side]): The order side to filter the orders by.
+            cursor (Optional[str]): The cursor for pagination.
+            product_type (Optional[ProductType]): The product type to filter the orders by.
+
+        Returns:
+            OrdersPage: An object containing the list of orders and pagination information.
+        """
         orders_page = OrdersPage([], has_next=True, cursor=cursor, sequence=0)
 
         while orders_page.has_next:
@@ -495,8 +515,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         return orders_page
 
-    def list_fills(self, order_id: str = None, product_id: str = None, start_date: datetime = None,
-                   end_date: datetime = None, cursor: str = None, limit: int = 100) -> FillsPage:
+    def list_fills(self, order_id: Optional[str] = None, product_id: Optional[str] = None,
+                   start_date: Optional[datetime] = None, end_date: Optional[datetime] = None,
+                   cursor: Optional[str] = None, limit: int = 100) -> FillsPage:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getfills
 
@@ -561,14 +582,30 @@ class CoinbaseAdvancedTradeAPIClient(object):
         page = FillsPage.from_response(response)
         return page
 
-    def list_fills_all(self, order_id: str = None, product_id: str = None, start_date: datetime = None,
-                       end_date: datetime = None, cursor: str = None, limit: int = 100) -> FillsPage:
+    def list_fills_all(self, order_id: Optional[str] = None, product_id: Optional[str] = None,
+                       start_date: Optional[datetime] = None, end_date: Optional[datetime] = None,
+                       cursor: Optional[str] = None, limit: int = 100) -> FillsPage:
+        """
+        Retrieves all fills for the specified order or product within the specified date range.
 
+        Args:
+            order_id (Optional[str]): The ID of the order to retrieve fills for.
+            product_id (Optional[str]): The ID of the product to retrieve fills for.
+            start_date (Optional[datetime]): The start date of the date range.
+            end_date (Optional[datetime]): The end date of the date range.
+            cursor (Optional[str]): The cursor for pagination.
+            limit (int): The maximum number of fills to retrieve per request. Defaults to 100.
+
+        Returns:
+            FillsPage: An instance of the FillsPage class containing the retrieved fills.
+
+        """
         fills = FillsPage(fills=[], cursor=cursor)
 
         while fills.cursor != '':
-            response = self.list_fills(order_id=order_id, product_id=product_id, start_date=start_date,
-                                       end_date=end_date, cursor=fills.cursor, limit=limit)
+            response = self.list_fills(order_id=order_id, product_id=product_id,
+                                       start_date=start_date, end_date=end_date,
+                                       cursor=fills.cursor, limit=limit)
             fills.cursor = response.cursor
             fills.fills.extend(response.fills)
 
@@ -599,9 +636,9 @@ class CoinbaseAdvancedTradeAPIClient(object):
     # Products #
 
     def list_products(self,
-                      limit: int = None,
-                      offset: int = None,
-                      product_type: ProductType = None) -> ProductsPage:
+                      limit: Optional[int] = None,
+                      offset: Optional[int] = None,
+                      product_type: Optional[ProductType] = None) -> ProductsPage:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getproducts
 
@@ -723,7 +760,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         # request size of 299 (max allowed by coinbase)
         time_window_in_mins = step_size_in_mins * max_candles_amount
 
-        product_candles = CandlesPage({})
+        product_candles = CandlesPage([])
 
         # run through from most recent to oldest to preserve time order in list
 
@@ -777,7 +814,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         trades_page = TradesPage.from_response(response)
         return trades_page
 
-    def get_product_book(self, product_id: str, limit: int = None) -> ProductBook:
+    def get_product_book(self, product_id: str, limit: Optional[int] = None) -> ProductBook:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getproductbook
 
@@ -789,7 +826,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         - limit: A pagination limit.
         """
 
-        request_path = f"/api/v3/brokerage/product_book"
+        request_path = "/api/v3/brokerage/product_book"
         method = "GET"
 
         query_params = ''
@@ -809,17 +846,17 @@ class CoinbaseAdvancedTradeAPIClient(object):
         bid_asks_page = ProductBook.from_response(response)
         return bid_asks_page
 
-    def get_best_bid_ask(self, product_ids: List[str] = None) -> BidAsksPage:
+    def get_best_bid_ask(self, product_ids: Optional[List[str]] = None) -> BidAsksPage:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getbestbidask
 
-        Get the best bid/ask for all products. A subset of all products can be returned instead by using the product_ids input.
+        Get the best bid/ask for all products. A subset of all products can be returned.
 
         Args:
         - product_ids: Subset of all products to be returned instead.
         """
 
-        request_path = f"/api/v3/brokerage/best_bid_ask"
+        request_path = "/api/v3/brokerage/best_bid_ask"
         method = "GET"
 
         query_params = ''
@@ -839,10 +876,10 @@ class CoinbaseAdvancedTradeAPIClient(object):
     # Fees #
 
     def get_transactions_summary(self,
-                                 start_date: datetime = None,
-                                 end_date: datetime = None,
+                                 start_date: Optional[datetime] = None,
+                                 end_date: Optional[datetime] = None,
                                  user_native_currency: str = "USD",
-                                 product_type: ProductType = None):
+                                 product_type: Optional[ProductType] = None):
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_gettransactionsummary
 
@@ -882,7 +919,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     # Portfolios
 
-    def list_portfolios(self, portfolio_type: PortfolioType = None) -> PortfoliosPage:
+    def list_portfolios(self, portfolio_type: Optional[PortfolioType] = None) -> PortfoliosPage:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getportfolios
 
@@ -925,7 +962,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             'name': name,
         }
 
-        headers = self._build_request_headers(method, request_path, json.dumps(payload)) if self._is_legacy_auth(
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) \
+            if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
         response = requests.post(self._base_url+request_path,
                                  json=payload, headers=headers,
@@ -949,7 +987,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             'name': name,
         }
 
-        headers = self._build_request_headers(method, request_path, json.dumps(payload)) if self._is_legacy_auth(
+        headers = self._build_request_headers(method, request_path, json.dumps(payload))\
+            if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
         response = requests.put(self._base_url+request_path,
                                 json=payload, headers=headers,
@@ -971,7 +1010,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         payload = {}
 
-        headers = self._build_request_headers(method, request_path, json.dumps(payload)) if self._is_legacy_auth(
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) \
+            if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
         response = requests.delete(self._base_url+request_path,
                                    json=payload, headers=headers,
@@ -1003,7 +1043,10 @@ class CoinbaseAdvancedTradeAPIClient(object):
         breakdown = PortfolioBreakdown.from_response(response)
         return breakdown
 
-    def move_portfolio_funds(self, funds_value: str, funds_currency: str, source_portfolio_uuid: str, target_portfolio_uuid: str) -> PortfolioFundsTransfer:
+    def move_portfolio_funds(self, funds_value: str,
+                             funds_currency: str,
+                             source_portfolio_uuid: str,
+                             target_portfolio_uuid: str) -> PortfolioFundsTransfer:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_moveportfoliofunds
 
@@ -1023,7 +1066,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             "target_portfolio_uuid": target_portfolio_uuid
         }
 
-        headers = self._build_request_headers(method, request_path, json.dumps(payload)) if self._is_legacy_auth(
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) \
+            if self._is_legacy_auth(
         ) else self._build_request_headers_for_cloud(method, self._host, request_path)
         response = requests.post(self._base_url+request_path,
                                  json=payload, headers=headers,
@@ -1042,7 +1086,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         """
 
-        request_path = f"/api/v3/brokerage/time"
+        request_path = "/api/v3/brokerage/time"
         method = "GET"
 
         headers = self._build_request_headers(method, request_path) if self._is_legacy_auth(
@@ -1051,8 +1095,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         response = requests.get(
             self._base_url+request_path, headers=headers, timeout=self.timeout)
 
-        time = UnixTime.from_response(response)
-        return time
+        return UnixTime.from_response(response)
 
     # Helpers Methods #
 
@@ -1080,7 +1123,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         }
         jwt_token = jwt.encode(
             jwt_payload,
-            private_key,
+            private_key,  # type: ignore
             algorithm='ES256',
             headers={'kid': self._api_key, 'nonce': str(int(time.time()))},
         )

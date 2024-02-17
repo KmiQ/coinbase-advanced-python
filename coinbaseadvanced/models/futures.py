@@ -1,9 +1,16 @@
-from enum import Enum
+"""
+This module contains the definition of the FuturesPosition class and related enums.
+"""
 
+from enum import Enum
 from coinbaseadvanced.models.common import BaseModel
 
 
 class MarginType(Enum):
+    """
+    Enum representing the margin type for futures trading.
+    """
+
     UNSPECIFIED = "MARGIN_TYPE_UNSPECIFIED"
     CROSS = "MARGIN_TYPE_CROSS"
     ISOLATED = "MARGIN_TYPE_ISOLATED"
@@ -20,19 +27,24 @@ class FuturesPositionSide(Enum):
 
 
 class FuturesPosition(BaseModel):
-    product_id: str
-    contract_size: str
-    side: FuturesPositionSide
-    amount: str
-    avg_entry_price: str
-    current_price: str
-    unrealized_pnl: str
-    expiry: str
-    underlying_asset: str
-    asset_img_url: str
-    product_name: str
-    venue: str
-    notional_value: str
+    """
+    Represents a futures position.
+
+    Attributes:
+        product_id (str): The ID of the product.
+        contract_size (str): The size of the contract.
+        side (FuturesPositionSide): The side of the position.
+        amount (str): The amount of the position.
+        avg_entry_price (str): The average entry price of the position.
+        current_price (str): The current price of the position.
+        unrealized_pnl (str): The unrealized profit/loss of the position.
+        expiry (str): The expiry date of the position.
+        underlying_asset (str): The underlying asset of the position.
+        asset_img_url (str): The URL of the asset's image.
+        product_name (str): The name of the product.
+        venue (str): The venue of the position.
+        notional_value (str): The notional value of the position.
+    """
 
     def __init__(
             self, product_id: str,

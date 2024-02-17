@@ -2,13 +2,14 @@
 Object models for order related endpoints args and response.
 """
 
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 from enum import Enum
-from coinbaseadvanced.models.common import BaseModel
-from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
 import requests
+
+from coinbaseadvanced.models.common import BaseModel
+from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
 
 class Side(Enum):
@@ -61,8 +62,12 @@ class OrderError(BaseModel):
     preview_failure_reason: str
     new_order_failure_reason: str
 
-    def __init__(self, error: str = '', message: str = '', error_details: str = '',
-                 preview_failure_reason: str = '', new_order_failure_reason: str = '', **kwargs) -> None:
+    def __init__(self,
+                 error: str = '',
+                 message: str = '',
+                 error_details: str = '',
+                 preview_failure_reason: str = '',
+                 new_order_failure_reason: str = '', **kwargs) -> None:
         self.error = error
         self.message = message
         self.error_details = error_details
@@ -99,7 +104,11 @@ class LimitGTD(BaseModel):
     post_only: bool
     end_time: datetime
 
-    def __init__(self, base_size: str, limit_price: str, post_only: bool, end_time: str, **kwargs) -> None:
+    def __init__(self,
+                 base_size: str,
+                 limit_price: str,
+                 post_only: bool,
+                 end_time: str, **kwargs) -> None:
         self.base_size = base_size
         self.limit_price = limit_price
         self.post_only = post_only
@@ -114,10 +123,12 @@ class MarketIOC(BaseModel):
     Market order configuration.
     """
 
-    quote_size: str
-    base_size: str
+    quote_size: Optional[str]
+    base_size: Optional[str]
 
-    def __init__(self, quote_size: str = None, base_size: str = None, **kwargs) -> None:
+    def __init__(self,
+                 quote_size: Optional[str] = None,
+                 base_size: Optional[str] = None, **kwargs) -> None:
         self.quote_size = quote_size
         self.base_size = base_size
 
@@ -196,15 +207,18 @@ class OrderConfiguration(BaseModel):
     Order Configuration. One of four possible fields should only be settled.
     """
 
-    market_market_ioc: MarketIOC
-    limit_limit_gtc: LimitGTC
-    limit_limit_gtd: LimitGTD
-    stop_limit_stop_limit_gtc: StopLimitGTC
-    stop_limit_stop_limit_gtd: StopLimitGTD
+    market_market_ioc: Optional[MarketIOC]
+    limit_limit_gtc: Optional[LimitGTC]
+    limit_limit_gtd: Optional[LimitGTD]
+    stop_limit_stop_limit_gtc: Optional[StopLimitGTC]
+    stop_limit_stop_limit_gtd: Optional[StopLimitGTD]
 
-    def __init__(self, market_market_ioc: dict = None, limit_limit_gtc: dict = None,
-                 limit_limit_gtd: dict = None, stop_limit_stop_limit_gtc: dict = None,
-                 stop_limit_stop_limit_gtd: dict = None, **kwargs) -> None:
+    def __init__(self,
+                 market_market_ioc: Optional[dict] = None,
+                 limit_limit_gtc: Optional[dict] = None,
+                 limit_limit_gtd: Optional[dict] = None,
+                 stop_limit_stop_limit_gtc: Optional[dict] = None,
+                 stop_limit_stop_limit_gtd: Optional[dict] = None, **kwargs) -> None:
         self.market_market_ioc = MarketIOC(
             **market_market_ioc) if market_market_ioc is not None else None
         self.limit_limit_gtc = LimitGTC(
@@ -227,79 +241,83 @@ class Order(BaseModel):
     not all of them are returned at creation time.
     """
 
-    order_id: str
-    product_id: str
-    side: str
-    client_order_id: str
-    order_configuration: OrderConfiguration
+    order_id: Optional[str]
+    product_id: Optional[str]
+    side: Optional[str]
+    client_order_id: Optional[str]
+    order_configuration: Optional[OrderConfiguration]
 
-    user_id: str
-    status: str
-    time_in_force: str
-    created_time: datetime
-    completion_percentage: int
-    filled_size: str
-    average_filled_price: int
-    fee: str
-    number_of_fills: int
-    filled_value: int
-    pending_cancel: bool
-    size_in_quote: bool
-    total_fees: str
-    size_inclusive_of_fees: bool
-    total_value_after_fees: str
-    trigger_status: str
-    order_type: str
-    reject_reason: str
-    settled: str
-    product_type: str
-    reject_message: str
-    cancel_message: str
-    order_placement_source: str
-    outstanding_hold_amount: str
+    user_id: Optional[str]
+    status: Optional[str]
+    time_in_force: Optional[str]
+    created_time: Optional[datetime]
+    completion_percentage: Optional[int]
+    filled_size: Optional[str]
+    average_filled_price: Optional[int]
+    fee: Optional[str]
+    number_of_fills: Optional[int]
+    filled_value: Optional[int]
+    pending_cancel: Optional[bool]
+    size_in_quote: Optional[bool]
+    total_fees: Optional[str]
+    size_inclusive_of_fees: Optional[bool]
+    total_value_after_fees: Optional[str]
+    trigger_status: Optional[str]
+    order_type: Optional[str]
+    reject_reason: Optional[str]
+    settled: Optional[str]
+    product_type: Optional[str]
+    reject_message: Optional[str]
+    cancel_message: Optional[str]
+    order_placement_source: Optional[str]
+    outstanding_hold_amount: Optional[str]
 
-    is_liquidation: bool
-    last_fill_time: str
-    edit_history: List[OrderEditRecord]
-    leverage: str
-    margin_type: str
+    is_liquidation: Optional[bool]
+    last_fill_time: Optional[str]
+    edit_history: Optional[List[OrderEditRecord]]
+    leverage: Optional[str]
+    margin_type: Optional[str]
 
-    order_error: OrderError
+    order_error: Optional[OrderError]
 
-    def __init__(self, order_id: str, product_id: str, side: str, client_order_id: str,
-                 order_configuration: dict,
-                 user_id: str = None,
-                 status: str = None,
-                 time_in_force: str = None,
-                 created_time: str = None,
-                 completion_percentage: int = None,
-                 filled_size: str = None,
-                 average_filled_price: int = None,
-                 fee: str = None,
-                 number_of_fills: int = None,
-                 filled_value: int = None,
-                 pending_cancel: bool = None,
-                 size_in_quote: bool = None,
-                 total_fees: str = None,
-                 size_inclusive_of_fees: bool = None,
-                 total_value_after_fees: str = None,
-                 trigger_status: str = None,
-                 order_type: str = None,
-                 reject_reason: str = None,
-                 settled: str = None,
-                 product_type: str = None,
-                 reject_message: str = None,
-                 cancel_message: str = None,
-                 order_placement_source: str = None,
-                 outstanding_hold_amount: str = None,
+    def __init__(self,
+                 order_id: Optional[str],
+                 product_id: Optional[str],
+                 side: Optional[str],
+                 client_order_id: Optional[str],
+                 order_configuration: Optional[dict],
+                 user_id: Optional[str] = None,
+                 status: Optional[str] = None,
+                 time_in_force: Optional[str] = None,
+                 created_time: Optional[str] = None,
+                 completion_percentage: Optional[int] = None,
+                 filled_size: Optional[str] = None,
+                 average_filled_price: Optional[int] = None,
+                 fee: Optional[str] = None,
+                 number_of_fills: Optional[int] = None,
+                 filled_value: Optional[int] = None,
+                 pending_cancel: Optional[bool] = None,
+                 size_in_quote: Optional[bool] = None,
+                 total_fees: Optional[str] = None,
+                 size_inclusive_of_fees: Optional[bool] = None,
+                 total_value_after_fees: Optional[str] = None,
+                 trigger_status: Optional[str] = None,
+                 order_type: Optional[str] = None,
+                 reject_reason: Optional[str] = None,
+                 settled: Optional[str] = None,
+                 product_type: Optional[str] = None,
+                 reject_message: Optional[str] = None,
+                 cancel_message: Optional[str] = None,
+                 order_placement_source: Optional[str] = None,
+                 outstanding_hold_amount: Optional[str] = None,
 
-                 is_liquidation: bool = None,
-                 last_fill_time: str = None,
-                 edit_history: List[OrderEditRecord] = None,
-                 leverage: str = None,
-                 margin_type: str = None,
+                 is_liquidation: Optional[bool] = None,
+                 last_fill_time: Optional[str] = None,
+                 edit_history: Optional[List[OrderEditRecord]] = None,
+                 leverage: Optional[str] = None,
+                 margin_type: Optional[str] = None,
 
-                 order_error: dict = None, **kwargs) -> None:
+                 order_error: Optional[dict] = None, **kwargs) -> None:
         self.order_id = order_id
         self.product_id = product_id
         self.side = side
@@ -336,12 +354,12 @@ class Order(BaseModel):
 
         self.is_liquidation = is_liquidation
         self.last_fill_time = last_fill_time
-        self.edit_history = [OrderEditRecord(
-            **edit) for edit in edit_history] if edit_history is not None else None,
+        self.edit_history = edit_history if edit_history is not None else None
         self.leverage = leverage
         self.margin_type = margin_type
 
-        self.order_error = OrderError(**order_error) if order_error is not None else None
+        self.order_error = OrderError(
+            **order_error) if order_error is not None else None
 
         self.kwargs = kwargs
 
@@ -391,17 +409,18 @@ class OrdersPage(BaseModel):
 
     orders: List[Order]
     has_next: bool
-    cursor: str
+    cursor: Optional[str]
     sequence: int
 
     def __init__(self,
                  orders: List[dict],
                  has_next: bool,
-                 cursor: str,
+                 cursor: Optional[str],
                  sequence: int, **kwargs
                  ) -> None:
 
-        self.orders = list(map(lambda x: Order(**x), orders)) if orders is not None else None
+        self.orders = list(map(lambda x: Order(**x), orders)
+                           ) if orders is not None else []
 
         self.has_next = has_next
         self.cursor = cursor
@@ -455,7 +474,7 @@ class OrderBatchCancellation(BaseModel):
         self.kwargs = kwargs
 
     @classmethod
-    def from_response(cls, response: requests.Response) -> 'Order':
+    def from_response(cls, response: requests.Response) -> 'OrderBatchCancellation':
         """
         Factory method.
         """
@@ -476,13 +495,13 @@ class Fill(BaseModel):
     entry_id: str
     trade_id: str
     order_id: str
-    trade_time: datetime
+    trade_time: Optional[datetime]
     trade_type: str
     price: str
     size: str
     commission: str
     product_id: str
-    sequence_timestamp: datetime
+    sequence_timestamp: Optional[datetime]
     liquidity_indicator: str
     size_in_quote: bool
     user_id: str
@@ -516,7 +535,8 @@ class Fill(BaseModel):
         self.commission = commission
         self.product_id = product_id
         self.sequence_timestamp = datetime.strptime(
-            sequence_timestamp if len(sequence_timestamp) <= 27 else sequence_timestamp[:26] + 'Z',
+            sequence_timestamp if len(
+                sequence_timestamp) <= 27 else sequence_timestamp[:26] + 'Z',
             "%Y-%m-%dT%H:%M:%S.%fZ") if sequence_timestamp is not None else None
         self.liquidity_indicator = liquidity_indicator
         self.size_in_quote = size_in_quote
@@ -532,14 +552,15 @@ class FillsPage(BaseModel):
     """
 
     fills: List[Fill]
-    cursor: str
+    cursor: Optional[str]
 
     def __init__(self,
                  fills: List[dict],
-                 cursor: str, **kwargs
+                 cursor:  Optional[str], **kwargs
                  ) -> None:
 
-        self.fills = list(map(lambda x: Fill(**x), fills)) if fills is not None else None
+        self.fills = list(map(lambda x: Fill(**x), fills)
+                          ) if fills is not None else []
 
         self.cursor = cursor
 

@@ -4,7 +4,7 @@ Object models for account related endpoints args and response.
 
 from uuid import UUID
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 import requests
 
 from coinbaseadvanced.models.common import BaseModel, ValueCurrency
@@ -19,7 +19,7 @@ class Account(BaseModel):
     uuid: UUID
     name: str
     currency: str
-    available_balance: ValueCurrency
+    available_balance: Optional[ValueCurrency]
     default: bool
     active: bool
     created_at: datetime
@@ -27,7 +27,7 @@ class Account(BaseModel):
     deleted_at: datetime
     type: str
     ready: bool
-    hold: ValueCurrency
+    hold: Optional[ValueCurrency]
 
     def __init__(
         self, uuid: UUID, name: str, currency: str, available_balance: dict, default: bool,
@@ -70,19 +70,19 @@ class AccountsPage(BaseModel):
 
     accounts: List[Account]
     has_next: bool
-    cursor: str
+    cursor: Optional[str]
     size: int
 
     def __init__(self,
                  accounts: List[dict],
                  has_next: bool,
-                 cursor: str,
+                 cursor: Optional[str],
                  size: int,
                  **kwargs
                  ) -> None:
 
         self.accounts = list(map(lambda x: Account(**x), accounts))\
-            if accounts is not None else None
+            if accounts is not None else []
 
         self.has_next = has_next
         self.cursor = cursor
@@ -103,4 +103,4 @@ class AccountsPage(BaseModel):
         return cls(**result)
 
     def __iter__(self):
-        return self.accounts.__iter__()
+        return self.accounts.__iter__() if self.accounts is not None else [].__iter__()

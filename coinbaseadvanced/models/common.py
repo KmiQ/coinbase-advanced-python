@@ -2,12 +2,15 @@
 Object models for order related endpoints args and response.
 """
 
-from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
-
 import requests
+
+from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
 
 class BaseModel:
+    """
+    Base class for models.
+    """
 
     def __str__(self):
         attributes = ", ".join(
@@ -21,19 +24,32 @@ class BaseModel:
 
 
 class EmptyResponse(BaseModel):
+    """
+    Represents an empty response from the Coinbase Advanced Trade API.
+
+    Attributes:
+        success (bool): Indicates whether the response was successful or not.
+    """
+
     success: bool
 
-    def __init__(self,
-                 **kwargs
-                 ) -> None:
-
+    def __init__(self, **kwargs) -> None:
         self.success = True
         self.kwargs = kwargs
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'EmptyResponse':
         """
-        Factory Method.
+        Factory Method that creates an EmptyResponse object from a requests.Response object.
+
+        Args:
+            response (requests.Response): The response object returned by the API.
+
+        Returns:
+            EmptyResponse: An instance of the EmptyResponse class.
+
+        Raises:
+            CoinbaseAdvancedTradeAPIError: If the response is not OK.
         """
 
         if not response.ok:

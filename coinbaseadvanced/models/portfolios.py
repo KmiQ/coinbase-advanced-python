@@ -5,11 +5,11 @@ Object models for portfolios related endpoints args and response.
 from typing import List
 from enum import Enum
 from uuid import UUID
-from coinbaseadvanced.models.common import BaseModel, ValueCurrency
-from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
 import requests
 
+from coinbaseadvanced.models.common import BaseModel, ValueCurrency
+from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 from coinbaseadvanced.models.futures import FuturesPosition, FuturesPositionSide, MarginType
 
 
@@ -230,7 +230,11 @@ class PortfolioBreakdown(BaseModel):
     perp_positions: List[PerpPosition]
     futures_positions: List[FuturesPosition]
 
-    def __init__(self, portfolio: dict, portfolio_balances: dict, spot_positions: list, perp_positions: list, futures_positions: list,  **kwargs):
+    def __init__(self, portfolio: dict,
+                 portfolio_balances: dict,
+                 spot_positions: list,
+                 perp_positions: list,
+                 futures_positions: list,  **kwargs):
         self.portfolio = Portfolio(**portfolio)
         self.portfolio_balances = PortfolioBalances(**portfolio_balances)
         self.spot_positions = [SpotPosition(**x) for x in spot_positions]
@@ -260,9 +264,9 @@ class PortfoliosPage(BaseModel):
 
     portfolios: List[Portfolio]
 
-    def __init__(self, portfolios: List[Portfolio], **kwargs) -> None:
+    def __init__(self, portfolios: list, **kwargs) -> None:
         self.portfolios = list(map(lambda x: Portfolio(**x), portfolios)) \
-            if portfolios is not None else None
+            if portfolios is not None else []
 
         self.kwargs = kwargs
 
@@ -283,21 +287,42 @@ class PortfoliosPage(BaseModel):
 
 
 class PortfolioFundsTransfer(BaseModel):
+    """
+    Represents a funds transfer between two portfolios.
+    """
+
     source_portfolio_uuid: str
     target_portfolio_uuid: str
 
-    def __init__(self, source_portfolio_uuid: str, target_portfolio_uuid: str,   **kwargs):
+    def __init__(self, source_portfolio_uuid: str, target_portfolio_uuid: str, **kwargs):
+        """
+        Initializes a new instance of the PortfolioFundsTransfer class.
+
+        Args:
+            source_portfolio_uuid (str): The UUID of the source portfolio.
+            target_portfolio_uuid (str): The UUID of the target portfolio.
+            **kwargs: Additional keyword arguments.
+
+        """
         self.source_portfolio_uuid = source_portfolio_uuid
         self.target_portfolio_uuid = target_portfolio_uuid
-
         self.kwargs = kwargs
 
     @classmethod
     def from_response(cls, response: requests.Response) -> 'PortfolioFundsTransfer':
         """
-        Factory Method.
-        """
+        Factory method that creates a PortfolioFundsTransfer object from a response.
 
+        Args:
+            response (requests.Response): The response object.
+
+        Returns:
+            PortfolioFundsTransfer: The created PortfolioFundsTransfer object.
+
+        Raises:
+            CoinbaseAdvancedTradeAPIError: If the response is not OK.
+
+        """
         if not response.ok:
             raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
 

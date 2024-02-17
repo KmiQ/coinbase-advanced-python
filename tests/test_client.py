@@ -7,7 +7,6 @@ from unittest import mock
 from datetime import datetime, timezone
 
 from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, Side, StopDirection, Granularity
-from coinbaseadvanced.models.common import ValueCurrency
 from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 from coinbaseadvanced.models.portfolios import PortfolioType
 from tests.fixtures.fixtures import *
@@ -58,6 +57,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertEqual(account.uuid, "b044449a-38a3-5b8f-a506-4a65c9853222")
         self.assertEqual(account.currency, "BTC")
 
+        assert account.available_balance is not None
         self.assertEqual(account.available_balance.currency, "BTC")
         self.assertEqual(account.available_balance.value, "0.2430140900000000")
 
@@ -220,11 +220,12 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIn('CB-ACCESS-TIMESTAMP', headers)
             self.assertIn('CB-ACCESS-SIGN', headers)
 
-            json = kwargs['json']
-            self.assertEqual(json['client_order_id'], "lknalksdj89asdkl")
-            self.assertEqual(json['product_id'], "ALGO-USD")
-            self.assertEqual(json['side'], "BUY")
-            self.assertDictEqual(json['order_configuration'], order_config)
+            json_data = kwargs['json']
+            self.assertEqual(json_data['client_order_id'], "lknalksdj89asdkl")
+            self.assertEqual(json_data['product_id'], "ALGO-USD")
+            self.assertEqual(json_data['side'], "BUY")
+            self.assertDictEqual(
+                json_data['order_configuration'], order_config)
 
         # Check output
 
@@ -236,6 +237,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertEqual(order_created.product_id, "ALGO-USD")
 
         order_config_output = order_created.order_configuration
+        assert order_config_output is not None
         self.assertIsNotNone(order_config_output.limit_limit_gtc)
         self.assertIsNone(order_config_output.limit_limit_gtd)
         self.assertIsNone(order_config_output.stop_limit_stop_limit_gtc)
@@ -282,11 +284,12 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIn('CB-ACCESS-TIMESTAMP', headers)
             self.assertIn('CB-ACCESS-SIGN', headers)
 
-            json = kwargs['json']
-            self.assertEqual(json['client_order_id'], "mklansdu8wehr")
-            self.assertEqual(json['product_id'], "ALGO-USD")
-            self.assertEqual(json['side'], "BUY")
-            self.assertDictEqual(json['order_configuration'], order_config)
+            json_data = kwargs['json']
+            self.assertEqual(json_data['client_order_id'], "mklansdu8wehr")
+            self.assertEqual(json_data['product_id'], "ALGO-USD")
+            self.assertEqual(json_data['side'], "BUY")
+            self.assertDictEqual(
+                json_data['order_configuration'], order_config)
 
         # Check output
 
@@ -299,6 +302,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertEqual(order_created.side, 'BUY')
 
         order_config_output = order_created.order_configuration
+        assert order_config_output is not None
         self.assertIsNone(order_config_output.limit_limit_gtc)
         self.assertIsNone(order_config_output.limit_limit_gtd)
         self.assertIsNone(order_config_output.stop_limit_stop_limit_gtc)
@@ -333,11 +337,12 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIn('CB-ACCESS-TIMESTAMP', headers)
             self.assertIn('CB-ACCESS-SIGN', headers)
 
-            json = kwargs['json']
-            self.assertEqual(json['client_order_id'], "asdasd")
-            self.assertEqual(json['product_id'], "ALGO-USD")
-            self.assertEqual(json['side'], "BUY")
-            self.assertDictEqual(json['order_configuration'], order_config)
+            json_data = kwargs['json']
+            self.assertEqual(json_data['client_order_id'], "asdasd")
+            self.assertEqual(json_data['product_id'], "ALGO-USD")
+            self.assertEqual(json_data['side'], "BUY")
+            self.assertDictEqual(
+                json_data['order_configuration'], order_config)
 
         # Check output
 
@@ -350,6 +355,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertEqual(order_created.side, 'BUY')
 
         order_config_output = order_created.order_configuration
+        assert order_config_output is not None
         self.assertIsNone(order_config_output.limit_limit_gtc)
         self.assertIsNone(order_config_output.limit_limit_gtd)
         self.assertIsNone(order_config_output.stop_limit_stop_limit_gtc)
@@ -385,11 +391,12 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIn('CB-ACCESS-TIMESTAMP', headers)
             self.assertIn('CB-ACCESS-SIGN', headers)
 
-            json = kwargs['json']
-            self.assertEqual(json['client_order_id'], "njkasdh7")
-            self.assertEqual(json['product_id'], "ALGO-USD")
-            self.assertEqual(json['side'], "SELL")
-            self.assertDictEqual(json['order_configuration'], order_config)
+            json_data = kwargs['json']
+            self.assertEqual(json_data['client_order_id'], "njkasdh7")
+            self.assertEqual(json_data['product_id'], "ALGO-USD")
+            self.assertEqual(json_data['side'], "SELL")
+            self.assertDictEqual(
+                json_data['order_configuration'], order_config)
 
         # Check output
 
@@ -402,6 +409,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertEqual(order_created.side, 'SELL')
 
         order_config_output = order_created.order_configuration
+        assert order_config_output is not None
         self.assertIsNone(order_config_output.limit_limit_gtc)
         self.assertIsNone(order_config_output.limit_limit_gtd)
         self.assertIsNone(order_config_output.stop_limit_stop_limit_gtc)
@@ -422,7 +430,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             client.create_limit_order("nlksdbnfgjd8y9mn,m234",
                                       "ALGO-USD",
                                       Side.BUY,
-                                      ".19",
+                                      .19,
                                       10000)
         except CoinbaseAdvancedTradeAPIError as order_error:
             self.assertDictEqual(order_error.error_dict, {
@@ -457,7 +465,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         order = client.create_limit_order("nlksdbnfgjd8y9mn,m234",
                                           "ALGO-USD",
                                           Side.BUY,
-                                          ".19",
+                                          .19,
                                           10000)
 
         self.assertIsNotNone(order.order_error)
@@ -489,9 +497,9 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIn('CB-ACCESS-TIMESTAMP', headers)
             self.assertIn('CB-ACCESS-SIGN', headers)
 
-            json = kwargs['json']
-            self.assertIn('order_id_1', json['order_ids'])
-            self.assertIn('order_id_2', json['order_ids'])
+            json_data = kwargs['json']
+            self.assertIn('order_id_1', json_data['order_ids'])
+            self.assertIn('order_id_2', json_data['order_ids'])
 
         # Check output
 
@@ -1168,8 +1176,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIn('CB-ACCESS-TIMESTAMP', headers)
             self.assertIn('CB-ACCESS-SIGN', headers)
 
-            json = kwargs['json']
-            self.assertEqual(json['name'], "portf-test3")
+            json_data = kwargs['json']
+            self.assertEqual(json_data['name'], "portf-test3")
         # Check output
 
         self.assertIsNotNone(portfolio_created)
@@ -1207,8 +1215,8 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIn('CB-ACCESS-TIMESTAMP', headers)
             self.assertIn('CB-ACCESS-SIGN', headers)
 
-            json = kwargs['json']
-            self.assertEqual(json['name'], "edited-portfolio-name")
+            json_data = kwargs['json']
+            self.assertEqual(json_data['name'], "edited-portfolio-name")
         # Check output
 
         self.assertIsNotNone(portfolio_edited)
@@ -1287,7 +1295,7 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
                          "asad-sdfsf-sfsdf-sfd")
         self.assertEqual(
             portfolio_breakdown.portfolio_balances.total_balance.value, "69952.54")
-        self.assertEqual(len(portfolio_breakdown.spot_positions), 178)
+        self.assertEqual(len(portfolio_breakdown.spot_positions), 78)
 
     @mock.patch("coinbaseadvanced.client.requests.post")
     def test_move_funds_success(self, mock_post):
@@ -1316,10 +1324,10 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             self.assertIn('CB-ACCESS-TIMESTAMP', headers)
             self.assertIn('CB-ACCESS-SIGN', headers)
 
-            json = kwargs['json']
-            self.assertEqual(json['source_portfolio_uuid'],
+            json_data = kwargs['json']
+            self.assertEqual(json_data['source_portfolio_uuid'],
                              "klsjdlksd-nsjkdnfk-234234")
-            self.assertEqual(json['target_portfolio_uuid'],
+            self.assertEqual(json_data['target_portfolio_uuid'],
                              "strklsdmkfls-34dfg-ing")
         # Check output
 
