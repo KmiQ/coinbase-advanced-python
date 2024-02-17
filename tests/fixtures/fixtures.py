@@ -267,3 +267,51 @@ def fixture_get_unix_time_success_response() -> mock.Mock:
         return _fixtured_mock_response(
             ok=True,
             text=content)
+
+
+def fixture_list_portfolios_success_response() -> mock.Mock:
+    with open('tests/fixtures/list_portfolios_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return _fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_create_portfolio_success_response() -> mock.Mock:
+    with open('tests/fixtures/create_portfolio_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return _fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_edit_portfolio_success_response() -> mock.Mock:
+    with open('tests/fixtures/edit_portfolio_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return _fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_delete_portfolio_success_response() -> mock.Mock:
+    with open('tests/fixtures/delete_portfolio_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return _fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_get_portfolio_breakdown_success_response() -> mock.Mock:
+    with open('tests/fixtures/get_portfolio_breakdown_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return _fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
+def fixture_move_funds_success_response() -> mock.Mock:
+    with open('tests/fixtures/move_funds_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return _fixtured_mock_response(
+            ok=True,
+            text=content)

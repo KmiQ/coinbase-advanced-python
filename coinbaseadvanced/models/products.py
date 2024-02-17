@@ -6,10 +6,11 @@ from uuid import UUID
 from datetime import datetime
 from typing import List
 from enum import Enum
-from coinbaseadvanced.models.common import BaseModel
-from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
 import requests
+
+from coinbaseadvanced.models.common import BaseModel
+from coinbaseadvanced.models.error import CoinbaseAdvancedTradeAPIError
 
 
 class ProductType(Enum):
@@ -174,9 +175,9 @@ class ProductsPage(BaseModel):
     products: List[Product]
     num_products: int
 
-    def __init__(self, products: List[Product], num_products: int, **kwargs) -> None:
+    def __init__(self, products: list, num_products: int, **kwargs) -> None:
         self.products = list(map(lambda x: Product(**x), products)) \
-            if products is not None else None
+            if products is not None else []
 
         self.num_products = num_products
 
@@ -210,7 +211,13 @@ class Candle(BaseModel):
     close: str
     volume: int
 
-    def __init__(self, start: str, low: str, high: str, open: str, close: str, volume: int, **kwargs) -> None:
+    def __init__(self,
+                 start: str,
+                 low: str,
+                 high: str,
+                 open: str,
+                 close: str,
+                 volume: int, **kwargs) -> None:
         self.start = start
         self.low = low
         self.high = high
@@ -228,8 +235,9 @@ class CandlesPage(BaseModel):
 
     candles: List[Candle]
 
-    def __init__(self, candles: List[Candle], **kwargs) -> None:
-        self.candles = list(map(lambda x: Candle(**x), candles)) if candles is not None else None
+    def __init__(self, candles: list, **kwargs) -> None:
+        self.candles = list(map(lambda x: Candle(**x), candles)
+                            ) if candles is not None else []
 
         self.kwargs = kwargs
 
@@ -250,6 +258,14 @@ class CandlesPage(BaseModel):
 
 
 class Bid(BaseModel):
+    """
+    Represents a bid in a trading market.
+
+    Attributes:
+        price (str): The price of the bid.
+        size (str): The size of the bid.
+    """
+
     price: str
     size: str
 
@@ -261,6 +277,14 @@ class Bid(BaseModel):
 
 
 class Ask(BaseModel):
+    """
+    Represents an ask order in a trading market.
+
+    Attributes:
+        price (str): The price of the ask order.
+        size (str): The size of the ask order.
+    """
+
     price: str
     size: str
 
@@ -281,10 +305,12 @@ class BidAsk(BaseModel):
     asks: List[Ask]
     time: str
 
-    def __init__(self, product_id: str, bids: List[Bid], asks: List[Ask], time: str, **kwargs) -> None:
+    def __init__(self, product_id: str, bids: list, asks: list, time: str, **kwargs) -> None:
         self.product_id = product_id
-        self.bids = list(map(lambda x: Bid(**x), bids)) if bids is not None else None
-        self.asks = list(map(lambda x: Ask(**x), asks)) if asks is not None else None
+        self.bids = list(map(lambda x: Bid(**x), bids)
+                         ) if bids is not None else []
+        self.asks = list(map(lambda x: Ask(**x), asks)
+                         ) if asks is not None else []
         self.time = time
 
         self.kwargs = kwargs
@@ -297,8 +323,9 @@ class BidAsksPage(BaseModel):
 
     pricebooks: List
 
-    def __init__(self, pricebooks: List[BidAsk], **kwargs) -> None:
-        self.pricebooks = list(map(lambda x: BidAsk(**x), pricebooks)) if pricebooks is not None else None
+    def __init__(self, pricebooks: list, **kwargs) -> None:
+        self.pricebooks = list(map(lambda x: BidAsk(
+            **x), pricebooks)) if pricebooks is not None else []
 
         self.kwargs = kwargs
 
@@ -388,11 +415,12 @@ class TradesPage(BaseModel):
     best_ask: str
 
     def __init__(self,
-                 trades: List[Trade],
+                 trades: list,
                  best_bid: str,
                  best_ask: str, **kwargs
                  ) -> None:
-        self.trades = list(map(lambda x: Trade(**x), trades)) if trades is not None else None
+        self.trades = list(map(lambda x: Trade(**x), trades)
+                           ) if trades is not None else []
         self.best_bid = best_bid
         self.best_ask = best_ask
 

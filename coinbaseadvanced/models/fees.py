@@ -2,6 +2,7 @@
 Object models for fees related endpoints args and response.
 """
 
+from typing import Optional
 import requests
 
 from coinbaseadvanced.models.common import BaseModel
@@ -69,9 +70,9 @@ class TransactionsSummary(BaseModel):
 
     total_volume: int
     total_fees: int
-    fee_tier: FeeTier
-    margin_rate: MarginRate
-    goods_and_services_tax: GoodsAndServicesTax
+    fee_tier: Optional[FeeTier]
+    margin_rate: Optional[MarginRate]
+    goods_and_services_tax: Optional[GoodsAndServicesTax]
     advanced_trade_only_volume: int
     advanced_trade_only_fees: int
     coinbase_pro_volume: int
@@ -79,13 +80,23 @@ class TransactionsSummary(BaseModel):
     total_balance: str
     has_promo_fee: bool
 
-    def __init__(self, total_volume: int, total_fees: int, fee_tier: dict, margin_rate: dict,
-                 goods_and_services_tax: dict, advanced_trade_only_volume: int, advanced_trade_only_fees: int,
-                 coinbase_pro_volume: int, coinbase_pro_fees: int, total_balance: str, has_promo_fee: bool, **kwargs) -> None:
+    def __init__(self,
+                 total_volume: int,
+                 total_fees: int,
+                 fee_tier: dict,
+                 margin_rate: dict,
+                 goods_and_services_tax: dict,
+                 advanced_trade_only_volume: int,
+                 advanced_trade_only_fees: int,
+                 coinbase_pro_volume: int,
+                 coinbase_pro_fees: int,
+                 total_balance: str,
+                 has_promo_fee: bool, **kwargs) -> None:
         self.total_volume = total_volume
         self.total_fees = total_fees
         self.fee_tier = FeeTier(**fee_tier) if fee_tier is not None else None
-        self.margin_rate = MarginRate(**margin_rate) if margin_rate is not None else None
+        self.margin_rate = MarginRate(
+            **margin_rate) if margin_rate is not None else None
         self.goods_and_services_tax = GoodsAndServicesTax(
             **goods_and_services_tax) if goods_and_services_tax is not None else None
         self.advanced_trade_only_volume = advanced_trade_only_volume

@@ -1,0 +1,10 @@
+{
+    "portfolios": [
+        {
+            "name": "Default",
+            "uuid": "cd5d3286-b5ad-5f48-b356-1fd3e4e73f72",
+            "type": "DEFAULT",
+            "deleted": false
+        }
+    ]
+}

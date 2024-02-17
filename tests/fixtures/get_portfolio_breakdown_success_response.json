@@ -1,0 +1,1210 @@
+{
+    "breakdown": {
+        "portfolio": {
+            "name": "Default",
+            "uuid": "asad-sdfsf-sfsdf-sfd",
+            "type": "DEFAULT",
+            "deleted": false
+        },
+        "portfolio_balances": {
+            "total_balance": {
+                "value": "69952.54",
+                "currency": "USD"
+            },
+            "total_futures_balance": {
+                "value": "0",
+                "currency": "USD"
+            },
+            "total_cash_equivalent_balance": {
+                "value": "98.86",
+                "currency": "USD"
+            },
+            "total_crypto_balance": {
+                "value": "69853.68",
+                "currency": "USD"
+            },
+            "futures_unrealized_pnl": {
+                "value": "0",
+                "currency": "USD"
+            },
+            "perp_unrealized_pnl": {
+                "value": "0",
+                "currency": "USD"
+            }
+        },
+        "spot_positions": [
+            {
+                "asset": "API3",
+                "account_uuid": "0278f994-8af7-5b4a-81eb-cac09f5b36b4",
+                "total_balance_fiat": 179.01405,
+                "total_balance_crypto": 49.39,
+                "available_to_trade_fiat": 179.01405,
+                "allocation": 0.0025590789,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "70.899345",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/f7ebfe65087148ff64cb5c3ef61ab2ff3f48a2a78825f9b1856270311cad5769cfbcec2aa7d4c4c7cf8f8be1ef664d128de2a055f2a3a5b9e2178abec8779f8c/asset_icons/b7e4d5f6878b345a5ba7d75a4c8f6d1ee9b9145e24331963d599a856345b3ca9.png",
+                "is_cash": false
+            },
+            {
+                "asset": "BTRST",
+                "account_uuid": "0467760f-6fef-53ea-b1cb-747a2b8921bc",
+                "total_balance_fiat": 98.82707,
+                "total_balance_crypto": 109.93,
+                "available_to_trade_fiat": 98.82707,
+                "allocation": 0.0014127733,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "99.70651",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/c6fbaf218584baca987a5176d49c8cf1df025d3c2d30ac7593bad0cfcc72ee2366ddae60712593ee0227010d8efde9bbe0af33d72bd693bbbea60a364c34f2db/asset_icons/a9736f252e016fc2fc1d79cd1080bf15237edae4e8a0602a3ad6e4e47bec45bc.png",
+                "is_cash": false
+            },
+            {
+                "asset": "UNI",
+                "account_uuid": "075f74e9-0ee8-5c97-97c6-0f3654d39972",
+                "total_balance_fiat": 620.5684,
+                "total_balance_crypto": 92.88555,
+                "available_to_trade_fiat": 620.5684,
+                "allocation": 0.008871278,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "534.9191455075",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/a1f4b7b34069888e313f284b49012a01b3bbc37b5113319c7105170a8fe268de8f60be5a0af7a8dafa8aba31fcc21ef44bc30c1e8bbb8379064ac94965bccf26/asset_icons/aafc2f5fff21664213e2a5a2c6e31aa055f277d1069b16745d54f84c0e94f1f3.png",
+                "is_cash": false
+            },
+            {
+                "asset": "DASH",
+                "account_uuid": "090d84e6-8c7d-5276-8e17-e1dcded06bff",
+                "total_balance_fiat": 293.20676,
+                "total_balance_crypto": 10.583171,
+                "available_to_trade_fiat": 293.20676,
+                "allocation": 0.00419151,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "356.85127893165",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/666dcae79d8896d18a69b5354bfa95bd6d8eef206863281e2acd9a12f14b21726624450a5bc39287b9b380ec2dfa47f51ba6b3b01bd61a5630c53c0654f92c64/asset_icons/b68ce7819b9a02aeceb2454040f8b09dda0a9faf2df70755789d089de668051a.png",
+                "is_cash": false
+            },
+            {
+                "asset": "BAL",
+                "account_uuid": "094daa7a-e638-585f-92aa-d39a5c04ab23",
+                "total_balance_fiat": 296.08362,
+                "total_balance_crypto": 76.212,
+                "available_to_trade_fiat": 296.08362,
+                "allocation": 0.004232636,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "420.30918",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/a85b08b50f9f1d6080b37c1132866afbaaa0702d76ae43e109668878be6f00b399d5513bb89127ca8866dbe3bed51de1777855d2d9f0ebd455bc6dce96fb7536/asset_icons/33f2c3f24fb34a679f3e9051042814e130718dbea585ed1bb8c21669434a6a05.png",
+                "is_cash": false
+            },
+            {
+                "asset": "FOX",
+                "account_uuid": "0a7c253f-9f63-5986-a1b2-e053116e2914",
+                "total_balance_fiat": 32.55462,
+                "total_balance_crypto": 369.1,
+                "available_to_trade_fiat": 32.55462,
+                "allocation": 0.00046538154,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "12.051115",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/4d085062f8fe8749e12aedd699ee7ee3e7c1e2b70a761b0a997f361ca58eb63bf3458df8e9b3849e0ba861f8b3e21354d8f96f1ca12478e960e440144841baf8/asset_icons/7d392d1e2c7d43c056ebef9fcd4d0968baef1d73217f35770d55ba635a8a398b.png",
+                "is_cash": false
+            },
+            {
+                "asset": "ALGO",
+                "account_uuid": "0a8d25a6-1e80-50d5-b4d8-7a841ca49894",
+                "total_balance_fiat": 159.84634,
+                "total_balance_crypto": 906.67236,
+                "available_to_trade_fiat": 159.84634,
+                "allocation": 0.0022850686,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "107.1760562141403871577990515465292",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/434cf9473be68c296f9c213b64a8caaebeb0f0fcf4096f38af3175eead7107425676652c9219c003f2acaafdcb07bce1f4862fe4f3f692ca1ae1da3c3dbff546/asset_icons/40447ba4170da28e92cf5c02d5675103d44d75fd6076ad8b0f5a953b3d4d3b9e.png",
+                "is_cash": false
+            },
+            {
+                "asset": "GAL",
+                "account_uuid": "0b196afb-27d2-5e3b-a0aa-3ba491ce807e",
+                "total_balance_fiat": 12.174505,
+                "total_balance_crypto": 4.795,
+                "available_to_trade_fiat": 12.174505,
+                "allocation": 0.00017403951,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "6.7729375",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/e55a82675e8de17ca2d37165a565c2b6e210c000a282420caa1a4e59187712d17aab4e8c34a503596c024c79438e66bf0b7ca457b69ba59475772205c2924d30/asset_icons/6694994cce300e1d18c6ff93a055a9c512b64f45e0cb768ea3e260364e129f89.png",
+                "is_cash": false
+            },
+            {
+                "asset": "USDT",
+                "account_uuid": "0c156bd7-f255-5855-be15-2ceb1d19bf0e",
+                "total_balance_fiat": 526.7555,
+                "total_balance_crypto": 526.46857,
+                "available_to_trade_fiat": 526.7555,
+                "allocation": 0.0075301845,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "526.06319020033",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/41f6a93a3a222078c939115fc304a67c384886b7a9e6c15dcbfa6519dc45f6bb4a586e9c48535d099efa596dbf8a9dd72b05815bcd32ac650c50abb5391a5bd0/asset_icons/1f8489bb280fb0a0fd643c1161312ba49655040e9aaaced5f9ad3eeaf868eadc.png",
+                "is_cash": false
+            },
+            {
+                "asset": "SNT",
+                "account_uuid": "0d0185ac-d415-5667-b822-da8b4348a93e",
+                "total_balance_fiat": 401.93478,
+                "total_balance_crypto": 10321.9,
+                "available_to_trade_fiat": 401.93478,
+                "allocation": 0.0057458216,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "218.927499",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/50a835c8a08ea3d5c7688cd7b838fe647ff2b10c6e2dff649cd3e7010217ed39530d27de8e7e7926c4e50e1929137d54e3f597dd71f1648da1b80ce7bda6b5ea/asset_icons/3e848accede838d241dfe8f06c9a34912d6b3eb3a2355aa8dba989f5f5e9e414.png",
+                "is_cash": false
+            },
+            {
+                "asset": "ETH",
+                "account_uuid": "0d55e27a-b055-56b7-85d9-29c39776205f",
+                "total_balance_fiat": 1986.0007,
+                "total_balance_crypto": 0.75914556,
+                "available_to_trade_fiat": 1986.0007,
+                "allocation": 0.028390689,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "973.5450072515324",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/dbb4b4983bde81309ddab83eb598358eb44375b930b94687ebe38bc22e52c3b2125258ffb8477a5ef22e33d6bd72e32a506c391caa13af64c00e46613c3e5806/asset_icons/4113b082d21cc5fab17fc8f2d19fb996165bcce635e6900f7fc2d57c4ef33ae9.png",
+                "is_cash": false
+            },
+            {
+                "asset": "FET",
+                "account_uuid": "0e68cb38-7ee0-5673-bfe0-434b938efc30",
+                "total_balance_fiat": 660.5689,
+                "total_balance_crypto": 978.33075,
+                "available_to_trade_fiat": 660.5689,
+                "allocation": 0.0094431015,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "99.79470880640828197402",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/206053988eba479e6f73693b61fe5d7298988e22f744ac617cd59769f63d0fbac9de461c146e1e41127c7c9f109f28c85cf809f21f00d7f3e671eac25d68dba7/asset_icons/26bc100e25a6a1425811e48b7ba77e11f4cb4b35d272a8e32c8ebe72a71e2c7f.png",
+                "is_cash": false
+            },
+            {
+                "asset": "STG",
+                "account_uuid": "0f858df3-4435-5976-a08f-a1d1dfc9f9c0",
+                "total_balance_fiat": 9.984039,
+                "total_balance_crypto": 17.4,
+                "available_to_trade_fiat": 0,
+                "allocation": 0.00014272591,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "7.22709",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/064c51afdf4ee600f680127e68477d702947e4d8b91fb7ec609b51589f49b89c0c4f6f995a3c1ffd13807369c5dd4fbc1c2f36b7e88c67228b2e0df96a5093c9/asset_icons/eda1673602614f40fe85b7d26fb5da8e9be9cf6427b680dd7384a64e13d28427.png",
+                "is_cash": false
+            },
+            {
+                "asset": "ABT",
+                "account_uuid": "0ffea955-7a67-50a0-a37e-86c4b67db8c4",
+                "total_balance_fiat": 72.1449,
+                "total_balance_crypto": 68.4,
+                "available_to_trade_fiat": 72.1449,
+                "allocation": 0.0010313407,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "7.4214",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/b68308e0716ca54e4522229b414e3962463d44285101dad68af77cfe29638bffce35871ea0d63190483c2160bec781ff1fcafcf6e433fb9e67d3bc18dd1b102d/asset_icons/3fecbdfc5748ff1c4f75add28d7acf29cd776f66cf2619be793a4cb8f61191ba.png",
+                "is_cash": false
+            },
+            {
+                "asset": "DNT",
+                "account_uuid": "136ec0c1-54fb-5c3d-90c7-53bf05766e8d",
+                "total_balance_fiat": 290.08282,
+                "total_balance_crypto": 10415.9,
+                "available_to_trade_fiat": 290.08282,
+                "allocation": 0.004146852,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "231.753775",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/577411f8690b794940a3b2c1d41bd3e5abfb7cccbb0841b7f38be34738ddaa2e1dde03ca463ff4b495f1fa46807364347032db065a1606427e26dc56ddda927b/asset_icons/ee9de82c22e44db793002d1ce558e62523f63d847f5d0ddf49da18cd338da946.png",
+                "is_cash": false
+            },
+            {
+                "asset": "COMP",
+                "account_uuid": "13c13221-e228-5e0b-95b6-07f385eb57ff",
+                "total_balance_fiat": 465.77072,
+                "total_balance_crypto": 8.219,
+                "available_to_trade_fiat": 465.77072,
+                "allocation": 0.0066583822,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "321.16002",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/b0d22ef41d2fa2ecbb6c116ab9aa5f0ec6541cc63cffd922dd1f1564eda40e20e69cdafd8044c0d512e906b99dcdf0eade4251fe0ca3edd4dfa1ba2e6145cdf4/asset_icons/fed5c36d72b459ebe60c190c315bde2266ae24ff445f5cf599f124ac4fa21713.png",
+                "is_cash": false
+            },
+            {
+                "asset": "QSP",
+                "account_uuid": "17b4e372-40af-59a6-b947-803d077b3ded",
+                "total_balance_fiat": 61.585827,
+                "total_balance_crypto": 13796,
+                "available_to_trade_fiat": 0,
+                "allocation": 0.0008803945,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "184.93538",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/0c83e2312ae5ef807632620c4dd4d5c056da76b83022ee53521cf2698269b6ac52cb92c46395d23a51712abd5d73ba54a7cadf8dacaa7fcc57c3a4b5f8a7a72d/asset_icons/bef68605c98ea33617d80c3200a4d4193782303c04b610c6e380370866c308a4.png",
+                "is_cash": false
+            },
+            {
+                "asset": "TRAC",
+                "account_uuid": "19291610-8a07-53cc-9ac9-18688c1f19b4",
+                "total_balance_fiat": 974.9267,
+                "total_balance_crypto": 1328.6,
+                "available_to_trade_fiat": 974.9267,
+                "allocation": 0.013936974,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "217.82182",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/9e361915722ae12dbd3579bea34eda12c9efceef15dec8dcb21255885d05a75e174edc216cfa886a1b7ea904018f5f1319227fb72e96207c9e21bfb547a4aa87/asset_icons/373db13f96592643c2151dd7c17ee375143a5826070b30ba23034a950dfecbf7.png",
+                "is_cash": false
+            },
+            {
+                "asset": "BNT",
+                "account_uuid": "19cfce26-4ff7-59fb-a70b-58b0ba562d71",
+                "total_balance_fiat": 415.08344,
+                "total_balance_crypto": 529.17316,
+                "available_to_trade_fiat": 415.08344,
+                "allocation": 0.0059337867,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "191.3490121248",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/8a7dc03bcbe76c88007b58fae9b1e44aceb817075441731a644b5667479ded2f7f2650f47718408468e01135f77af780a75d429929ef2d9d6dddb3d91b102511/asset_icons/eef04e3ba9a5761f6624c549d4d0640b04e78fe937d58ea6a6ffbdf283e9b199.png",
+                "is_cash": false
+            },
+            {
+                "asset": "LOOM",
+                "account_uuid": "19f359cd-ec55-5d9c-b445-4078a4feccfe",
+                "total_balance_fiat": 819.83594,
+                "total_balance_crypto": 8704.5,
+                "available_to_trade_fiat": 0,
+                "allocation": 0.011719889,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "384.74672",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/b0b24639376a9026879e5ef1829abe1a908c8b0b9e63010e1b1c435bc065da2d312b8f617c8621163743572651b40b4cfb1cb2c3374596d2f4ceea8b1a035bd1/asset_icons/893bfe47aa5917d3cf730d54e31eb09a5f69711834a0f9f5d594d0ec73004e23.png",
+                "is_cash": false
+            },
+            {
+                "asset": "SOL",
+                "account_uuid": "1d1f1f07-3eb0-5ec6-b8f0-1d5f580321b0",
+                "total_balance_fiat": 50.08025,
+                "total_balance_crypto": 0.44824567,
+                "available_to_trade_fiat": 50.08025,
+                "allocation": 0.00071591756,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "18.842546094675",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/2eefc7ffd92b6460ebdcab6fd67e384146ecdec29bff68d78f68b5d9cb9af05652a8d78087b6090c6d598f8fb9af1c3c062c33df15d0db3ba8e465b819841820/asset_icons/fd6899026b1e517bbb7995e5c992c71dc33b85edb3b28b66591579d6706deab2.png",
+                "is_cash": false
+            },
+            {
+                "asset": "CHZ",
+                "account_uuid": "1e452a62-41b1-5b05-9919-29dd8df411ba",
+                "total_balance_fiat": 449.42715,
+                "total_balance_crypto": 4521.4,
+                "available_to_trade_fiat": 449.42715,
+                "allocation": 0.006424744,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "1057.12168",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/272d99cdacc88f37e3dfcc2288a14a28b2943b73f77d81c590506a5ee7ff4908b6c8ce302cbc28f977c311992e23c30dee92ddee4a6676aa0270684b0a17ddb0/asset_icons/e3867b2fce424b81ffa29d4d9c01dca00a4313ca79d0a7834655b50b87106329.png",
+                "is_cash": false
+            },
+            {
+                "asset": "LQTY",
+                "account_uuid": "2028cc18-5aaf-55a4-b8fb-a775f284a2d1",
+                "total_balance_fiat": 163.7894,
+                "total_balance_crypto": 114.47,
+                "available_to_trade_fiat": 163.7894,
+                "allocation": 0.0023414362,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "87.1199535",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/550e27ec8f74750c1d0db46b448ed4a0213657be346e6fd7b014e1adf41c98a84d5fc71ab5d75c83529135021b7d3846811740984bc54f7888c21caa087269ba/asset_icons/8dd89a52054d1ecfb3a0b72028f880d28907cad78a472ecfadcdf40d40358348.png",
+                "is_cash": false
+            },
+            {
+                "asset": "ORN",
+                "account_uuid": "23788897-16a0-565c-86cc-f0e0241d17cc",
+                "total_balance_fiat": 343.92307,
+                "total_balance_crypto": 310.12,
+                "available_to_trade_fiat": 343.92307,
+                "allocation": 0.0049165203,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "275.69668",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/602aca1faf08b70546fd83518922212b9522e3e328ad8a6392493230e3c0faf5857967fadec2647c258928f04e374a07f9e5f0de399430fbe83651c344d803b7/asset_icons/47c5e1bef1a54accd6971448b636ec693ab5c990edfda11dfe146377328492db.png",
+                "is_cash": false
+            },
+            {
+                "asset": "SAND",
+                "account_uuid": "242dbe36-9cc4-54a8-9843-f60cad1fcf3c",
+                "total_balance_fiat": 112.5671,
+                "total_balance_crypto": 242.21,
+                "available_to_trade_fiat": 112.5671,
+                "allocation": 0.0016091925,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "107.655272468",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/636bffe426aa918ed0b2bdb246c070dcd080f9fb2ac4f7086f9ad4214fa3ab807fff973d7c1a3fd284f512d5ce95f3b9a9590d68bec5bfd90ff08a1f0634457f/asset_icons/1e0ff193e9cb40ae8cbdfc3ee7253eea6a3cc943fcf14a4f053f086e80b29dd1.png",
+                "is_cash": false
+            },
+            {
+                "asset": "KNC",
+                "account_uuid": "2527221e-49a1-5185-8007-9ab12506d18c",
+                "total_balance_fiat": 92.90514,
+                "total_balance_crypto": 150.6,
+                "available_to_trade_fiat": 92.90514,
+                "allocation": 0.0013281169,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "91.39914",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/61c136736ba6116b74e4089349ef2b23f11d4fdccec0739cfe9bc7f371106c98c4dfee7b6ae76a10ec22e4d5c484b80c451d244058ac0aa963d79c853e81c1d3/asset_icons/8391ce2ea6a1b28a87b8a2df2f8650d2450177e1c02717676179bb869787e6a1.png",
+                "is_cash": false
+            },
+            {
+                "asset": "SUKU",
+                "account_uuid": "25ac5aa2-ce5a-502d-9edb-b191161938c1",
+                "total_balance_fiat": 232.07979,
+                "total_balance_crypto": 4215.8,
+                "available_to_trade_fiat": 232.07979,
+                "allocation": 0.003317675,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "240.3006",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://asset-metadata-service-production.s3.amazonaws.com/asset_icons/47ae772f2e7f5d888ac73ac1bdc6f3fe78149311838f7692659da486850b8985.png",
+                "is_cash": false
+            },
+            {
+                "asset": "SHIB",
+                "account_uuid": "26559de7-3d80-5139-a7b8-781a3fbe2cd0",
+                "total_balance_fiat": 396.3444,
+                "total_balance_crypto": 42052456,
+                "available_to_trade_fiat": 396.3444,
+                "allocation": 0.005665905,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "380.78498908",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/c14c8dc36c003113c898b56dfff649eb0ff71249fd7c8a9de724edb2dedfedde5562ba4a194db8433f2ef31a1e879af0727e6632751539707b17e66d63a9013b/asset_icons/a7309384448163db7e3e9fded23cd6ecf3ea6e1fb3800cab216acb7fc85f9563.png",
+                "is_cash": false
+            },
+            {
+                "asset": "CVX",
+                "account_uuid": "26867307-d655-5152-899b-328fe3a8d03c",
+                "total_balance_fiat": 5.9194903,
+                "total_balance_crypto": 1.749,
+                "available_to_trade_fiat": 5.9194903,
+                "allocation": 0.000084621526,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "6.9304125",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/9ca341c62a7739f7f2463dafa4b9237433085b2a936b8ff01a52305c71d7c36ea06e979ff77bab1c27ef454889092c500e3445b464bfa195b06c5d8068768d08/asset_icons/96f5030e0a1a144113ea4a8a499dea7034d9089bbdbc2ad20bb3e24686375bfd.png",
+                "is_cash": false
+            },
+            {
+                "asset": "NMR",
+                "account_uuid": "26fb0f75-b19e-5fdb-9953-2709e091317b",
+                "total_balance_fiat": 749.72003,
+                "total_balance_crypto": 29.917,
+                "available_to_trade_fiat": 749.72003,
+                "allocation": 0.010717553,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "332.67704",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/b23923eaa54424c1c726a828714b3aa175e13d05af35c6f289c00d434a9ebb0d3ebb8a9d03392133048ada7787208abc2627ab017fe9f7b825a8a8214476ee01/asset_icons/18d75ec781edddde415a5c4ac8106ec16d618578e6eb55343bb3e57ee3dcac8c.png",
+                "is_cash": false
+            },
+            {
+                "asset": "IMX",
+                "account_uuid": "28e5393c-3067-5af7-9126-0fc922cb87c5",
+                "total_balance_fiat": 115.206436,
+                "total_balance_crypto": 37.89,
+                "available_to_trade_fiat": 115.206436,
+                "allocation": 0.001646923,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "15.3018765",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/a7d84f3470772b54098325668c451bed7783b72092043253422232cda93b75fce93e554f497d10ce712e16aca1d60c4309d204dc07dfc9a12411f25c07d65ab7/asset_icons/98c6ce796a9a3787ecddb35b2d27dfaef77bb1ababff4c5af9c72c5a1e116351.png",
+                "is_cash": false
+            },
+            {
+                "asset": "SOL",
+                "account_uuid": "2a084af4-5450-5d50-917f-af8aade948be",
+                "total_balance_fiat": 1236.8798,
+                "total_balance_crypto": 11.070751,
+                "available_to_trade_fiat": 0,
+                "allocation": 0.0176817,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "150.55827002613",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/2eefc7ffd92b6460ebdcab6fd67e384146ecdec29bff68d78f68b5d9cb9af05652a8d78087b6090c6d598f8fb9af1c3c062c33df15d0db3ba8e465b819841820/asset_icons/fd6899026b1e517bbb7995e5c992c71dc33b85edb3b28b66591579d6706deab2.png",
+                "is_cash": false
+            },
+            {
+                "asset": "RLC",
+                "account_uuid": "2c5fda0e-4b5e-5795-bed8-cec540a546fd",
+                "total_balance_fiat": 1149.5464,
+                "total_balance_crypto": 517.08,
+                "available_to_trade_fiat": 1149.5464,
+                "allocation": 0.016433233,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "457.35726",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/4661f84397db59e962bde8d9eed5797a48fb09808c6679ba437b3967abbfea76ecbed6ba241288b7a7b1f63d9f8710f44d3c8e833a9b24605f5b1f3ed2d40b39/asset_icons/78b320621de824739ae01d0c8fcddee8fa3f086107f447ac71b24720098825dd.png",
+                "is_cash": false
+            },
+            {
+                "asset": "PRQ",
+                "account_uuid": "2f6d6c1b-8de5-56a2-9bb9-25606ad354ab",
+                "total_balance_fiat": 14.511345,
+                "total_balance_crypto": 86.3,
+                "available_to_trade_fiat": 14.511345,
+                "allocation": 0.00020744558,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "6.87811",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/97e2a8699fe50428883e8ae7f7e94fcf64451e55131814bfb2396634fbe5487c50fa86b22e1b267d7644d35d1353a5116c9e0b3ff094be3fbb386ed9605fbf48/asset_icons/8fbb3576c4e62584bc73aa1202fe78d9d842fde13d8440425aac0c9aa80cf5cd.png",
+                "is_cash": false
+            },
+            {
+                "asset": "NKN",
+                "account_uuid": "30ebc7f7-da88-5002-bedd-044c92cf5f06",
+                "total_balance_fiat": 430.7472,
+                "total_balance_crypto": 3744,
+                "available_to_trade_fiat": 430.7472,
+                "allocation": 0.0061577065,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "286.6032",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/7a647abc6e4390dadf3a5b6b076e1edf225697b536428908164dc6f1f07c664d28fa745e5fd94a9c4acc44a4565b57ee3da855f442433807059387809e3a1c00/asset_icons/21799a7e209fb79c787016aa36bb2371af1895ddba69fc2f6cddb0fa8d297246.png",
+                "is_cash": false
+            },
+            {
+                "asset": "ATOM",
+                "account_uuid": "3104be90-3b53-5a2f-bfdc-601916ebd8d0",
+                "total_balance_fiat": 842.9657,
+                "total_balance_crypto": 81.35164,
+                "available_to_trade_fiat": 0,
+                "allocation": 0.012050538,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "1369.635260752999999028315",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/b92276a1f003b87191983dab71970a9a6d522dde514176e5880a75055af1e67ce5f153b96a2ee5ecd22729a73d3a8739b248d853bde74ab6e643bef2d1b4f88d/asset_icons/9c760bf25bca9823f9ef8d651681b779aadc71a2f543f931070034e59ef10120.png",
+                "is_cash": false
+            },
+            {
+                "asset": "ALCX",
+                "account_uuid": "31544d21-3243-5ed2-a260-a329a2ed4641",
+                "total_balance_fiat": 223.68039,
+                "total_balance_crypto": 8.7735,
+                "available_to_trade_fiat": 223.68039,
+                "allocation": 0.0031976022,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "148.710825",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/de1809b24ff2b8ed9fca46b724d19187c3b0c91cb5b2450ac698a140fc13d114197a37d1e935fccbb8a21af60e60e7530840c8fdae1548d3a0568b26126e64d5/asset_icons/0c985c71c38dc9739f2b140999854f2c945d8382f0490caea544dbda22822817.png",
+                "is_cash": false
+            },
+            {
+                "asset": "C98",
+                "account_uuid": "31e94446-45db-5f1e-a359-02378e88e3aa",
+                "total_balance_fiat": 6.9851475,
+                "total_balance_crypto": 25.47,
+                "available_to_trade_fiat": 6.9851475,
+                "allocation": 0.000099855526,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "6.6744135",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/c37291c66efbee294513c80637eef0a89ec92eb64e4848e899680cf63a4b431b2f875cc9e97cc3cc58e7725b0f95b8f22b472e925683d3e6ad24956c2ad89d03/asset_icons/d651cc7d1e015d6711a2aea646bd0f892a0b7fe2c6709e94a4be3a8f96a327fa.png",
+                "is_cash": false
+            },
+            {
+                "asset": "FORT",
+                "account_uuid": "3445a9d2-7e52-5521-88f1-8dc3eade491e",
+                "total_balance_fiat": 5.406426,
+                "total_balance_crypto": 43.53,
+                "available_to_trade_fiat": 5.406426,
+                "allocation": 0.00007728706,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "6.9277995",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/218c89b4af238f3638203829a2ed877f53f0fd29c85d47c0ab0396a6e3df9b8b6ad0a334f4094035009a04780b655a261f3d8646ebc58bf44273ee043fb8c10e/asset_icons/2ab6a8cb41a45251593712953b1dd6569ca460a93d5182aba1dcce6e520884d9.png",
+                "is_cash": false
+            },
+            {
+                "asset": "CGLD",
+                "account_uuid": "34a17b38-8f73-5daa-a5ea-21a5e9682284",
+                "total_balance_fiat": 282.32303,
+                "total_balance_crypto": 381.26,
+                "available_to_trade_fiat": 282.32303,
+                "allocation": 0.0040359227,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "168.89818",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/ffe4578ddfc800cb0211a51236bfa4ea9c7c73e11749fd02af47908850ab33730fa03527b6872be0b797421aabbe4cee210fe69d05bab07979857f59ba19f000/asset_icons/18fb1a86e1143ef2e8adb80e5150de27ea246342b4b61979624ce6a058ef9172.png",
+                "is_cash": false
+            },
+            {
+                "asset": "AAVE",
+                "account_uuid": "3770b571-ece1-5c7f-aae1-55d5337582f7",
+                "total_balance_fiat": 550.3156,
+                "total_balance_crypto": 6.156,
+                "available_to_trade_fiat": 550.3156,
+                "allocation": 0.007866986,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "361.9728",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/6ad513d3c9108b163cf0a4c9fd3441cadcb9cf656ea7b9fb333eb7e4a94cd503528e0a94188285d31aedfc392f0793fd4161f7ad4e04d5f6b82e4d70a314d295/asset_icons/80f3d2256652f5ccd680fc48702d130dd01f1bd7c9737fac560a02949efac3b9.png",
+                "is_cash": false
+            },
+            {
+                "asset": "FX",
+                "account_uuid": "38739657-5f86-5ae6-9551-8329b00f13b5",
+                "total_balance_fiat": 32.409527,
+                "total_balance_crypto": 223.9,
+                "available_to_trade_fiat": 32.409527,
+                "allocation": 0.00046330737,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "37.1674",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/2149457c70f4ba9b15862990694d84f4615f71812a1e81578378290750e69436b5b4a03849abc00df2bd81eb31d5c2a5e6c9ad7d28476f2280e77245de36737e/asset_icons/21f2016c1cec870ec333d17b38930087c8b50771c690ee98c105362687f58773.png",
+                "is_cash": false
+            },
+            {
+                "asset": "INDEX",
+                "account_uuid": "3963ecda-0228-5c9c-a06c-890a5d546e01",
+                "total_balance_fiat": 11.74568,
+                "total_balance_crypto": 3.581,
+                "available_to_trade_fiat": 11.74568,
+                "allocation": 0.00016790928,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "8.34373",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/4d92da96958493b2343c9348d0ada5512f83b50ca78f8b74ac0dfc9fe08d5c08818d21c59f1e80a531824cf45697e97f0802413ab3dda0ace1af718c9652b4ad/asset_icons/d406a78bbabab60a00b601b8aaf2cd124ab545d255f6ab292b2fbf50bcd51bc5.png",
+                "is_cash": false
+            },
+            {
+                "asset": "WCFG",
+                "account_uuid": "3a7fbe1a-f653-5cde-be57-47ad636954ab",
+                "total_balance_fiat": 151.91267,
+                "total_balance_crypto": 240.94,
+                "available_to_trade_fiat": 151.91267,
+                "allocation": 0.0021716536,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "54.81385",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/0a18cf819a001ed19fe745c6177b644ec593b7b8a1f772c3bbf753eb69ee12008a2a23622abbc8a3c3561b328d1825f98fe25c9835d0e0287809af09ac274f06/asset_icons/956b826dfb2cdc2fd38ea7aacc0244c8e5d1ca1a60065a448317e33e9dd2d975.png",
+                "is_cash": false
+            },
+            {
+                "asset": "MATIC",
+                "account_uuid": "3bb88d65-38a4-5338-a14e-c47bb6bf6b2f",
+                "total_balance_fiat": 773.48334,
+                "total_balance_crypto": 902.8638,
+                "available_to_trade_fiat": 773.48334,
+                "allocation": 0.0110572595,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "780.021747414786012748385208",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/085ce26e1eba2ccb210ea85df739a0ca2ef782747e47d618c64e92b168b94512df469956de1b667d93b2aa05ce77947e7bf1b4e0c7276371aa88ef9406036166/asset_icons/57f28803aad363f419a950a5f5b99acfd4fba8b683c01b9450baab43c9fa97ea.png",
+                "is_cash": false
+            },
+            {
+                "asset": "SUPER",
+                "account_uuid": "3c6159a7-300b-59bb-b4ae-b6657665f2bd",
+                "total_balance_fiat": 1610.899,
+                "total_balance_crypto": 1498.03,
+                "available_to_trade_fiat": 1610.899,
+                "allocation": 0.023028458,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "145.8032599",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/b88aa33b679795ff651a354ad1097f2cb0465fada85af03d94752c8bd860770a005b9a5718b49a8787afc694fc0d57700d3231efbacff860f6c19c75569d728f/asset_icons/cb49ee6894483a009ac82830a3d037176883ae99cae3d82ce137a919ed97904d.png",
+                "is_cash": false
+            },
+            {
+                "asset": "KEEP",
+                "account_uuid": "3c74581b-7fca-5b80-9f0a-73ba45badd9e",
+                "total_balance_fiat": 274.8533,
+                "total_balance_crypto": 2179.3,
+                "available_to_trade_fiat": 0,
+                "allocation": 0.00392914,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "174.98507",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/b7a0005f0bdd62224358b16e93c4cd2fcb8d560bf9afd710017064ca85229af794e970137362d7f4126cc185a7269eedd47be68673d6a0f6ed0e147d9b601115/asset_icons/3474b5bcd374d3ca62783bbb359724b389a610e5301ac57b9877df1d4fa5f938.png",
+                "is_cash": false
+            },
+            {
+                "asset": "DIA",
+                "account_uuid": "3d9b3514-b45d-5ef9-a64e-5b0667c5d104",
+                "total_balance_fiat": 410.13663,
+                "total_balance_crypto": 927.03,
+                "available_to_trade_fiat": 410.13663,
+                "allocation": 0.00586307,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "277.6362147",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/d157c473ff0b5272766f761e27e65ac276cbff13404053f55a6564b6347c82c2d6838128005390c5fe8735797e78784e4ae5f27f37a402b1b1ae7ff4b7f0a6e2/asset_icons/8330a8c0463b726ab615976b5d060a49f89b91a71d80adeb9483db5185d540e4.png",
+                "is_cash": false
+            },
+            {
+                "asset": "XTZ",
+                "account_uuid": "3ee5e8d0-002d-5123-ab9a-dea0fb243150",
+                "total_balance_fiat": 304.7817,
+                "total_balance_crypto": 293.90717,
+                "available_to_trade_fiat": 0,
+                "allocation": 0.004356979,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "285.293064697",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/196aae0d1ec13906a21975544fac79eb2752e379a149a1e5c6b7ffe6159986f474c67f929afe61541df773d97d883e638911f125753fd8974d91eca8c1657aff/asset_icons/e294b1cf6ec96713bf6a15e72b13313e446489d7709cda328f825679370b46b9.png",
+                "is_cash": false
+            },
+            {
+                "asset": "SNX",
+                "account_uuid": "400798db-19ce-54d5-8997-0da1924f2dca",
+                "total_balance_fiat": 568.9009,
+                "total_balance_crypto": 156.722,
+                "available_to_trade_fiat": 568.9009,
+                "allocation": 0.008132669,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "269.405118",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/ad046187b86db2855ddb94d0fcfa09a052281086f98f75c34dd3c5f257cbb2a05bf1f6a479f75748a97a0719a6c8cfb3e69f839363f9f8b37565e2a8c23677f6/asset_icons/3ad3bb2a4258ff2e13aadfa70f6a4d3fe7a68767980361e8aa05ae0462317be3.png",
+                "is_cash": false
+            },
+            {
+                "asset": "COVAL",
+                "account_uuid": "43083dfd-2aaf-5597-8476-3e58bb1aba70",
+                "total_balance_fiat": 26.76999,
+                "total_balance_crypto": 2481,
+                "available_to_trade_fiat": 26.76999,
+                "allocation": 0.00038268793,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "30.310035",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/540e191194f5e04bbee028b0754166f3fa0e08317fd124c9c641a632e480b5b4359345d73f273d715c6a6fdf459bda3c9c3207b0abdea4c185ae704416e6a09a/asset_icons/38a6852b2665dd81e58d065533d16190919d565d23a435f980d67368aac2e9d0.png",
+                "is_cash": false
+            },
+            {
+                "asset": "PRO",
+                "account_uuid": "448dfc34-a2f7-5785-bcd6-fc09894295f4",
+                "total_balance_fiat": 105.15682,
+                "total_balance_crypto": 221.15,
+                "available_to_trade_fiat": 105.15682,
+                "allocation": 0.0015032596,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "101.729",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/2fc227f3a5e03da21bcd8a2d37ee92e9e15cafa732f84b297182e6b506c66b55dd659ef49cb0421291162e1e5369ab3c9668aacef6cf883318e9e1e9c53ea31e/asset_icons/85036ded328632ecd261b3bf00190cefae414b62b88590ef476e8f928025d56c.png",
+                "is_cash": false
+            },
+            {
+                "asset": "TRU",
+                "account_uuid": "45df616a-ebaa-56d9-926c-013e1a6481fc",
+                "total_balance_fiat": 43.79151,
+                "total_balance_crypto": 828.6,
+                "available_to_trade_fiat": 43.79151,
+                "allocation": 0.00062601746,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "28.00668",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/4a37775c41d1d7c74525a837028e20c733ae0a892e6be5809ed025b0232c38cfed94d2ba869f421482269df821b89de3d38bd6cd32abdef2c5ae5f3bd85ec6ac/asset_icons/11b4d7f75fb565668abad3bcebbb4a98faf162bd80b16d0730cbb6d4a190fa77.png",
+                "is_cash": false
+            },
+            {
+                "asset": "POWR",
+                "account_uuid": "4970fc6a-2a31-5037-9b33-1d4c94c433a8",
+                "total_balance_fiat": 792.9625,
+                "total_balance_crypto": 2172.5,
+                "available_to_trade_fiat": 792.9625,
+                "allocation": 0.011335722,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "293.93925",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/8cfc4a784e31966aef87e56669ba99cf26a518bbf097619aceb3fd76f1fb11e00fcaae9e2f715c1bc531fcf4dbac478e8e568cbd2db701dac3d6cf63f49d4644/asset_icons/c2306ff01552c2d061e8c9ab7af65f05fffee53355507b23a2635f778d596356.png",
+                "is_cash": false
+            },
+            {
+                "asset": "BAT",
+                "account_uuid": "4a1328ea-d77e-547c-aa35-d965a4ae9286",
+                "total_balance_fiat": 288.95834,
+                "total_balance_crypto": 1241.15,
+                "available_to_trade_fiat": 288.95834,
+                "allocation": 0.004130777,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "276.26527",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/2d9f855375f53969106474170b6b045856b436a72d16d4cc2b089a01008a741dac0bab4e49eb2b0d3bf242c131b6800eb9560d56a1a014c3b4270511bb3e7465/asset_icons/126dbb5716ae8772d8dfe16496b469d88933fd4867b5ed0d363b3906597b090a.png",
+                "is_cash": false
+            },
+            {
+                "asset": "DYP",
+                "account_uuid": "4a7e630e-3017-57d2-9beb-5ae72ee0bf40",
+                "total_balance_fiat": 10.581656,
+                "total_balance_crypto": 36.8,
+                "available_to_trade_fiat": 10.581656,
+                "allocation": 0.00015126908,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "6.285624",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/c4d41bb0f3c319411ef994d72fe8d669e0f4b951aad68c2dc1562a22af3bfd45f4fa69a03674eb8ace8259892ee2dcfa70a6ce5ad68f2c848d4ccc026c630096/asset_icons/7a769387e31e5328184f99d535506e192aba3fdaf32e66d71233a435d4ba6765.png",
+                "is_cash": false
+            },
+            {
+                "asset": "SYN",
+                "account_uuid": "4d98abbf-1418-5737-8d73-474a77eb7a58",
+                "total_balance_fiat": 7.49529,
+                "total_balance_crypto": 10.17,
+                "available_to_trade_fiat": 7.49529,
+                "allocation": 0.000107148226,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "6.43761",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/fbadd6db5fd71a6dd1303ec06910b3c657549b099d9f0d3617f1a84f086b4088b61053cd5d9e86052a72903acd5023595df47a8a2d8436435f4ad5e923df2fe3/asset_icons/3017295c1a037abd0159715f4fec52568e3bc8eac25d03c4810ff8d4e4f0bad9.png",
+                "is_cash": false
+            },
+            {
+                "asset": "LRC",
+                "account_uuid": "4e2172c6-64c7-5256-9c20-9ef215679dff",
+                "total_balance_fiat": 114.53864,
+                "total_balance_crypto": 481.35593,
+                "available_to_trade_fiat": 114.53864,
+                "allocation": 0.0016373766,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "99.797599957832",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/6259b40ca0e8008de354ea33ac2a094333148a47093dbe356af3a5fe03b84e381aba3452ecaf10f6b94dec95b696bfa11bb22a849f15f2cf70730c898257495b/asset_icons/54b8302daf535ac77f7d434e3c04b46746550026fa42787b44ce4bbb2e8d5f8a.png",
+                "is_cash": false
+            },
+            {
+                "asset": "SUSHI",
+                "account_uuid": "4ea1971b-218a-5fdf-9885-209237370bdf",
+                "total_balance_fiat": 368.82404,
+                "total_balance_crypto": 313.12,
+                "available_to_trade_fiat": 368.82404,
+                "allocation": 0.00527249,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "385.8171365",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/cede43e837596061c7e2290c725be20ee0eb000eb76937c879289ccf08f5941f9c1d76e3f3dd8cb0e67f53d0f4adc48286516200e7db5bd6bc403fcd9d318449/asset_icons/483b36b14a995b07c7883d0647903f77d8feafe1f685b55a0334b8788b151194.png",
+                "is_cash": false
+            },
+            {
+                "asset": "TONE",
+                "account_uuid": "4ee67585-abb4-55e7-8327-ee70398b5d91",
+                "total_balance_fiat": 0.55628914,
+                "total_balance_crypto": 323,
+                "available_to_trade_fiat": 0,
+                "allocation": 0.00000795238,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "7.03494",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/9cca7a10e73864a1e028bbd3937c2eb77fc603ad50f086b1d4b7df9ca5b05c8bee41163be87872238edd490a9801fceea8736b47437299cdefdcb5346f565750/asset_icons/e60146405ff84450be308582d23c43f5464bd14ce9d373a037aa6e5987437c65.png",
+                "is_cash": false
+            },
+            {
+                "asset": "GTC",
+                "account_uuid": "4ef29c01-abdf-53e1-8f51-bc374cff6994",
+                "total_balance_fiat": 158.767,
+                "total_balance_crypto": 122.6,
+                "available_to_trade_fiat": 158.767,
+                "allocation": 0.002269639,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "205.355",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/29e8f9e8fdb2c5b057eb88e522d4610bc130c9a25fff5a60dad5f304c3cbd1f7e9dee0bce5820ca2f4b7e0d4f1ba5e6184f1ce2cd78c67cc208e468d14468758/asset_icons/f1bd892ac41a8927d5923aa08163f7476799f1e0d78732e19790435079281e15.png",
+                "is_cash": false
+            },
+            {
+                "asset": "ZRX",
+                "account_uuid": "4fcdb1e3-7282-5931-86fd-b7eb0872f0f4",
+                "total_balance_fiat": 481.96008,
+                "total_balance_crypto": 1491.6584,
+                "available_to_trade_fiat": 481.96008,
+                "allocation": 0.0068898154,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "265.548769975575",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/3d0b1dc2a70acb73379c2d35a1e641f4438702ce8e4a4855b5514ad2758e3f520797d3ae7a9aa675d683188302e4d09c801a5195d89382d4296933dd72217717/asset_icons/1597d628dd19b7885433a2ac2d7de6ad196c519aeab4bfe679706aacbf1df78a.png",
+                "is_cash": false
+            },
+            {
+                "asset": "TRIBE",
+                "account_uuid": "546298d5-7940-556f-89f7-83396c27fb1b",
+                "total_balance_fiat": 662.8973,
+                "total_balance_crypto": 1905.6,
+                "available_to_trade_fiat": 0,
+                "allocation": 0.009476387,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "389.255273184",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/e92d389970cb7f1aecc11181c974716609f56def102bc81e2fe9f2af6298a1a786adae69a786ab6596661c96580d6a8d66a10e7613e943754aba3c150c74e48e/asset_icons/3570586fb277a3e505de4ecf848bc37d9050cc1ee9798eaefdd48011f5236ad9.png",
+                "is_cash": false
+            },
+            {
+                "asset": "RBN",
+                "account_uuid": "55f9699a-09ca-5a64-9b38-8f28d9ac757c",
+                "total_balance_fiat": 64.260765,
+                "total_balance_crypto": 135.68,
+                "available_to_trade_fiat": 64.260765,
+                "allocation": 0.00091863377,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "26.9060224",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/ae2c39d7c442a56b7f58a48a73b7948dbbf35bbab603d8adb587fba53a5bdec6e89f5a1f06d356958b318ee382837addaef973b31b572c02824fdda3f4154c36/asset_icons/18b310637e80144d2ab1b5c3e14aa62dabb838f48e29a3432ab31b207b2a5d9b.png",
+                "is_cash": false
+            },
+            {
+                "asset": "MCO2",
+                "account_uuid": "57caeb5e-103b-5832-b721-3376d8fdffc0",
+                "total_balance_fiat": 11.746073,
+                "total_balance_crypto": 20.44,
+                "available_to_trade_fiat": 0,
+                "allocation": 0.0001679149,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "37.9162",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/7847386af4c5b0989d05a5cbe9643def4cab81d611cc73a76be7e5e17681cf4467ec3ad4b720d5d54c896c096f5f5edf9e326639c3ed9821d23b4164138ec31d/asset_icons/87955db33d68dfb46e667566134ecbb662e9852f8c0dd61eeb4273f97918acb4.png",
+                "is_cash": false
+            },
+            {
+                "asset": "BAND",
+                "account_uuid": "5888c821-952a-5803-b538-e6df7ca1e988",
+                "total_balance_fiat": 536.464,
+                "total_balance_crypto": 284.37,
+                "available_to_trade_fiat": 536.464,
+                "allocation": 0.0076689715,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "571.86807",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/e78ffb23379b9e5e2910877fa5455270e57947c4c00a98bd79c3ac4a0d4266f27f48164cfe90130eece3479f40a13b50346a09fd2ae902b33ca0845fe67fc8c4/asset_icons/5014e5a26a574b1a9a32e6d7ccfe8ab106e0c989dfca6aac1c469debbc772730.png",
+                "is_cash": false
+            },
+            {
+                "asset": "WLUNA",
+                "account_uuid": "5a6aa20d-cab1-5547-a129-166d0c2cc4de",
+                "total_balance_fiat": 0.00011863896,
+                "total_balance_crypto": 2.336,
+                "available_to_trade_fiat": 0,
+                "allocation": 1.6959923e-9,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "0.00039398976",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/4472c4542dd9946dda9948ef32e46825a9e39d9e10db6a87e740131f9f2ebd60b21d80b0922d3c36cde4d8e3930373091b3ab6ba8d8df768c985d25fd7e342aa/asset_icons/0879d9ac5e4f735d4c4c628461f887df8983dbe6322af4f1bd373a38a0d79d02.png",
+                "is_cash": false
+            },
+            {
+                "asset": "CELR",
+                "account_uuid": "5a90dcd9-735e-5622-81c0-6def232a16cd",
+                "total_balance_fiat": 12.048495,
+                "total_balance_crypto": 629,
+                "available_to_trade_fiat": 12.048495,
+                "allocation": 0.00017223814,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "6.95674",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/4323e24fc0ea4bef224bb2d9ae157e358e634c11deb4578766d84023142ff752b674ffd3c06bfe4c0588c21e754e9e0ceef4e0ec6fa8925ab96caa639914c287/asset_icons/327d63f3d2e25896e7adddc2730ac8e373adbd1320f34cb301542c7997e633b9.png",
+                "is_cash": false
+            },
+            {
+                "asset": "DDX",
+                "account_uuid": "5d869636-d4f6-599f-828c-b6c5f713d456",
+                "total_balance_fiat": 9.422019,
+                "total_balance_crypto": 195.21,
+                "available_to_trade_fiat": 0,
+                "allocation": 0.0001346916,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "102.9635145",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/adc1256e1ee2cda7961307c6840b637e6417b53e68ccf0341965247c7f1bf3d8520390ed24a726bc8fa93b4542f94ebbe8d07433c6faa3c87cc85f77229e421f/asset_icons/fc4ece2ec136d2fd7b2834703804d9784f4bf15ee909e8b09d19f145522b7ea5.png",
+                "is_cash": false
+            },
+            {
+                "asset": "MLN",
+                "account_uuid": "5ddcfa11-28b0-55d0-be30-c5caf94c6b05",
+                "total_balance_fiat": 39.281605,
+                "total_balance_crypto": 2.189,
+                "available_to_trade_fiat": 39.281605,
+                "allocation": 0.00056154653,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "43.67055",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/e95ca6375a5274396c259b9c1b35271c33fbc6e9923370ba2f0d142cd4eeac49cc9d8f347e3910900e58af8783176eb26417deafd20a9bf33f2db998fd4dc77a/asset_icons/3894326987e36bfc2e526be325db0f8569025ff18df0c1fb4f1beed348d5fa91.png",
+                "is_cash": false
+            },
+            {
+                "asset": "BIT",
+                "account_uuid": "5fb89962-6d3c-537d-92f7-a2fa8a7ee396",
+                "total_balance_fiat": 16.409246,
+                "total_balance_crypto": 23.37,
+                "available_to_trade_fiat": 16.409246,
+                "allocation": 0.00023457684,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "6.9841245",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/3eb49d280a2bbc143d7ebfbcfaf261e051999529a1e300ff2737be942b721e710f8921202c4ae1b330ba371376ff470e0ad292dfd1641246308bf036d20f030f/asset_icons/d3ccbcd3675a5911357c99321284d2692ea40e52e2fffff57a54d6174cd06742.png",
+                "is_cash": false
+            },
+            {
+                "asset": "MASK",
+                "account_uuid": "605be426-251d-5bb4-93b2-acc7065ab5b1",
+                "total_balance_fiat": 58.028,
+                "total_balance_crypto": 16.3,
+                "available_to_trade_fiat": 58.028,
+                "allocation": 0.0008295339,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "52.486",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/98af4f0ca847c5ffb13deba6aafd1ab08c7f9688f5fc9a16869cb97f654e11a6581c780c5aaf3ea07d09b4c6768ae7abf103fdd3e36e9142741392d11477fdcd/asset_icons/26a7e1c723556ebcf97cd1d237d08b77690d8d6dbce80fea63cfcd33629d47f0.png",
+                "is_cash": false
+            },
+            {
+                "asset": "UMA",
+                "account_uuid": "62862eb6-cb02-5559-b1a6-d6b05e9b7170",
+                "total_balance_fiat": 731.0761,
+                "total_balance_crypto": 169.211,
+                "available_to_trade_fiat": 731.0761,
+                "allocation": 0.010451031,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "279.367361",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/b8b3766b7258165a2ccbb94ef0ca866d9c0a32e5c5a2de17857f617af2147b0ddad2d6515a5c6e5f35ef6a0c2a1e13e382d9755cdc313f5a63ec381e4111bc38/asset_icons/a3067c1067816be8a36697fad879f799afb71e44541aa49837b1a56f98b63ce8.png",
+                "is_cash": false
+            },
+            {
+                "asset": "GODS",
+                "account_uuid": "62d86b79-7d5d-5b48-838f-7bec3fb86723",
+                "total_balance_fiat": 21.816229,
+                "total_balance_crypto": 71.08,
+                "available_to_trade_fiat": 21.816229,
+                "allocation": 0.00031187187,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "17.1039804",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/f3af9fe7c5c92b272168b43858cd05462d61b5a2e53c990fc75467ede14932a273803ca11d84564cf44a26a946fd7b98bc34972b83cb3ac771807292615af33d/asset_icons/b6098354862e3b12155d433429ea4b85dc0ef860a74d0aeef108426fea2d92f3.png",
+                "is_cash": false
+            },
+            {
+                "asset": "COTI",
+                "account_uuid": "63524f2d-1835-5300-b918-3540f7cfe067",
+                "total_balance_fiat": 151.3826,
+                "total_balance_crypto": 1751.1,
+                "available_to_trade_fiat": 151.3826,
+                "allocation": 0.0021640758,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "125.816535",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/25bc622db7137c67c9541744590b15c21d0ced0a0f72bfcbb2eb606db5ca80577a0688f38ca0a98362e0c5f2457499fe7dc6cb96d75d15c0b98aacd507dd270b/asset_icons/a71037ec21128cdfe5bf640b9d92254555e0d9ef7fa3ec7d6bcfc4a2c7a8eed2.png",
+                "is_cash": false
+            },
+            {
+                "asset": "MIR",
+                "account_uuid": "635543ae-73f4-5061-a97a-632b828f369f",
+                "total_balance_fiat": 18.144478,
+                "total_balance_crypto": 868.33,
+                "available_to_trade_fiat": 0,
+                "allocation": 0.0002593827,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "104.807431",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/dc788d2fa73db2500498d7be9f7c327b5d96b22b1289acf98e26a80f3b1915e41c6a888a218cae88ddabe467a8b9f077884794f95554b7914031c829ec2be76b/asset_icons/630db775d36cd42f9a7bb2d6b4dda98a04e51c953537ea85a972cea8be072792.png",
+                "is_cash": false
+            },
+            {
+                "asset": "PLA",
+                "account_uuid": "64ec4632-eec5-5d9c-a540-47641ebb8f37",
+                "total_balance_fiat": 20.49552,
+                "total_balance_crypto": 137.6,
+                "available_to_trade_fiat": 20.49552,
+                "allocation": 0.0002929918,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "26.03392",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/5bf74d2b6bc08aed7ce4e8e352e2d3ce9a6492393e8dfd0a002c0a06be28447a82d357c58f19b799439737561eaf5852488bc60c1b0e928dcbfbd2b4880da1be/asset_icons/96d843635f63e8da41d1daadf6338a5a46be0158fbd9fab182d9f43b09bc9ac1.png",
+                "is_cash": false
+            },
+            {
+                "asset": "OXT",
+                "account_uuid": "6661e692-f24f-5fae-9797-07b3e45827f5",
+                "total_balance_fiat": 413.40875,
+                "total_balance_crypto": 4075,
+                "available_to_trade_fiat": 413.40875,
+                "allocation": 0.0059098466,
+                "one_day_change": 0,
+                "cost_basis": {
+                    "value": "328.445",
+                    "currency": "USD"
+                },
+                "asset_img_url": "https://dynamic-assets.coinbase.com/5bf74d2b6bc08aed7ce4e8e352e2d3ce9a6492393e8dfd0a002c0a06be28447a82d357c58f19b799439737561eaf5852488bc60c1b0e928dcbfbd2b4880da1be/asset_icons/96d843635f63e8da41d1daadf6338a5a46be0158fbd9fab182d9f43b09bc9ac1.png",
+                "is_cash": false
+            }
+        ],
+        "perp_positions": [],
+        "futures_positions": []
+    }
+}

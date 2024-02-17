@@ -8,14 +8,17 @@ import os
 from datetime import datetime, timezone
 
 from coinbaseadvanced.client import CoinbaseAdvancedTradeAPIClient, Side, StopDirection, Granularity
+from coinbaseadvanced.models.common import ValueCurrency
 
 from tests.fixtures.fixtures import *
 
 load_dotenv()  # Load environment variables from a .env file
 
 # Cloud API Trading Keys (NEW/Recommended): https://cloud.coinbase.com/access/api
-API_KEY_NAME = os.getenv('API_KEY_NAME')
-PRIVATE_KEY = os.getenv('PRIVATE_KEY').replace('\\n', '\n')
+# API_KEY_NAME = os.getenv('API_KEY_NAME')
+# PRIVATE_KEY = os.getenv('PRIVATE_KEY').replace('\\n', '\n')
+API_KEY_NAME = os.getenv('API_KEY_NAME_FULL')
+PRIVATE_KEY = os.getenv('PRIVATE_KEY_FULL').replace('\\n', '\n')
 
 # Legacy API Keys: https://www.coinbase.com/settings/api
 API_KEY = os.getenv('API_KEY')
@@ -49,7 +52,8 @@ def audit(func, args, fixture_obj):
 
 # Creating the client per authentication methods.
 # client = CoinbaseAdvancedTradeAPIClient.from_legacy_api_keys(API_KEY, SECRET_KEY)
-client = CoinbaseAdvancedTradeAPIClient.from_cloud_api_keys(API_KEY_NAME, PRIVATE_KEY)
+client = CoinbaseAdvancedTradeAPIClient.from_cloud_api_keys(
+    API_KEY_NAME, PRIVATE_KEY)
 print()
 
 # Accounts
@@ -138,8 +142,27 @@ print()
 #     'end_date': datetime(2023, 1, 31, tzinfo=timezone.utc)},
 #     json.loads(fixture_get_transactions_summary_success_response().text))
 
+# Portfolios
+
+# audit(client.list_portfolios, {},
+#      json.loads(fixture_list_portfolios_success_response().text))
+
+# audit(client.create_portfolio, {'name': 'test-portfolio-name-2'},
+#      json.loads(fixture_create_portfolio_success_response().text)['portfolio'])
+
+# audit(client.edit_portfolio, {'portfolio_uuid': '354808f3-06df-42d7-87ec-488f34ff6f14', 'name': 'test-edit-portfolio-name'},
+#      json.loads(fixture_create_portfolio_success_response().text)['portfolio'])
+
+# EXPECTED: "Response => Fixtures: NEED UPDATE, key 'success' present in live response but not found in fixture."
+# audit(client.delete_portfolio, {'portfolio_uuid': 'a78767c7-6d83-4c0c-a736-7f70ef866324'},
+#      json.loads(fixture_delete_portfolio_success_response().text))
+
+# audit(client.get_portfolio_breakdown, {'portfolio_uuid': 'e7ae4c9c-fd97-46c9-a6e4-5048893b5dc3'},
+#      json.loads(fixture_get_portfolio_breakdown_success_response().text)['breakdown'])
+
+# audit(client.move_portfolio_funds, {'funds_value': '0.1', 'funds_currency': 'USD', 'source_portfolio_uuid': 'bba559eb-5b24-45f5-9898-472a81c46a56', 'target_portfolio_uuid': 'e7ae4c9c-fd97-46c9-a6e4-5048893b5dc3'},
+#      json.loads(fixture_move_funds_success_response().text))
+
 # Common
 # audit(client.get_unix_time, {},
 #      json.loads(fixture_get_unix_time_success_response().text))
-
-# TODO: Migrate to Python >=3.8

@@ -26,7 +26,7 @@ class CoinbaseAdvancedTradeAPIError(Exception):
 
         try:
             error_result = json.loads(response.text)
-        except ValueError as error:
+        except ValueError:
             error_result = {'reason': response.text}
 
         return cls(error_dict=error_result)
