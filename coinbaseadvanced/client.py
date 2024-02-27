@@ -21,7 +21,7 @@ from coinbaseadvanced.models.portfolios import Portfolio, PortfolioBreakdown, \
 from coinbaseadvanced.models.products import BidAsksPage, ProductBook, ProductsPage, Product, \
     CandlesPage, TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
 from coinbaseadvanced.models.accounts import AccountsPage, Account
-from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Order, \
+from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Order, OrderEdit, \
     OrderBatchCancellation, FillsPage, Side, StopDirection, OrderType
 
 
@@ -330,6 +330,37 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
         order = Order.from_create_order_response(response)
         return order
+
+    def edit_order(self, order_id: str, limit_price: float, base_size: float) -> OrderEdit:
+        """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_editorder
+
+        Edit an order's size (quantity), or price. Only good-till-cancelled (GTC) Limit Orders can be edited.
+
+        Args:
+        - order_id: ID of order to edit.
+        - limit_price: New price for order.
+        - base_size: New size for order
+        """
+
+        request_path = f"/api/v3/brokerage/orders/edit"
+        method = "POST"
+
+        payload = {
+            'order_id': order_id,
+            'price': str(limit_price),
+            'size': str(base_size)
+        }
+
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) \
+            if self._is_legacy_auth() \
+            else self._build_request_headers_for_cloud(method, self._host, request_path)
+        response = requests.post(self._base_url+request_path,
+                                 json=payload, headers=headers,
+                                 timeout=self.timeout)
+
+        edit_result = OrderEdit.from_get_edit_response(response)
+        return edit_result
 
     def cancel_orders(self, order_ids: list) -> OrderBatchCancellation:
         """

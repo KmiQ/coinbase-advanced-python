@@ -444,6 +444,35 @@ class OrdersPage(BaseModel):
         return self.orders.__iter__()
 
 
+class OrderEdit(BaseModel):
+    """
+    Order edit.
+    """
+
+    success: bool
+    errors: List[dict]
+    edit_failure_reason: str
+    preview_failure_reason: str
+
+    def __init__(self, success: bool, errors: List[dict], **kwargs) -> None:
+        self.success = success
+        self.errors = errors if errors is not None else None
+
+        self.kwargs = kwargs
+    
+    @classmethod
+    def from_get_edit_response(cls, response: requests.Response) -> 'OrderEdit':
+        """
+        Factory Method.
+        """
+
+        if not response.ok:
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
+
+        result = response.json()
+        return cls(**result)
+
+
 class OrderCancellation(BaseModel):
     """
     Order cancellation.
