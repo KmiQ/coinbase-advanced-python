@@ -93,6 +93,14 @@ def fixture_create_sell_market_order_success_response() -> mock.Mock:
             text=content)
 
 
+def fixture_edit_order_success_response() -> mock.Mock:
+    with open('tests/fixtures/edit_order_success_response.json', 'r', encoding="utf-8") as file:
+        content = file.read()
+        return _fixtured_mock_response(
+            ok=True,
+            text=content)
+
+
 def fixture_default_order_failure_response() -> mock.Mock:
     with open('tests/fixtures/default_order_failure_response.json', 'r', encoding="utf-8") as file:
         content = file.read()

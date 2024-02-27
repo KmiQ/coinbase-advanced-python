@@ -450,18 +450,20 @@ class OrderEdit(BaseModel):
     """
 
     success: bool
-    errors: List[dict]
-    edit_failure_reason: str
-    preview_failure_reason: str
+    errors: Optional[List[dict]]
+    edit_failure_reason: Optional[str]
+    preview_failure_reason: Optional[str]
 
-    def __init__(self, success: bool, errors: List[dict], **kwargs) -> None:
+    def __init__(self, success: bool, errors: Optional[List[dict]] = None,  edit_failure_reason: Optional[str] = None, preview_failure_reason: Optional[str] = None,  **kwargs) -> None:
         self.success = success
-        self.errors = errors if errors is not None else None
+        self.errors = errors
+        self.edit_failure_reason = edit_failure_reason
+        self.preview_failure_reason = preview_failure_reason
 
         self.kwargs = kwargs
-    
+
     @classmethod
-    def from_get_edit_response(cls, response: requests.Response) -> 'OrderEdit':
+    def from_response(cls, response: requests.Response) -> 'OrderEdit':
         """
         Factory Method.
         """

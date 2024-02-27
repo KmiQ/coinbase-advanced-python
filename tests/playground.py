@@ -77,11 +77,19 @@ print()
 #     'client_order_id': generate_random_id(),
 #     'product_id': "ALGO-USD",
 #     'side': Side.BUY,
-#     'limit_price': ".15",
-#     'base_size': 1000
+#     'limit_price': ".12",
+#     'base_size': 10,
+#     'retail_portfolio_id': "bba559eb-5b24-45f5-9898-472a81c46a56"
 # },
 #     fixture_obj
 # )
+
+# audit(client.edit_order, {
+#     'order_id': "754eb3d3-13ad-4f25-b239-c79257b49f10",
+#     'limit_price': 0.08,
+#     'base_size': 6
+# }, json.loads(
+#     fixture_edit_order_success_response().text))
 
 # audit(client.cancel_orders, {'order_ids': ["42a266d3-591b-43d4-a968-a9a126f7b1a5", "82c6919f-6884-4127-95af-11db89b21ed3",
 #       "c1d5ab66-d99a-4329-9c1d-be6a9f32c686"]}, json.loads(fixture_cancel_orders_success_response().text))

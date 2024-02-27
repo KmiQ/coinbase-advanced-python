@@ -161,7 +161,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
     def create_buy_market_order(self,
                                 client_order_id: str,
                                 product_id: str,
-                                quote_size: float) -> Order:
+                                quote_size: float,
+                                retail_portfolio_id: Optional[str] = None) -> Order:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
 
@@ -179,12 +180,13 @@ class CoinbaseAdvancedTradeAPIClient(object):
             }
         }
 
-        return self.create_order(client_order_id, product_id, Side.BUY, order_configuration)
+        return self.create_order(client_order_id, product_id, Side.BUY, order_configuration, retail_portfolio_id)
 
     def create_sell_market_order(self,
                                  client_order_id: str,
                                  product_id: str,
-                                 base_size: float) -> Order:
+                                 base_size: float,
+                                 retail_portfolio_id: Optional[str] = None) -> Order:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
 
@@ -202,7 +204,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
             }
         }
 
-        return self.create_order(client_order_id, product_id, Side.SELL, order_configuration)
+        return self.create_order(client_order_id, product_id, Side.SELL, order_configuration, retail_portfolio_id)
 
     def create_limit_order(
             self,
@@ -212,7 +214,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             limit_price: float,
             base_size: float,
             cancel_time: Optional[datetime] = None,
-            post_only: Optional[bool] = None) -> Order:
+            post_only: Optional[bool] = None,
+            retail_portfolio_id: Optional[str] = None) -> Order:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
 
@@ -245,7 +248,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         else:
             order_configuration['limit_limit_gtc'] = limit_order_configuration
 
-        return self.create_order(client_order_id, product_id, side, order_configuration)
+        return self.create_order(client_order_id, product_id, side, order_configuration, retail_portfolio_id)
 
     def create_stop_limit_order(
             self,
@@ -256,7 +259,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             stop_direction: StopDirection,
             limit_price: float,
             base_size: float,
-            cancel_time: Optional[datetime] = None) -> Order:
+            cancel_time: Optional[datetime] = None,
+            retail_portfolio_id: Optional[str] = None) -> Order:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
 
@@ -294,12 +298,13 @@ class CoinbaseAdvancedTradeAPIClient(object):
         else:
             order_configuration['stop_limit_stop_limit_gtc'] = stop_limit_order_configuration
 
-        return self.create_order(client_order_id, product_id, side, order_configuration)
+        return self.create_order(client_order_id, product_id, side, order_configuration, retail_portfolio_id)
 
     def create_order(self, client_order_id: str,
                      product_id: str,
                      side: Side,
-                     order_configuration: dict) -> Order:
+                     order_configuration: dict,
+                     retail_portfolio_id: Optional[str] = None) -> Order:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
 
@@ -318,8 +323,10 @@ class CoinbaseAdvancedTradeAPIClient(object):
             'client_order_id': client_order_id,
             'product_id': product_id,
             'side': side.value,
-            'order_configuration': order_configuration
+            'order_configuration': order_configuration,
         }
+        if retail_portfolio_id is not None:
+            payload['retail_portfolio_id'] = retail_portfolio_id
 
         headers = self._build_request_headers(method, request_path, json.dumps(payload)) \
             if self._is_legacy_auth() \
@@ -359,7 +366,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                  json=payload, headers=headers,
                                  timeout=self.timeout)
 
-        edit_result = OrderEdit.from_get_edit_response(response)
+        edit_result = OrderEdit.from_response(response)
         return edit_result
 
     def cancel_orders(self, order_ids: list) -> OrderBatchCancellation:

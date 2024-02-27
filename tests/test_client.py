@@ -471,6 +471,20 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         self.assertIsNotNone(order.order_error)
 
     @mock.patch("coinbaseadvanced.client.requests.post")
+    def test_edit_order_success(self, mock_post):
+
+        mock_resp = fixture_edit_order_success_response()
+        mock_post.return_value = mock_resp
+
+        client = CoinbaseAdvancedTradeAPIClient(
+            api_key='kjsldfk32234', secret_key='jlsjljsfd89y98y98shdfjksfd')
+
+        # Check output
+        order_edited = client.edit_order("nlksdbnfgjd8y9mn,m234", .19, 10000)
+
+        self.assertTrue(order_edited.success)
+
+    @mock.patch("coinbaseadvanced.client.requests.post")
     def test_cancel_orders_success(self, mock_post):
 
         mock_resp = fixture_cancel_orders_success_response()
