@@ -450,18 +450,61 @@ class OrderEdit(BaseModel):
     """
 
     success: bool
-    errors: List[dict]
-    edit_failure_reason: str
-    preview_failure_reason: str
+    errors: Optional[List[dict]]
+    edit_failure_reason: Optional[str]
+    preview_failure_reason: Optional[str]
 
-    def __init__(self, success: bool, errors: List[dict], **kwargs) -> None:
+    def __init__(self, success: bool, errors: Optional[List[dict]] = None,  edit_failure_reason: Optional[str] = None, preview_failure_reason: Optional[str] = None,  **kwargs) -> None:
         self.success = success
-        self.errors = errors if errors is not None else None
+        self.errors = errors
+        self.edit_failure_reason = edit_failure_reason
+        self.preview_failure_reason = preview_failure_reason
 
         self.kwargs = kwargs
-    
+
     @classmethod
-    def from_get_edit_response(cls, response: requests.Response) -> 'OrderEdit':
+    def from_response(cls, response: requests.Response) -> 'OrderEdit':
+        """
+        Factory Method.
+        """
+
+        if not response.ok:
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
+
+        result = response.json()
+        return cls(**result)
+
+
+class OrderEditPreview(BaseModel):
+    """
+    Order edit.
+    """
+
+    errors: Optional[List[dict]]
+    slippage: str
+    order_total: str
+    commission_total: str
+    quote_size: str
+    base_size: str
+    best_bid: str
+    best_ask: str
+    average_filled_price: str
+
+    def __init__(self, errors: Optional[List[dict]] = None, slippage: str = "", order_total: str = "", commission_total: str = "", quote_size: str = "", base_size: str = "", best_bid: str = "", best_ask: str = "", average_filled_price: str = "", **kwargs) -> None:
+        self.errors = errors
+        self.slippage = slippage
+        self.order_total = order_total
+        self.commission_total = commission_total
+        self.quote_size = quote_size
+        self.base_size = base_size
+        self.best_bid = best_bid
+        self.best_ask = best_ask
+        self.average_filled_price = average_filled_price
+
+        self.kwargs = kwargs
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'OrderEditPreview':
         """
         Factory Method.
         """

@@ -21,7 +21,7 @@ from coinbaseadvanced.models.portfolios import Portfolio, PortfolioBreakdown, \
 from coinbaseadvanced.models.products import BidAsksPage, ProductBook, ProductsPage, Product, \
     CandlesPage, TradesPage, ProductType, Granularity, GRANULARITY_MAP_IN_MINUTES
 from coinbaseadvanced.models.accounts import AccountsPage, Account
-from coinbaseadvanced.models.orders import OrderPlacementSource, OrdersPage, Order, OrderEdit, \
+from coinbaseadvanced.models.orders import OrderEditPreview, OrderPlacementSource, OrdersPage, Order, OrderEdit, \
     OrderBatchCancellation, FillsPage, Side, StopDirection, OrderType
 
 
@@ -161,7 +161,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
     def create_buy_market_order(self,
                                 client_order_id: str,
                                 product_id: str,
-                                quote_size: float) -> Order:
+                                quote_size: float,
+                                retail_portfolio_id: Optional[str] = None) -> Order:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
 
@@ -179,12 +180,13 @@ class CoinbaseAdvancedTradeAPIClient(object):
             }
         }
 
-        return self.create_order(client_order_id, product_id, Side.BUY, order_configuration)
+        return self.create_order(client_order_id, product_id, Side.BUY, order_configuration, retail_portfolio_id)
 
     def create_sell_market_order(self,
                                  client_order_id: str,
                                  product_id: str,
-                                 base_size: float) -> Order:
+                                 base_size: float,
+                                 retail_portfolio_id: Optional[str] = None) -> Order:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
 
@@ -202,7 +204,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
             }
         }
 
-        return self.create_order(client_order_id, product_id, Side.SELL, order_configuration)
+        return self.create_order(client_order_id, product_id, Side.SELL, order_configuration, retail_portfolio_id)
 
     def create_limit_order(
             self,
@@ -212,7 +214,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             limit_price: float,
             base_size: float,
             cancel_time: Optional[datetime] = None,
-            post_only: Optional[bool] = None) -> Order:
+            post_only: Optional[bool] = None,
+            retail_portfolio_id: Optional[str] = None) -> Order:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
 
@@ -245,7 +248,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         else:
             order_configuration['limit_limit_gtc'] = limit_order_configuration
 
-        return self.create_order(client_order_id, product_id, side, order_configuration)
+        return self.create_order(client_order_id, product_id, side, order_configuration, retail_portfolio_id)
 
     def create_stop_limit_order(
             self,
@@ -256,7 +259,8 @@ class CoinbaseAdvancedTradeAPIClient(object):
             stop_direction: StopDirection,
             limit_price: float,
             base_size: float,
-            cancel_time: Optional[datetime] = None) -> Order:
+            cancel_time: Optional[datetime] = None,
+            retail_portfolio_id: Optional[str] = None) -> Order:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
 
@@ -294,12 +298,13 @@ class CoinbaseAdvancedTradeAPIClient(object):
         else:
             order_configuration['stop_limit_stop_limit_gtc'] = stop_limit_order_configuration
 
-        return self.create_order(client_order_id, product_id, side, order_configuration)
+        return self.create_order(client_order_id, product_id, side, order_configuration, retail_portfolio_id)
 
     def create_order(self, client_order_id: str,
                      product_id: str,
                      side: Side,
-                     order_configuration: dict) -> Order:
+                     order_configuration: dict,
+                     retail_portfolio_id: Optional[str] = None) -> Order:
         """
         https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
 
@@ -318,8 +323,10 @@ class CoinbaseAdvancedTradeAPIClient(object):
             'client_order_id': client_order_id,
             'product_id': product_id,
             'side': side.value,
-            'order_configuration': order_configuration
+            'order_configuration': order_configuration,
         }
+        if retail_portfolio_id is not None:
+            payload['retail_portfolio_id'] = retail_portfolio_id
 
         headers = self._build_request_headers(method, request_path, json.dumps(payload)) \
             if self._is_legacy_auth() \
@@ -343,7 +350,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
         - base_size: New size for order
         """
 
-        request_path = f"/api/v3/brokerage/orders/edit"
+        request_path = "/api/v3/brokerage/orders/edit"
         method = "POST"
 
         payload = {
@@ -359,7 +366,39 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                  json=payload, headers=headers,
                                  timeout=self.timeout)
 
-        edit_result = OrderEdit.from_get_edit_response(response)
+        edit_result = OrderEdit.from_response(response)
+        return edit_result
+
+    def edit_order_preview(self, order_id: str, limit_price: float, base_size: float) -> OrderEditPreview:
+        """
+        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_previeweditorder
+
+        Simulate an edit order request with a specified new size, or new price, to preview the result of an edit.
+        Only limit order types, with time in force type of good-till-cancelled can be edited.
+
+        Args:
+        - order_id: ID of order to edit.
+        - limit_price: New price for order.
+        - base_size: New size for order
+        """
+
+        request_path = "/api/v3/brokerage/orders/edit_preview"
+        method = "POST"
+
+        payload = {
+            'order_id': order_id,
+            'price': str(limit_price),
+            'size': str(base_size)
+        }
+
+        headers = self._build_request_headers(method, request_path, json.dumps(payload)) \
+            if self._is_legacy_auth() \
+            else self._build_request_headers_for_cloud(method, self._host, request_path)
+        response = requests.post(self._base_url+request_path,
+                                 json=payload, headers=headers,
+                                 timeout=self.timeout)
+
+        edit_result = OrderEditPreview.from_response(response)
         return edit_result
 
     def cancel_orders(self, order_ids: list) -> OrderBatchCancellation:
