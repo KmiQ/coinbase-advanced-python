@@ -91,6 +91,13 @@ print()
 # }, json.loads(
 #     fixture_edit_order_success_response().text))
 
+audit(client.edit_order_preview, {
+    'order_id': "754eb3d3-13ad-4f25-b239-c79257b49f10",
+    'limit_price': 0.08,
+    'base_size': 6
+}, json.loads(
+    fixture_edit_order_preview_success_response().text))
+
 # audit(client.cancel_orders, {'order_ids': ["42a266d3-591b-43d4-a968-a9a126f7b1a5", "82c6919f-6884-4127-95af-11db89b21ed3",
 #       "c1d5ab66-d99a-4329-9c1d-be6a9f32c686"]}, json.loads(fixture_cancel_orders_success_response().text))
 

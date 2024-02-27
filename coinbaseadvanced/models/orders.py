@@ -475,6 +475,47 @@ class OrderEdit(BaseModel):
         return cls(**result)
 
 
+class OrderEditPreview(BaseModel):
+    """
+    Order edit.
+    """
+
+    errors: Optional[List[dict]]
+    slippage: str
+    order_total: str
+    commission_total: str
+    quote_size: str
+    base_size: str
+    best_bid: str
+    best_ask: str
+    average_filled_price: str
+
+    def __init__(self, errors: Optional[List[dict]] = None, slippage: str = "", order_total: str = "", commission_total: str = "", quote_size: str = "", base_size: str = "", best_bid: str = "", best_ask: str = "", average_filled_price: str = "", **kwargs) -> None:
+        self.errors = errors
+        self.slippage = slippage
+        self.order_total = order_total
+        self.commission_total = commission_total
+        self.quote_size = quote_size
+        self.base_size = base_size
+        self.best_bid = best_bid
+        self.best_ask = best_ask
+        self.average_filled_price = average_filled_price
+
+        self.kwargs = kwargs
+
+    @classmethod
+    def from_response(cls, response: requests.Response) -> 'OrderEditPreview':
+        """
+        Factory Method.
+        """
+
+        if not response.ok:
+            raise CoinbaseAdvancedTradeAPIError.not_ok_response(response)
+
+        result = response.json()
+        return cls(**result)
+
+
 class OrderCancellation(BaseModel):
     """
     Order cancellation.
