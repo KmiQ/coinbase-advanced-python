@@ -1,0 +1,11 @@
+{
+    "errors": [],
+    "slippage": "string",
+    "order_total": "string",
+    "commission_total": "string",
+    "quote_size": "string",
+    "base_size": "string",
+    "best_bid": "string",
+    "best_ask": "string",
+    "average_filled_price": "string"
+}
