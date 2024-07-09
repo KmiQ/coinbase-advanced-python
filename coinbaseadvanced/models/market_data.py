@@ -1,5 +1,14 @@
-class Level2Event:
+class Level2Event:# https://docs.cdp.coinbase.com/advanced-trade/docs/ws-channels/#heartbeats-channel
     def __init__(self, channel: str, client_id: str, timestamp: str, sequence_num: int, events: list):
+        """
+        Initializes a Level2Event object.
+
+        :param channel: The channel name.
+        :param client_id: The client ID.
+        :param timestamp: The timestamp of the event.
+        :param sequence_num: The sequence number of the event.
+        :param events: A list of event data.
+        """
         self.channel = channel
         self.client_id = client_id
         self.timestamp = timestamp
@@ -9,8 +18,14 @@ class Level2Event:
     def __repr__(self):
         return f"Level2Event(channel={self.channel}, events={self.events})"
 
+
 class L2Event:
     def __init__(self, event: dict):
+        """
+        Initializes an L2Event object.
+
+        :param event: A dictionary containing event data.
+        """
         self.type = event.get('type')
         self.product_id = event.get('product_id')
         self.updates = [L2Update(update) for update in event.get('updates', [])]
@@ -18,8 +33,14 @@ class L2Event:
     def __repr__(self):
         return f"L2Event(type={self.type}, product_id={self.product_id}, updates={self.updates})"
 
+
 class L2Update:
     def __init__(self, update: dict):
+        """
+        Initializes an L2Update object.
+
+        :param update: A dictionary containing update data.
+        """
         self.side = update.get('side')
         self.event_time = update.get('event_time')
         self.price_level = update.get('price_level')
@@ -29,28 +50,34 @@ class L2Update:
         return f"L2Update(side={self.side}, event_time={self.event_time}, price_level={self.price_level}, new_quantity={self.new_quantity})"
 
 
-class MarketUpdate:
-    def __init__(self, update: dict):
-        self.side = update.get('side')
-        self.event_time = update.get('event_time')
-        self.price_level = update.get('price_level')
-        self.new_quantity = update.get('new_quantity')
-
-    def __repr__(self):
-        return f"MarketUpdate(side={self.side}, event_time={self.event_time}, price_level={self.price_level}, new_quantity={self.new_quantity})"
-
 class HeartbeatEvent:
-    def __init__(self, channel: str, client_id: str, timestamp: str, sequence_num: int):
+    def __init__(self, channel: str, current_time: str, heartbeat_counter: int):
+        """
+        Initializes a HeartbeatEvent object.
+
+        :param channel: The channel name.
+        :param current_time: The current time of the heartbeat event.
+        :param heartbeat_counter: The heartbeat counter.
+        """
         self.channel = channel
-        self.client_id = client_id
-        self.timestamp = timestamp
-        self.sequence_num = sequence_num
+        self.current_time = current_time
+        self.heartbeat_counter = heartbeat_counter
 
     def __repr__(self):
-        return f"HeartbeatEvent(channel={self.channel}, timestamp={self.timestamp}, sequence_num={self.sequence_num})"
+        return f"HeartbeatEvent(channel={self.channel}, current_time={self.current_time}, heartbeat_counter={self.heartbeat_counter})"
+
 
 class CandlesEvent:
     def __init__(self, channel: str, client_id: str, timestamp: str, sequence_num: int, events: list):
+        """
+        Initializes a CandlesEvent object.
+
+        :param channel: The channel name.
+        :param client_id: The client ID.
+        :param timestamp: The timestamp of the event.
+        :param sequence_num: The sequence number of the event.
+        :param events: A list of event data.
+        """
         self.channel = channel
         self.client_id = client_id
         self.timestamp = timestamp
@@ -63,8 +90,14 @@ class CandlesEvent:
     def __repr__(self):
         return f"CandlesEvent(channel={self.channel}, candles={self.candles})"
 
+
 class CandleUpdate:
     def __init__(self, update: dict):
+        """
+        Initializes a CandleUpdate object.
+
+        :param update: A dictionary containing update data.
+        """
         self.start = update['start']
         self.high = update['high']
         self.low = update['low']
@@ -77,8 +110,18 @@ class CandleUpdate:
         return (f"CandleUpdate(start={self.start}, high={self.high}, low={self.low}, open={self.open}, "
                 f"close={self.close}, volume={self.volume}, product_id={self.product_id})")
 
+
 class MarketTradesEvent:
     def __init__(self, channel: str, client_id: str, timestamp: str, sequence_num: int, trades: list):
+        """
+        Initializes a MarketTradesEvent object.
+
+        :param channel: The channel name.
+        :param client_id: The client ID.
+        :param timestamp: The timestamp of the event.
+        :param sequence_num: The sequence number of the event.
+        :param trades: A list of trade data.
+        """
         self.channel = channel
         self.client_id = client_id
         self.timestamp = timestamp
@@ -88,8 +131,14 @@ class MarketTradesEvent:
     def __repr__(self):
         return f"MarketTradesEvent(channel={self.channel}, trades={self.trades})"
 
+
 class TradeDetail:
     def __init__(self, trade: dict):
+        """
+        Initializes a TradeDetail object.
+
+        :param trade: A dictionary containing trade data.
+        """
         self.trade_id = trade.get('trade_id')
         self.product_id = trade.get('product_id')
         self.price = trade.get('price')
@@ -98,10 +147,20 @@ class TradeDetail:
         self.time = trade.get('time')
 
     def __repr__(self):
-        return f"TradeDetail(product_id={self.product_id} trade_id={self.trade_id}, price={self.price}, size={self.size}, side={self.side}, time={self.time})"
+        return f"TradeDetail(product_id={self.product_id}, trade_id={self.trade_id}, price={self.price}, size={self.size}, side={self.side}, time={self.time})"
+
 
 class StatusEvent:
     def __init__(self, channel: str, client_id: str, timestamp: str, sequence_num: int, events: list):
+        """
+        Initializes a StatusEvent object.
+
+        :param channel: The channel name.
+        :param client_id: The client ID.
+        :param timestamp: The timestamp of the event.
+        :param sequence_num: The sequence number of the event.
+        :param events: A list of event data.
+        """
         self.channel = channel
         self.client_id = client_id
         self.timestamp = timestamp
@@ -114,8 +173,14 @@ class StatusEvent:
     def __repr__(self):
         return f"StatusEvent(channel={self.channel}, products={self.products})"
 
+
 class ProductStatus:
     def __init__(self, product: dict):
+        """
+        Initializes a ProductStatus object.
+
+        :param product: A dictionary containing product data.
+        """
         self.product_id = product.get('id')
         self.status = product.get('status')
         self.product_type = product.get('product_type')
@@ -128,10 +193,23 @@ class ProductStatus:
         self.min_market_funds = product.get('min_market_funds')
 
     def __repr__(self):
-        return f"ProductStatus(product_id={self.product_id}, status={self.status}, product_type={self.product_type}, base_currency={self.base_currency}, quote_currency={self.quote_currency}, base_increment={self.base_increment}, quote_increment={self.quote_increment}, display_name={self.display_name}, status_message={self.status_message}, min_market_funds={self.min_market_funds})"
+        return (f"ProductStatus(product_id={self.product_id}, status={self.status}, product_type={self.product_type}, "
+                f"base_currency={self.base_currency}, quote_currency={self.quote_currency}, base_increment={self.base_increment}, "
+                f"quote_increment={self.quote_increment}, display_name={self.display_name}, status_message={self.status_message}, "
+                f"min_market_funds={self.min_market_funds})")
+
 
 class TickerEvent:
     def __init__(self, channel: str, client_id: str, timestamp: str, sequence_num: int, events: list):
+        """
+        Initializes a TickerEvent object.
+
+        :param channel: The channel name.
+        :param client_id: The client ID.
+        :param timestamp: The timestamp of the event.
+        :param sequence_num: The sequence number of the event.
+        :param events: A list of event data.
+        """
         self.channel = channel
         self.client_id = client_id
         self.timestamp = timestamp
@@ -144,8 +222,14 @@ class TickerEvent:
     def __repr__(self):
         return f"TickerEvent(channel={self.channel}, tickers={self.tickers})"
 
+
 class TickerDetail:
     def __init__(self, ticker: dict):
+        """
+        Initializes a TickerDetail object.
+
+        :param ticker: A dictionary containing ticker data.
+        """
         self.type = ticker.get('type')
         self.product_id = ticker.get('product_id')
         self.price = ticker.get('price')
@@ -167,8 +251,18 @@ class TickerDetail:
                 f"best_bid={self.best_bid}, best_ask={self.best_ask}, best_bid_quantity={self.best_bid_quantity}, "
                 f"best_ask_quantity={self.best_ask_quantity})")
 
+
 class TickerBatchEvent:
     def __init__(self, channel: str, client_id: str, timestamp: str, sequence_num: int, events: list):
+        """
+        Initializes a TickerBatchEvent object.
+
+        :param channel: The channel name.
+        :param client_id: The client ID.
+        :param timestamp: The timestamp of the event.
+        :param sequence_num: The sequence number of the event.
+        :param events: A list of event data.
+        """
         self.channel = channel
         self.client_id = client_id
         self.timestamp = timestamp
@@ -181,8 +275,20 @@ class TickerBatchEvent:
     def __repr__(self):
         return f"TickerBatchEvent(channel={self.channel}, tickers={self.tickers})"
 
+
 class UserEvent:
-    def __init__(self, channel: str, client_id: str, timestamp: str, sequence_num: int, events: list, user_id=None, profile_id=None):
+    def __init__(self, channel: str, client_id: str, timestamp: str, sequence_num: int, events: list, user_id: str = None, profile_id: str = None):
+        """
+        Initializes a UserEvent object.
+
+        :param channel: The channel name.
+        :param client_id: The client ID.
+        :param timestamp: The timestamp of the event.
+        :param sequence_num: The sequence number of the event.
+        :param events: A list of event data.
+        :param user_id: The user ID.
+        :param profile_id: The profile ID.
+        """
         self.channel = channel
         self.client_id = client_id
         self.timestamp = timestamp
@@ -200,8 +306,14 @@ class UserEvent:
     def __repr__(self):
         return f"UserEvent(channel={self.channel}, user_id={self.user_id}, profile_id={self.profile_id}, orders={self.orders}, positions={self.positions})"
 
+
 class Order:
     def __init__(self, order: dict):
+        """
+        Initializes an Order object.
+
+        :param order: A dictionary containing order data.
+        """
         self.avg_price = order.get('avg_price')
         self.cancel_reason = order.get('cancel_reason')
         self.client_order_id = order.get('client_order_id')
@@ -219,7 +331,7 @@ class Order:
         self.post_only = order.get('post_only')
         self.product_id = order.get('product_id')
         self.product_type = order.get('product_type')
-        self.reject_reason = order.get('reject_Reason')
+        self.reject_reason = order.get('reject_reason')
         self.retail_portfolio_id = order.get('retail_portfolio_id')
         self.risk_managed_by = order.get('risk_managed_by')
         self.status = order.get('status')
