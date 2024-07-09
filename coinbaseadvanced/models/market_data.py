@@ -180,3 +180,59 @@ class TickerBatchEvent:
 
     def __repr__(self):
         return f"TickerBatchEvent(channel={self.channel}, tickers={self.tickers})"
+
+class UserEvent:
+    def __init__(self, channel: str, client_id: str, timestamp: str, sequence_num: int, events: list, user_id=None, profile_id=None):
+        self.channel = channel
+        self.client_id = client_id
+        self.timestamp = timestamp
+        self.sequence_num = sequence_num
+        self.user_id = user_id
+        self.profile_id = profile_id
+        self.orders = []
+        self.positions = {"perpetual_futures_positions": [], "expiring_futures_positions": []}
+        for event in events:
+            if 'orders' in event:
+                self.orders.extend([Order(order) for order in event['orders']])
+            if 'positions' in event:
+                self.positions = event['positions']
+
+    def __repr__(self):
+        return f"UserEvent(channel={self.channel}, user_id={self.user_id}, profile_id={self.profile_id}, orders={self.orders}, positions={self.positions})"
+
+class Order:
+    def __init__(self, order: dict):
+        self.avg_price = order.get('avg_price')
+        self.cancel_reason = order.get('cancel_reason')
+        self.client_order_id = order.get('client_order_id')
+        self.completion_percentage = order.get('completion_percentage')
+        self.contract_expiry_type = order.get('contract_expiry_type')
+        self.cumulative_quantity = order.get('cumulative_quantity')
+        self.filled_value = order.get('filled_value')
+        self.leaves_quantity = order.get('leaves_quantity')
+        self.limit_price = order.get('limit_price')
+        self.number_of_fills = order.get('number_of_fills')
+        self.order_id = order.get('order_id')
+        self.order_side = order.get('order_side')
+        self.order_type = order.get('order_type')
+        self.outstanding_hold_amount = order.get('outstanding_hold_amount')
+        self.post_only = order.get('post_only')
+        self.product_id = order.get('product_id')
+        self.product_type = order.get('product_type')
+        self.reject_reason = order.get('reject_Reason')
+        self.retail_portfolio_id = order.get('retail_portfolio_id')
+        self.risk_managed_by = order.get('risk_managed_by')
+        self.status = order.get('status')
+        self.stop_price = order.get('stop_price')
+        self.time_in_force = order.get('time_in_force')
+        self.total_fees = order.get('total_fees')
+        self.total_value_after_fees = order.get('total_value_after_fees')
+        self.trigger_status = order.get('trigger_status')
+        self.creation_time = order.get('creation_time')
+        self.end_time = order.get('end_time')
+        self.start_time = order.get('start_time')
+
+    def __repr__(self):
+        return (f"Order(order_id={self.order_id}, order_side={self.order_side}, order_type={self.order_type}, "
+                f"status={self.status}, product_id={self.product_id}, limit_price={self.limit_price}, "
+                f"leaves_quantity={self.leaves_quantity}, creation_time={self.creation_time})")

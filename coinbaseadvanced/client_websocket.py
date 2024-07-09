@@ -5,6 +5,7 @@ import websocket
 from channels import CHANNELS
 from utils import generate_jwt
 
+
 class CoinbaseWebSocketClient:
     def __init__(self, api_key: str, signing_key: str, ws_url: str = "wss://advanced-trade-ws.coinbase.com"):
         self.api_key = api_key
@@ -24,7 +25,7 @@ class CoinbaseWebSocketClient:
         return message
 
     def _handle_message(self, ws, message):
-        # print(f"Received raw message: {message}")
+        print(f"Received raw message: {message}")  # Debug: print raw message
         data = json.loads(message)
 
         if 'type' in data and data['type'] == 'error':
@@ -85,3 +86,7 @@ class CoinbaseWebSocketClient:
 
     def _on_close(self, ws, close_status_code, close_msg):
         print(f"Closed connection with status: {close_status_code}, message: {close_msg}")
+
+    @staticmethod
+    def _handle_heartbeat(self, ws, message):
+        pass

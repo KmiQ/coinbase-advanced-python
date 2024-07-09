@@ -1,5 +1,5 @@
 from models.market_data import HeartbeatEvent, CandlesEvent, MarketTradesEvent, StatusEvent, TickerEvent, \
-    TickerBatchEvent, Level2Event
+    TickerBatchEvent, Level2Event, UserEvent
 
 CHANNELS = {
     'heartbeat': HeartbeatEvent,
@@ -9,4 +9,5 @@ CHANNELS = {
     'ticker': TickerEvent,
     'ticker_batch': TickerBatchEvent,
     "l2_data": Level2Event,
+    'user': UserEvent,
 }
