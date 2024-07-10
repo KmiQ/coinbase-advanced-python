@@ -135,7 +135,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def get_account(self, account_id: str) -> Account:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getaccount
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getaccount
 
         Get a list of information about an account, given an account UUID.
 
@@ -164,7 +164,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                 quote_size: float,
                                 retail_portfolio_id: Optional[str] = None) -> Order:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_postorder
 
         Create a buy type market order.
 
@@ -188,7 +188,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                  base_size: float,
                                  retail_portfolio_id: Optional[str] = None) -> Order:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_postorder
 
         Create a sell type market order.
 
@@ -217,7 +217,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
             post_only: Optional[bool] = None,
             retail_portfolio_id: Optional[str] = None) -> Order:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_postorder
 
         Create a limit order.
 
@@ -262,7 +262,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
             cancel_time: Optional[datetime] = None,
             retail_portfolio_id: Optional[str] = None) -> Order:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_postorder
 
         Create a stop-limit order.
 
@@ -306,7 +306,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
                      order_configuration: dict,
                      retail_portfolio_id: Optional[str] = None) -> Order:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_postorder
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_postorder
 
         Create an order with a specified product_id (asset-pair), side (buy/sell), etc.
 
@@ -340,7 +340,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def edit_order(self, order_id: str, limit_price: float, base_size: float) -> OrderEdit:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_editorder
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_editorder
 
         Edit an order's size (quantity), or price. Only good-till-cancelled (GTC) Limit Orders can be edited.
 
@@ -371,7 +371,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def edit_order_preview(self, order_id: str, limit_price: float, base_size: float) -> OrderEditPreview:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_previeweditorder
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_previeweditorder
 
         Simulate an edit order request with a specified new size, or new price, to preview the result of an edit.
         Only limit order types, with time in force type of good-till-cancelled can be edited.
@@ -403,7 +403,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def cancel_orders(self, order_ids: list) -> OrderBatchCancellation:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_cancelorders
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_cancelorders
 
         Initiate cancel requests for one or more orders.
 
@@ -444,7 +444,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
             order_placement_source: Optional[OrderPlacementSource] = None,
     ) -> OrdersPage:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_gethistoricalorders
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_gethistoricalorders
 
         Get a list of orders filtered by optional query parameters (product_id, order_status, etc).
 
@@ -589,7 +589,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
                    start_date: Optional[datetime] = None, end_date: Optional[datetime] = None,
                    cursor: Optional[str] = None, limit: int = 100) -> FillsPage:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getfills
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getfills
 
         Get a list of fills filtered by optional query parameters (product_id, order_id, etc).
 
@@ -683,7 +683,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def get_order(self, order_id: str) -> Order:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_gethistoricalorder
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_gethistoricalorder
 
         Get a single order by order ID.
 
@@ -710,7 +710,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
                       offset: Optional[int] = None,
                       product_type: Optional[ProductType] = None) -> ProductsPage:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getproducts
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getproducts
 
         Get a list of the available currency pairs for trading.
 
@@ -748,7 +748,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def get_product(self, product_id: str) -> Product:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getproduct
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getproduct
 
         Get information on a single product by product ID.
 
@@ -775,7 +775,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
             end_date: datetime,
             granularity: Granularity) -> CandlesPage:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getcandles
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getcandles
 
         Get rates for a single product by product ID, grouped in buckets.
 
@@ -857,7 +857,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
     def get_market_trades(
             self, product_id: str, limit: int) -> TradesPage:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getmarkettrades
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getmarkettrades
 
         Get snapshot information, by product ID, about the last trades (ticks),
         best bid/ask, and 24h volume.
@@ -886,7 +886,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def get_product_book(self, product_id: str, limit: Optional[int] = None) -> ProductBook:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getproductbook
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getproductbook
 
         Get a list of bids/asks for a single product.
         The amount of detail shown can be customized with the limit parameter.
@@ -918,7 +918,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def get_best_bid_ask(self, product_ids: Optional[List[str]] = None) -> BidAsksPage:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getbestbidask
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getbestbidask
 
         Get the best bid/ask for all products. A subset of all products can be returned.
 
@@ -951,7 +951,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
                                  user_native_currency: str = "USD",
                                  product_type: Optional[ProductType] = None):
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_gettransactionsummary
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_gettransactionsummary
 
         Get a summary of transactions with fee tiers, total volume, and fees.
         """
@@ -991,7 +991,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def list_portfolios(self, portfolio_type: Optional[PortfolioType] = None) -> PortfoliosPage:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getportfolios
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getportfolios
 
         Get a list of all portfolios of a user.
 
@@ -1019,7 +1019,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def create_portfolio(self, name: str) -> Portfolio:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_createportfolio
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_createportfolio
 
         Create a portfolio.
 
@@ -1044,7 +1044,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def edit_portfolio(self, portfolio_uuid: str, name: str) -> Portfolio:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_editportfolio
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_editportfolio
 
         Edit a portfolio.
 
@@ -1069,7 +1069,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def delete_portfolio(self, portfolio_uuid: str) -> EmptyResponse:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_deleteportfolio
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_deleteportfolio
 
         Delete a portfolio by portfolio ID.
 
@@ -1091,7 +1091,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def get_portfolio_breakdown(self, portfolio_uuid: str) -> PortfolioBreakdown:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getportfoliobreakdown
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getportfoliobreakdown
 
         Get the breakdown of a portfolio by portfolio ID.
 
@@ -1118,7 +1118,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
                              source_portfolio_uuid: str,
                              target_portfolio_uuid: str) -> PortfolioFundsTransfer:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_moveportfoliofunds
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_moveportfoliofunds
 
         Move portfolio funds.
 
@@ -1150,7 +1150,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def get_unix_time(self) -> UnixTime:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getunixtime
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getunixtime
 
         Get the current time from the Coinbase Advanced API.
 
