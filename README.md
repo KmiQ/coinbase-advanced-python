@@ -57,7 +57,7 @@ You can define your own callback functions to handle different types of events. 
 ### Heartbeat Subscription
 For each subscription to a market data channel, a separate heartbeat subscription is automatically created. This helps to ensure that the connection remains open and active.
 
-### Concurrency
+### Concurrencyadding
 Each subscription runs in a separate thread to ensure that multiple subscriptions can operate concurrently without blocking each other.
 
 ### Coinbase API Rate Limits

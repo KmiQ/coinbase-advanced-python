@@ -28,7 +28,7 @@ from coinbaseadvanced.models.orders import OrderEditPreview, OrderPlacementSourc
 class AuthSchema(Enum):
     """
     Enum representing authetication schema:
-    https://docs.cloud.coinbase.com/advanced-trade-api/docs/auth#authentication-schemes
+    https://docs.cdp.coinbase.com/advanced-trade/docs/auth#authentication-schemes
     """
 
     CLOUD_API_TRADING_KEYS = "CLOUD_API_TRADING_KEYS"
@@ -79,7 +79,7 @@ class CoinbaseAdvancedTradeAPIClient(object):
 
     def list_accounts(self, limit: int = 49, cursor: Optional[str] = None) -> AccountsPage:
         """
-        https://docs.cloud.coinbase.com/advanced-trade-api/reference/retailbrokerageapi_getaccounts
+        https://docs.cdp.coinbase.com/advanced-trade/reference/retailbrokerageapi_getaccounts/
 
         Get a list of authenticated accounts for the current user.
 

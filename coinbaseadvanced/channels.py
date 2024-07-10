@@ -5,11 +5,11 @@ from models.market_data import HeartbeatEvent, CandlesEvent, MarketTradesEvent, 
 # https://docs.cdp.coinbase.com/advanced-trade/docs/ws-channels/#heartbeats-channel
 CHANNELS = {
     'heartbeat': HeartbeatEvent,  # Channel for heartbeat events
-    'candles': CandlesEvent,  # Channel for candle events (OHLC data)
-    'market_trades': MarketTradesEvent,  # Channel for market trades events
-    'status': StatusEvent,  # Channel for status events (e.g., product status)
-    'ticker': TickerEvent,  # Channel for ticker events (price and volume data)
-    'ticker_batch': TickerBatchEvent,  # Channel for batch ticker events
-    'l2_data': Level2Event,  # Channel for level 2 data events (order book updates)
-    'user': UserEvent,  # Channel for user-specific events (e.g., orders, positions)
+    'candles': CandlesEvent,  # Real-time updates on product candles
+    'market_trades': MarketTradesEvent,  # Real-time updates every time a market trade happens
+    'status': StatusEvent,  # Sends all products and currencies on a preset interval
+    'ticker': TickerEvent,  # Real-time price updates every time a match happens
+    'ticker_batch': TickerBatchEvent,  # Real-time price updates every 5000 milliseconds
+    'l2_data': Level2Event,  # All updates and easiest way to keep order book snapshot
+    'user': UserEvent,  # Only sends messages that include the authenticated user
 }

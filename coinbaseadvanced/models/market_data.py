@@ -1,4 +1,4 @@
-class Level2Event:# https://docs.cdp.coinbase.com/advanced-trade/docs/ws-channels/#heartbeats-channel
+class Level2Event:
     def __init__(self, channel: str, client_id: str, timestamp: str, sequence_num: int, events: list):
         """
         Initializes a Level2Event object.
@@ -47,7 +47,8 @@ class L2Update:
         self.new_quantity = update.get('new_quantity')
 
     def __repr__(self):
-        return f"L2Update(side={self.side}, event_time={self.event_time}, price_level={self.price_level}, new_quantity={self.new_quantity})"
+        return (f"L2Update(side={self.side}, event_time={self.event_time}, price_level={self.price_level}, "
+                f"new_quantity={self.new_quantity})")
 
 
 class HeartbeatEvent:
@@ -64,7 +65,8 @@ class HeartbeatEvent:
         self.heartbeat_counter = heartbeat_counter
 
     def __repr__(self):
-        return f"HeartbeatEvent(channel={self.channel}, current_time={self.current_time}, heartbeat_counter={self.heartbeat_counter})"
+        return (f"HeartbeatEvent(channel={self.channel}, current_time={self.current_time}, "
+                f"heartbeat_counter={self.heartbeat_counter})")
 
 
 class CandlesEvent:
