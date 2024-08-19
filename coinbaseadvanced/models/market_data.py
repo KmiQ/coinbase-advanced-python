@@ -279,7 +279,15 @@ class TickerBatchEvent:
 
 
 class UserEvent:
-    def __init__(self, channel: str, client_id: str, timestamp: str, sequence_num: int, events: list, user_id: str = None, profile_id: str = None):
+    def __init__(
+            self,
+            channel: str,
+            client_id: str,
+            timestamp: str,
+            sequence_num: int,
+            events: list,
+            user_id: str = "",
+            profile_id: str = ""):
         """
         Initializes a UserEvent object.
 
