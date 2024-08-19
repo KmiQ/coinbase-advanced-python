@@ -1,7 +1,7 @@
 import time
-import jwt
 import hashlib
 import os
+import jwt
 from cryptography.hazmat.primitives import serialization
 
 
@@ -19,7 +19,7 @@ def generate_jwt(api_key: str, signing_key: str) -> str:
         private_key_bytes = signing_key.encode('utf-8')
         private_key = serialization.load_pem_private_key(private_key_bytes, password=None)
     except Exception as e:
-        raise ValueError(f"Failed to load private key: {e}")
+        raise ValueError(f"Failed to load private key: {e}") from e
 
     # Create the JWT payload with issuer, not before, expiry, and subject claims
     payload = {

@@ -82,9 +82,22 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             client.get_account('b044449a-38a3-5b8f-a506-4a65c9853222')
         except CoinbaseAdvancedTradeAPIError as api_error:
             self.assertDictEqual(api_error.error_dict, {
-                "error": "unknown",
-                "error_details": "some error details here",
-                "message": "some additional message here"
+                "success": False,
+                "failure_reason": "UNKNOWN_FAILURE_REASON",
+                "order_id": "",
+                "error_response": {
+                    "error": "INSUFFICIENT_FUND",
+                    "message": "Insufficient balance in source account",
+                    "error_details": "",
+                    "preview_failure_reason": "PREVIEW_INSUFFICIENT_FUND"
+                },
+                "order_configuration": {
+                    "limit_limit_gtc": {
+                        "base_size": "10000",
+                        "limit_price": ".19",
+                        "post_only": False
+                    }
+                }
             })
 
     @mock.patch("coinbaseadvanced.client.requests.get")
@@ -182,9 +195,22 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
             client.list_accounts()
         except CoinbaseAdvancedTradeAPIError as page_error:
             self.assertDictEqual(page_error.error_dict, {
-                "error": "unknown",
-                "error_details": "some error details here",
-                "message": "some additional message here"
+                "success": False,
+                "failure_reason": "UNKNOWN_FAILURE_REASON",
+                "order_id": "",
+                "error_response": {
+                    "error": "INSUFFICIENT_FUND",
+                    "message": "Insufficient balance in source account",
+                    "error_details": "",
+                    "preview_failure_reason": "PREVIEW_INSUFFICIENT_FUND"
+                },
+                "order_configuration": {
+                    "limit_limit_gtc": {
+                        "base_size": "10000",
+                        "limit_price": ".19",
+                        "post_only": False
+                    }
+                }
             })
 
     @mock.patch("coinbaseadvanced.client.requests.post")
@@ -1343,8 +1369,9 @@ class TestCoinbaseAdvancedTradeAPIClient(unittest.TestCase):
         client = CoinbaseAdvancedTradeAPIClient(
             api_key='lknalksdj89asdkl', secret_key='jlsjljsfd89y98y98shdfjksfd')
 
-        transfer = client.move_portfolio_funds(funds_value="0.1", funds_currency="USD",
-                                               source_portfolio_uuid="klsjdlksd-nsjkdnfk-234234", target_portfolio_uuid="strklsdmkfls-34dfg-ing")
+        transfer = client.move_portfolio_funds(
+            funds_value="0.1", funds_currency="USD", source_portfolio_uuid="klsjdlksd-nsjkdnfk-234234",
+            target_portfolio_uuid="strklsdmkfls-34dfg-ing")
 
         # Check input
 

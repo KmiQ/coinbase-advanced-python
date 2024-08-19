@@ -1,10 +1,26 @@
+"""
+API Client for Coinbase Websocket channels.
+"""
+
 import json
 import time
 import threading
 import websocket
-from channels import CHANNELS
-from models.market_data import HeartbeatEvent
-from utils import generate_jwt
+from coinbaseadvanced.models.market_data import CandlesEvent, HeartbeatEvent, Level2Event, MarketTradesEvent, StatusEvent, TickerBatchEvent, TickerEvent, UserEvent
+from coinbaseadvanced.utils import generate_jwt
+
+# Mapping of channel names to their corresponding event classes.
+# https://docs.cdp.coinbase.com/advanced-trade/docs/ws-channels/#heartbeats-channel
+CHANNELS = {
+    'heartbeat': HeartbeatEvent,  # Channel for heartbeat events
+    'candles': CandlesEvent,  # Real-time updates on product candles
+    'market_trades': MarketTradesEvent,  # Real-time updates every time a market trade happens
+    'status': StatusEvent,  # Sends all products and currencies on a preset interval
+    'ticker': TickerEvent,  # Real-time price updates every time a match happens
+    'ticker_batch': TickerBatchEvent,  # Real-time price updates every 5000 milliseconds
+    'l2_data': Level2Event,  # All updates and easiest way to keep order book snapshot
+    'user': UserEvent,  # Only sends messages that include the authenticated user
+}
 
 
 class CoinbaseWebSocketClient:
@@ -39,7 +55,7 @@ class CoinbaseWebSocketClient:
             "timestamp": int(time.time())
         }
 
-    def _handle_message(self, ws, message: str):
+    def _handle_message(self, ws: websocket.WebSocket, message: str) -> None:
         """
         Handles incoming WebSocket messages.
 
@@ -49,13 +65,13 @@ class CoinbaseWebSocketClient:
         """
         data = json.loads(message)
 
-        if 'type' in data and data['type'] == 'error':
+        if data.get('type') == 'error':
             raise ValueError(f"Error message: {data['message']}")
 
-        if 'channel' in data and data['channel'] == 'subscriptions':
-            return data
+        if data.get('channel') == 'subscriptions':
+            return
 
-        if 'channel' in data and data['channel'] == 'heartbeats':
+        if data.get('channel') == 'heartbeats':
             heartbeat_event = HeartbeatEvent(
                 channel=data['channel'],
                 current_time=data['events'][0]['current_time'],
@@ -63,7 +79,7 @@ class CoinbaseWebSocketClient:
             )
             if 'heartbeats' in self.callbacks:
                 self.callbacks['heartbeats'](heartbeat_event)
-            return heartbeat_event
+            return
 
         channel = data.get('channel')
         if channel and channel in CHANNELS:
@@ -74,7 +90,7 @@ class CoinbaseWebSocketClient:
                     self.callbacks[channel](event)
                 return event
             except TypeError as e:
-                raise TypeError(f"Error creating event for channel {channel}: {e}")
+                raise TypeError(f"Error creating event for channel {channel}: {e}") from e
         else:
             raise ValueError(f"Unrecognized channel: {channel}")
 
@@ -102,7 +118,7 @@ class CoinbaseWebSocketClient:
         thread = threading.Thread(target=run)
         thread.start()
 
-    def _on_open(self, ws, product_ids: list, channel: str):
+    def _on_open(self, ws: websocket.WebSocket, product_ids: list, channel: str):
         """
         Handles the WebSocket connection opening by sending subscription messages.
 
@@ -112,19 +128,20 @@ class CoinbaseWebSocketClient:
         """
         subscribe_message = self._create_message("subscribe", product_ids, channel)
         ws.send(json.dumps(subscribe_message))
+
         heartbeat_message = self._create_message("subscribe", product_ids, "heartbeats")
         ws.send(json.dumps(heartbeat_message))
 
-    def _on_error(self, ws, error: str):
+    def _on_error(self, ws: websocket.WebSocket, error: str):
         """
         Handles errors from the WebSocket.
 
         :param ws: The WebSocket instance.
         :param error: The error message.
         """
-        raise Exception(f"WebSocket error: {error}")
+        raise websocket.WebSocketException(f"WebSocket error: {error}")
 
-    def _on_close(self, ws, close_status_code, close_msg):
+    def _on_close(self, ws: websocket.WebSocket, close_status_code, close_msg):
         """
         Handles the WebSocket connection closing.
 
@@ -132,4 +149,5 @@ class CoinbaseWebSocketClient:
         :param close_status_code: The status code for the connection closure.
         :param close_msg: The message for the connection closure.
         """
-        raise Exception(f"Closed connection with status: {close_status_code}, message: {close_msg}")
+        raise websocket.WebSocketConnectionClosedException(
+            f"Closed connection with status: {close_status_code}, message: {close_msg}")
