@@ -24,6 +24,51 @@ print(accounts_page.size)
 order_created = client.create_limit_order(client_order_id="lknalksdj89asdkl", product_id="ALGO-USD", side=Side.BUY, limit_price=".19", base_size=5)
 ```
 
+## Websocket usage
+
+Here is a basic example of how to use the CoinbaseWebSocketClient:
+
+```
+import asyncio
+import time
+from client_websocket import CoinbaseWebSocketClient
+
+def handle_candle_event(event):
+    print(f"Received event candle: {event}")
+
+async def main():
+    api_key = "your-api-key"
+    private_key = "-----BEGIN EC PRIVATE KEY-----\n\n-----END EC PRIVATE KEY-----"
+    
+    client = CoinbaseWebSocketClient(api_key, private_key)
+    client.subscribe(["BTC-EUR"], "candles", callback=handle_candle_event)
+    
+    while True:
+        time.sleep(1)
+
+if __name__ == "__main__":
+    asyncio.run(main())
+
+```
+
+### Callback Functions
+You can define your own callback functions to handle different types of events. The callback function will receive an event object that you can process as needed.
+
+### Heartbeat Subscription
+For each subscription to a market data channel, a separate heartbeat subscription is automatically created. This helps to ensure that the connection remains open and active.
+
+### Concurrencyadding
+Each subscription runs in a separate thread to ensure that multiple subscriptions can operate concurrently without blocking each other.
+
+### Coinbase API Rate Limits
+Before using this library, it is highly recommended to read the Coinbase API rate limits (https://docs.cdp.coinbase.com/advanced-trade/docs/ws-best-practices/) to understand the constraints and avoid exceeding the limits.
+
+### Best Practices
+It is also recommended to follow the WebSocket best practices (https://docs.cdp.coinbase.com/advanced-trade/docs/ws-best-practices/) provided by Coinbase for optimal performance and reliability.
+
+### Subscription Recommendations
+If possible, subscribe to one symbol per subscription to help balance the load on the Coinbase server and improve the reliability of your data stream.
+
 ## Installation
 ```
 pip install coinbaseadvanced
