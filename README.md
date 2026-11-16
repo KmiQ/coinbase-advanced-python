@@ -1,4 +1,10 @@
 # Coinbase Advanced
+
+> [!WARNING]
+> **This project is no longer maintained.** Please use Coinbase's official Python SDK instead: [coinbase-advanced-py](https://github.com/coinbase/coinbase-advanced-py) (`pip install coinbase-advanced-py`).
+>
+> Coinbase retired legacy API keys in February 2025, so the legacy auth path in this library no longer works. There will be no further releases, fixes or issue responses. The code and the `coinbaseadvanced` package on PyPI remain available as they are.
+
 Python library for the Coinbase Advanced Trade API.
 
 ## Features
